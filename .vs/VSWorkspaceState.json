@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.github",
+    "\\bin",
+    "\\public",
+    "\\routes",
+    "\\views"
+  ],
+  "SelectedNode": "\\views\\index.ejs",
+  "PreviewInSolutionExplorer": false
+}
