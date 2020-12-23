@@ -1,3 +1,5 @@
+// var request = require('request');
+
 (() => {
 
   const $inputSearch = $('#input-search');
@@ -10,7 +12,12 @@
   const $imgClose = $('#img-close');
   const $imgCse = $('#img-cse');
 
+  
+
+
+
   let data;
+  
 
   const updatePagination = () => {
     $pagination.css('display', 'block');
@@ -35,7 +42,9 @@
       data.items.map(o => {
         $results.append(`
           <li class="item">
-            <a href="${o.link}" class="title">${o.title}</a>
+            <a href="${o.link}"  onclick="getLink('${data.q}','${o.link}','${o.title}')" class="title" id="vegar">${o.title}</a>
+            
+           <div class="snippet">${o.link}</div>
             <div class="snippet">${o.snippet}</div>
             ${o.img ?
               `<a href=${o.img}><img src="${o.img}" alt="image"></a>`
@@ -106,3 +115,38 @@
   onInit();
 
 })();
+
+function getLink( value, link, title) {
+  // options = {
+  //   uri: 'http://localhost:1239/values',
+  //   method: 'POST',
+  //   json: {
+  //     "value": "test",
+  //     "date": "test"
+  //   }
+  // };
+  let dateT = new Date(Date.now());
+  $.post("http://localhost:1239/links",
+  {
+    "value": value,
+    "link": link,
+    "title": title,
+    "date": dateT
+  },
+  function(data, status){
+    alert("Data: " + data + "\nStatus: " + status);
+  });
+  
+  // request(options, function (error, response, body) {
+  //   if (!error && response.statusCode == 200) {
+  //     console.log(body.id) // Print the shortened url.
+  //   }
+  // });
+}
+function getDate(){
+  let today = new Date(Date.now());
+  let date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+  let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  let d = date+' '+time;
+  return d;
+}

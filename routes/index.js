@@ -1,9 +1,17 @@
 var express = require('express');
 const { google } = require('googleapis');
 const config = require('../config');
+var request = require('request');
+
+
+
+
+var options;
 
 var router = express.Router();
 const customsearch = google.customsearch('v1');
+
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -42,6 +50,23 @@ router.get('/search', (req, res, next) => {
           img: (((o.pagemap || {}).cse_image || {})[0] || {}).src
         }))
       }
+      //send data to localhost:1239
+      let dateT = new Date(Date.now());
+      options = {
+        
+        uri: 'http://localhost:1239/values',
+        method: 'POST',
+        json: {
+          "value": data.q,
+          "date": dateT
+        }
+      };
+      
+      request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          console.log(body.id) // Print the shortened url.
+        }
+      });
       // res.status(200).send(result);
       res.status(200).send(data);
     })
@@ -50,5 +75,6 @@ router.get('/search', (req, res, next) => {
       res.status(500).send(err);
     });
 })
+
 
 module.exports = router;
