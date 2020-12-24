@@ -54,7 +54,7 @@ router.get('/search', (req, res, next) => {
       let dateT = new Date(Date.now());
       options = {
         
-        uri: 'http://localhost:1239/values',
+        uri: 'http://fptda1admin.herokuapp.com/values',
         method: 'POST',
         json: {
           "value": data.q,
