@@ -135,8 +135,10 @@ function getLink( value, link, title) {
     "date": dateT
   },
   function(data, status){
-    alert("Data: " + data + "\nStatus: " + status);
+    //alert("Data: " + data + "\nStatus: " + status);
     window.location.href = link;
+  }).fail(function() {
+    alert( "loi ket noi toi server" );
   });
 
   
