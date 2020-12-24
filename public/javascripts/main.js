@@ -42,7 +42,7 @@
       data.items.map(o => {
         $results.append(`
           <li class="item">
-            <a href="${o.link}"  onclick="getLink('${data.q}','${o.link}','${o.title}')" class="title" id="vegar">${o.title}</a>
+            <a href="#"  onclick="getLink('${data.q}','${o.link}','${o.title}')" class="title" id="vegar">${o.title}</a>
             
            <div class="snippet">${o.link}</div>
             <div class="snippet">${o.snippet}</div>
@@ -137,6 +137,8 @@ function getLink( value, link, title) {
   function(data, status){
     alert("Data: " + data + "\nStatus: " + status);
   });
+
+  window.location.href = link;
   
   // request(options, function (error, response, body) {
   //   if (!error && response.statusCode == 200) {
