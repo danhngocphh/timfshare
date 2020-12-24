@@ -125,7 +125,7 @@ function getLink( value, link, title) {
   //     "date": "test"
   //   }
   // };
-  let dateT = new Date(Date.now());
+  let dateT = Date.now();
   // dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
   $.post("http://fptda1admin.herokuapp.com/links",
   {
