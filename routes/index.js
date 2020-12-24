@@ -52,6 +52,7 @@ router.get('/search', (req, res, next) => {
       }
       //send data to localhost:1239
       let dateT = new Date(Date.now());
+      dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
       options = {
         
         uri: 'http://fptda1admin.herokuapp.com/values',
