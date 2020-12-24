@@ -136,9 +136,10 @@ function getLink( value, link, title) {
   },
   function(data, status){
     alert("Data: " + data + "\nStatus: " + status);
+    window.location.href = link;
   });
 
-  window.location.href = link;
+  
   
   // request(options, function (error, response, body) {
   //   if (!error && response.statusCode == 200) {
