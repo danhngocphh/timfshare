@@ -4,6 +4,7 @@
 
   const $inputSearch = $('#input-search');
   const $results = $('#results');
+  const $recommend = $('#recommend');
   const $loader = $('#loader');
   const $btnPrev = $('#btn-prev');
   const $btnNext = $('#btn-next');
@@ -38,6 +39,22 @@
       data = _data;
       console.log(data);
       $loader.css('display', 'none');
+      var i_link = 0;
+      var i_key = 0;
+      $recommend.html(`<li class="total">Top 10 Link </li>`);   
+      
+      $.each(data.toplink, function(index, value) {
+        i_link++;
+        $recommend.append(`#${i_link}
+        <li class="item">
+        <a href="#" onclick="getLink('${data.q}','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
+    </li>
+        `); 
+      });
+
+
+      
+      
       $results.html(`<li class="total">Total about ${data.totalResults} results in ${data.time} seconds.</li>`);
       data.items.map(o => {
         $results.append(`
@@ -52,6 +69,7 @@
           </li>
         `);
       });
+      
       updatePagination();
     })
       .fail(err => console.log(err))
@@ -59,6 +77,7 @@
 
   const updateViewOnSearch = () => {
     $results.html('');
+    $recommend.html('');
     $pagination.css('display', 'none');
     $loader.css('display', 'block');
     $imgClose.css('display', 'block');

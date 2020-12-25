@@ -2,6 +2,28 @@ var express = require('express');
 const { google } = require('googleapis');
 const config = require('../config');
 var request = require('request');
+const mongoose = require('mongoose');
+// var statsd = require('./statsd');
+
+
+const schemaValue = mongoose.Schema({
+        value: String,
+        date: Date,
+        count: Number
+    });
+const Values = mongoose.model('keysearches', schemaValue);
+
+const schemaLink = mongoose.Schema({
+    value: String,
+    link: String,
+    title: String,
+    date: Date,
+    count: Number
+});
+const Links = mongoose.model('links', schemaLink);
+
+mongoose.connect("mongodb+srv://vegarnom:vegar8226@cluster0.eotns.mongodb.net/dbda1?retryWrites=true&w=majority",{useNewUrlParser: true});
+
 
 
 
@@ -19,6 +41,8 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/search', (req, res, next) => {
+
+
   const { q, start, num } = req.query;
   console.log(q, start, num);
 
@@ -28,12 +52,37 @@ router.get('/search', (req, res, next) => {
     q, start, num
   })
     .then(result => result.data)
-    .then((result) => {
+    .then( async (result) => {
       const { queries, items, searchInformation } = result;
 
       const page = (queries.request || [])[0] || {};
       const previousPage = (queries.previousPage || [])[0] || {};
       const nextPage = (queries.nextPage || [])[0] || {};
+      var toplink = {};
+
+
+      await Links.aggregate([
+        { $group: { _id: '$link',title : { $first:  "$title" }, i_total: { $sum: 1 }}},
+        { $project: { _id: 1, i_total: 1, title: 1 }},
+        { $sort: { i_total: -1 } },
+        { $limit : 10 }
+      ]).
+      then(function (result) {
+        
+        for (let i in result) {
+           
+                let val = result[i];    
+
+                toplink[val["_id"]] = [val["_id"], val["i_total"],val["title"]];
+                
+                
+           
+        }
+        
+      });
+
+      // toplink.set("link", "123");
+      
 
       const data = {
         q,
@@ -43,6 +92,7 @@ router.get('/search', (req, res, next) => {
         nextPage: nextPage.startIndex,
         previousPage: previousPage.startIndex,
         time: searchInformation.searchTime,
+        toplink: toplink,
         items: items.map(o => ({
           link: o.link,
           title: o.title,
@@ -50,6 +100,10 @@ router.get('/search', (req, res, next) => {
           img: (((o.pagemap || {}).cse_image || {})[0] || {}).src
         }))
       }
+
+      
+
+
       //send data to localhost:1239
       let dateT = new Date(Date.now());
       dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })

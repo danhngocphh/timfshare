@@ -22,6 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .wrap-search {
 	position: relative;
+	
 }
 .wrap-search input {
 	position: relative;
@@ -49,8 +50,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .wrap-content ul {
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 55%;
+	float: right;
 }
 .wrap-content li.total {
 	color: rgb(88, 88, 88);
@@ -58,6 +61,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .wrap-content li.item {
 	margin-top: 25px;
+	
 }
 .wrap-content li.item a.title {
 	font-weight: 900;
@@ -67,6 +71,32 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 15px;
 }
 .wrap-content li.item img {
+	width: 90px;
+	height: 90px;
+}
+
+.wrap-recommend ul {
+	padding-left: 20px;
+	padding-right: 20px;
+	width: 35%;
+	float: left;
+}
+.wrap-recommend li.total {
+	color: rgb(88, 88, 88);
+	margin-top: 20px;
+}
+.wrap-recommend li.item {
+	margin-top: 25px;
+	
+}
+.wrap-recommend li.item a.title {
+	font-weight: 900;
+}
+.wrap-recommend li.item div.snippet {
+	margin-top: 5px;
+	margin-bottom: 15px;
+}
+.wrap-recommend li.item img {
 	width: 90px;
 	height: 90px;
 }
@@ -87,9 +117,11 @@ img.cse {
 	margin-top: 50px;
 	text-align: center;
 	display: none;
+	width: 60%;
+	float: right;
 }
 .page button {
-	background-color: #eb1a58;
+	background-color: #cd1417;
 	color: white;
 	outline: none ;
 	border: none ;
