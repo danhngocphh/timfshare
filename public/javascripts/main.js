@@ -45,8 +45,8 @@
       
       $.each(data.toplink, function(index, value) {
         i_link++;
-        $recommend.append(`#${i_link}
-        <li class="item">
+        $recommend.append(`
+        <li class="item">#${i_link} 
         <a href="#" onclick="getLink('${data.q}','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
     </li>
         `); 
