@@ -5,6 +5,7 @@
   const $inputSearch = $('#input-search');
   const $results = $('#results');
   const $recommend = $('#recommend');
+  const $recommendkey = $('#recommendkey');
   const $loader = $('#loader');
   const $btnPrev = $('#btn-prev');
   const $btnNext = $('#btn-next');
@@ -48,6 +49,17 @@
         $recommend.append(`
         <li class="item">#${i_link} 
         <a href="#" onclick="getLink('${data.q}','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
+    </li>
+        `); 
+      });
+
+      $recommendkey.html(`<li class="total">Top 10 Key Search </li>`);   
+      
+      $.each(data.topkey, function(index, value) {
+        i_key++;
+        $recommendkey.append(`
+        <li class="item">#${i_key} 
+        <a href="/search?q=${value[0]}" class="title" id="vegar">${value[0]}</a>
     </li>
         `); 
       });

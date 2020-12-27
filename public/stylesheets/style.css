@@ -101,6 +101,11 @@ h1, h2, h3, h4, h5, h6 {
 	height: 90px;
 }
 
+.wrap-recommend a {
+	color: #497e99;
+	text-decoration: none;	
+}
+
 .loader, img.cse {
 	position: fixed;
 	left: 50%;
@@ -118,7 +123,7 @@ img.cse {
 	text-align: center;
 	display: none;
 	width: 60%;
-	float: right;
+	float: left;
 }
 .page button {
 	background-color: #cd1417;
