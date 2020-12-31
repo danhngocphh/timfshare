@@ -1,8 +1,6 @@
 // var request = require('request');
 
-(() => {
-
-  const $inputSearch = $('#input-search');
+const $inputSearch = $('#input-search');
   const $results = $('#results');
   const $recommend = $('#recommend');
   const $recommendkey = $('#recommendkey');
@@ -11,15 +9,9 @@
   const $btnNext = $('#btn-next');
   const $pagination = $('#pagination');
   const $imgSearch = $('#img-search');
+  const $Searchkey = $('#searchkey');
   const $imgClose = $('#img-close');
   const $imgCse = $('#img-cse');
-
-  
-
-
-
-  let data;
-  
 
   const updatePagination = () => {
     $pagination.css('display', 'block');
@@ -53,13 +45,15 @@
         `); 
       });
 
+      
+
       $recommendkey.html(`<li class="total">Top 10 Key Search </li>`);   
       
       $.each(data.topkey, function(index, value) {
         i_key++;
         $recommendkey.append(`
         <li class="item">#${i_key} 
-        <a href="/search?q=${value[0]}" class="title" id="vegar">${value[0]}</a>
+        <a onclick="topkey1('${value[0]}')" class="title" id="searchkey">${value[0]}</a>
     </li>
         `); 
       });
@@ -82,14 +76,42 @@
         `);
       });
       
+      
       updatePagination();
     })
       .fail(err => console.log(err))
   }
 
+(() => {
+
+  // const $inputSearch = $('#input-search');
+  // const $results = $('#results');
+  // const $recommend = $('#recommend');
+  // const $recommendkey = $('#recommendkey');
+  // const $loader = $('#loader');
+  // const $btnPrev = $('#btn-prev');
+  // const $btnNext = $('#btn-next');
+  // const $pagination = $('#pagination');
+  // const $imgSearch = $('#img-search');
+  // const $Searchkey = $('#searchkey');
+  // const $imgClose = $('#img-close');
+  // const $imgCse = $('#img-cse');
+
+  
+
+
+
+  let data;
+  
+
+
+
+
+
   const updateViewOnSearch = () => {
     $results.html('');
     $recommend.html('');
+    $recommendkey.html('');
     $pagination.css('display', 'none');
     $loader.css('display', 'block');
     $imgClose.css('display', 'block');
@@ -119,6 +141,13 @@
     cse(q);
   })
 
+  $Searchkey.click(() => {
+    const q = $inputSearch.val();
+    if (!q || q === '') return;
+    updateViewOnSearch();
+    cse(q);
+  })
+
   $btnNext.click(() => {
     updateViewOnSearch();
     cse(data.q, data.nextPage);
@@ -142,6 +171,8 @@
       cse(q);
     }
   }
+
+  
 
   onInit();
 
@@ -186,4 +217,24 @@ function getDate(){
   let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   let d = date+' '+time;
   return d;
+}
+
+const updateViewOnSearch = () => {
+  $results.html('');
+  $recommend.html('');
+  $recommendkey.html('');
+  $pagination.css('display', 'none');
+  $loader.css('display', 'block');
+  $imgClose.css('display', 'block');
+  $imgCse.css('display', 'none');
+}
+
+function topkey1(q) {
+    
+    
+  updateViewOnSearch();
+  cse(q);
+  document.getElementById("input-search").value = q;
+
+  
 }
