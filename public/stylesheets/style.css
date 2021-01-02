@@ -88,7 +88,7 @@ h1, h2, h3, h4, h5, h6 {
 	padding-right: 20px;
 	width: 40%;
 	float: right;
-	margin-top: 5%;
+	/* margin-top: 2%; */
 }
 .wrap-recommend li.total {
 	color: rgb(88, 88, 88);
@@ -132,7 +132,7 @@ h1, h2, h3, h4, h5, h6 {
 	padding-right: 20px;
 	width: 40%;
 	float: left;
-	margin-top: 5%;
+	/* margin-top: 2%; */
 	margin-left: 10%;	
 }
 	
