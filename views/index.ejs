@@ -17,26 +17,55 @@
 </head>
 
 <body>
-
+  
+  
   <div class="wrap-search">
+    
     <input type="text" placeholder="Input your key search here..." id="input-search">
     <img src="/images/search.png" alt="Search" class="search" id="img-search">
     <img src="/images/close.png" alt="Close" class="close" id="img-close">
+    
+    
   </div>
-
+  <a href="/" ><img src="/images/cse.png" alt="" class="logo" id=""></a>
   <div class="wrap-recommend">
-    <ul id="recommend" /></ul>
+    <p class="hotlink">Link hot: <a href="/" class="title" id="searchkey">nhac giang sinh VN - Fshare - Fshare</a> | <a href="/" class="title" id="searchkey">CAM LY VIDEO KARAOKE - Fshare - Fshare</a> | <a href="/" class="title" id="searchkey">One Piece - Vua bong da.mkv - Fshare</a> </p>
+
     
   </div>
 
+  
+  <div class="wrap-recommend">
+    <ul id="recommend" />
+    <li class="total">Top 10 Link </li>
+    <%var i_link = 0;%>
+      <%for (var result in toplink){i_link++;%>
+        
+        <li class="item">#<%= i_link %>  
+                <a href="#" onclick="getLink('nokeysearch','<%=toplink[result][0]%>','<%=toplink[result][2]%>')" class="title" id="vegar"><%=toplink[result][2]%></a>
+       </li>   
+        <%}%>
+      </ul>
+  </div> 
+
+  <div class="wrap-recommend">
+    <ul id="recommendkey" />
+    <li class="total">Top 10 Key </li>
+    <%var i_key = 0;%>
+      <%for (var result in topkey){i_key++;%>
+        
+        <li class="item">#<%= i_key %>  
+                <a href="#" onclick="topkey1('<%=topkey[result][0]%>')"  class="title" id="vegar"><%=topkey[result][0]%></a>
+       </li>   
+        <%}%>
+      </ul>
+  </div>
 
   <div class="wrap-content">
     <ul id="results" />
   </div>
 
-<div class="wrap-recommend">
-    <ul id="recommendkey" />
-  </div>
+
 
   <div class="page" id="pagination">
     <button class="prev" id="btn-prev">Previous</button>

@@ -36,8 +36,55 @@ const customsearch = google.customsearch('v1');
 
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Fshare Search' });
+router.get('/', async function (req, res, next) {
+
+      var toplink = {};
+      var topkey = {};
+
+
+      await Links.aggregate([
+        { $group: { _id: '$link',title : { $first:  "$title" }, i_total: { $sum: 1 }}},
+        { $project: { _id: 1, i_total: 1, title: 1 }},
+        { $sort: { i_total: -1 } },
+        { $limit : 10 }
+      ]).
+      then(function (result) {
+        
+        for (let i in result) {
+           
+                let val = result[i];    
+
+                toplink[val["_id"]] = [val["_id"], val["i_total"],val["title"]];
+                
+                
+           
+        }
+        
+      });
+
+      await Values.aggregate([
+        { $group: { _id: '$value', i_total: { $sum: 1 }}},
+        { $project: { _id: 1, i_total: 1, title: 1 }},
+        { $sort: { i_total: -1 } },
+        { $limit : 10 }
+      ]).
+      then(function (result) {
+        
+        for (let i in result) {
+           
+                let val = result[i];    
+
+                topkey[val["_id"]] = [val["_id"], val["i_total"]];
+                
+                
+           
+        }
+        
+      });
+
+
+
+  res.render('index', { title: 'Fshare Search' , toplink : toplink, topkey: topkey });
 });
 
 router.get('/search', (req, res, next) => {

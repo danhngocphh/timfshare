@@ -1,6 +1,6 @@
 // var request = require('request');
 
-const $inputSearch = $('#input-search');
+  const $inputSearch = $('#input-search');
   const $results = $('#results');
   const $recommend = $('#recommend');
   const $recommendkey = $('#recommendkey');
@@ -12,6 +12,8 @@ const $inputSearch = $('#input-search');
   const $Searchkey = $('#searchkey');
   const $imgClose = $('#img-close');
   const $imgCse = $('#img-cse');
+  const $hotlink = $('.hotlink');
+  
 
   const updatePagination = () => {
     $pagination.css('display', 'block');
@@ -27,36 +29,69 @@ const $inputSearch = $('#input-search');
       $btnPrev.addClass('disabled');
   }
 
+  // const top = (q, start) => {
+  //   $.get('/search', { q, start }).done(_data => {
+  //     data = _data;
+  //     var i_link = 0;
+  //     var i_key = 0; 
+  //     $recommend.html(`<li class="total">Top 10 Link </li>`);   
+      
+  //     $.each(data.toplink, function(index, value) {
+  //       i_link++;
+  //       $recommend.append(`
+  //       <li class="item">#${i_link} 
+  //       <a href="#" onclick="getLink('${data.q}','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
+  //   </li>
+  //       `); 
+  //     });
+
+      
+
+  //     $recommendkey.html(`<li class="total">Top 10 Key Search </li>`);   
+      
+  //     $.each(data.topkey, function(index, value) {
+  //       i_key++;
+  //       $recommendkey.append(`
+  //       <li class="item">#${i_key} 
+  //       <a onclick="topkey1('${value[0]}')" class="title" id="searchkey">${value[0]}</a>
+  //   </li>
+  //       `); 
+  //     });
+
+  //     updatePagination();
+  //   })
+  // }
+
   const cse = (q, start) => {
     $.get('/search', { q, start }).done(_data => {
       data = _data;
       console.log(data);
       $loader.css('display', 'none');
-      var i_link = 0;
-      var i_key = 0;
-      $recommend.html(`<li class="total">Top 10 Link </li>`);   
+    //   var i_link = 0;
+    //   var i_key = 0;
+    //   $recommend.html(`<li class="total">Top 10 Link </li>`);   
       
-      $.each(data.toplink, function(index, value) {
-        i_link++;
-        $recommend.append(`
-        <li class="item">#${i_link} 
-        <a href="#" onclick="getLink('${data.q}','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
-    </li>
-        `); 
-      });
+    //   $.each(data.toplink, function(index, value) {
+    //     i_link++;
+    //     $recommend.append(`
+    //     <li class="item">#${i_link} 
+    //     <a href="#" onclick="getLink('${data.q}','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
+    // </li>
+    //     `); 
+    //   });
 
       
 
-      $recommendkey.html(`<li class="total">Top 10 Key Search </li>`);   
+    //   $recommendkey.html(`<li class="total">Top 10 Key Search </li>`);   
       
-      $.each(data.topkey, function(index, value) {
-        i_key++;
-        $recommendkey.append(`
-        <li class="item">#${i_key} 
-        <a onclick="topkey1('${value[0]}')" class="title" id="searchkey">${value[0]}</a>
-    </li>
-        `); 
-      });
+    //   $.each(data.topkey, function(index, value) {
+    //     i_key++;
+    //     $recommendkey.append(`
+    //     <li class="item">#${i_key} 
+    //     <a onclick="topkey1('${value[0]}')" class="title" id="searchkey">${value[0]}</a>
+    // </li>
+    //     `); 
+    //   });
 
 
       
@@ -116,6 +151,9 @@ const $inputSearch = $('#input-search');
     $loader.css('display', 'block');
     $imgClose.css('display', 'block');
     $imgCse.css('display', 'none');
+    $recommend.css('display', 'none');
+  $recommendkey.css('display', 'none');
+    $hotlink.css('display', 'none');
   }
 
   $inputSearch.on('input', (e) => {
@@ -170,6 +208,7 @@ const $inputSearch = $('#input-search');
       updateViewOnSearch();
       cse(q);
     }
+    // top("123");
   }
 
   
@@ -227,6 +266,9 @@ const updateViewOnSearch = () => {
   $loader.css('display', 'block');
   $imgClose.css('display', 'block');
   $imgCse.css('display', 'none');
+  $recommend.css('display', 'none');
+  $recommendkey.css('display', 'none');
+  $hotlink.css('display', 'none');
 }
 
 function topkey1(q) {
