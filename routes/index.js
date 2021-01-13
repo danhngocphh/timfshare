@@ -40,6 +40,7 @@ router.get('/', async function (req, res, next) {
 
       var toplink = {};
       var topkey = {};
+      var keysearch = [];
 
 
       await Links.aggregate([
@@ -82,9 +83,32 @@ router.get('/', async function (req, res, next) {
         
       });
 
+      await Values.aggregate([
+        { $group: { _id: '$value'}},
+        { $project: { _id: 1}}
+        
+      ]).
+      then(function (result) {
+        
+        
+        for (let i in result) {
+           
+                let val = result[i]; 
+                
+                keysearch.push(val["_id"]);
+
+                
+                
+                
+           
+        }
+        
+        
+      });
 
 
-  res.render('index', { title: 'Fshare Search' , toplink : toplink, topkey: topkey });
+
+  res.render('index', { title: 'Fshare Search' , toplink : toplink, topkey: topkey, keysearch: keysearch });
 });
 
 router.get('/search', (req, res, next) => {
