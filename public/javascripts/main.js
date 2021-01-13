@@ -292,11 +292,31 @@ const updateViewOnSearch = () => {
   $pagination.css('display', 'none');
   $loader.css('display', 'block');
   $imgClose.css('display', 'block');
-  $imgCse.css('display', 'none');
-  $imglogooutside.css('display', 'none');
-  $inputSearch.css('display', 'none');
-  $recommend.css('display', 'none');
-  $recommendkey.css('display', 'none');
+  // $imgSearch.css('display', 'none');
+  // $imgClose.css('display', 'none');
+  // $imgCse.css('display', 'none');
+  // $imglogooutside.css('display', 'none');
+  // float: right;
+  // margin-top: 25%;
+  // margin-left: 15%;	
+  // top: 5%;
+	// right: 3.5%;
+
+  $inputSearch.css('width', '89%');
+  $inputSearch.css('float', 'right');
+  $inputSearch.css('margin-top', '0%');
+  $inputSearch.css('margin-left', '0%');
+  $imgSearch.css('margin-top', '1.1%');
+  $imgSearch.css('right', '1%');
+  $imgClose.css('margin-top', '1.1%');  
+  $imgClose.css('right', '2.5%');
+  $imglogooutside.css('position', 'relative');
+  $imglogooutside.css('width', '10%');
+  $imglogooutside.css('left', '5%');
+  $imglogooutside.css('margin-top', '1%');
+  $imglogooutside.css('float', 'left');
+  $recommend.css('display', 'block');
+  $recommendkey.css('display', 'block');
   $hotlink.css('display', 'none');
 }
 

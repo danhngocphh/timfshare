@@ -99,13 +99,13 @@ h1, h2, h3, h4, h5, h6 {
 .wrap-content ul {
 	padding-left: 10px;
 	padding-right: 10px;	
-	width: 55%;
+	width: 50%;
 	float: left;
-	margin-left: 1%;				
+	margin-left: 11%;				
 }
 .wrap-content li.total {
 	color: rgb(88, 88, 88);
-	margin-top: 20px;
+	/* margin-top: 10px; */
 }
 .wrap-content li.item {
 	margin-top: 25px;
@@ -126,7 +126,7 @@ h1, h2, h3, h4, h5, h6 {
 .wrap-recommend ul {
 	padding-left: 20px;
 	padding-right: 20px;
-	width: 40%;
+	width: 30%;
 	float: right;
 	/* margin-top: 2%; */
 }
@@ -170,10 +170,10 @@ h1, h2, h3, h4, h5, h6 {
 .wrap-recommendkey ul {
 	padding-left: 20px;
 	padding-right: 20px;
-	width: 40%;
+	width: 30%;
 	float: right;
 	/* margin-top: 2%; */
-	margin-left: 10%;	
+	/* margin-left: 10%;	 */
 }
 	
 
@@ -198,7 +198,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .wrap-recommendkey a {
-	color: #0025f5;
+	color: #497e99;
 	text-decoration: none;	
 }
 
@@ -229,7 +229,7 @@ img.logo {
 	display: none;
 	width: 55%;
 	float: left;
-	margin-left: 1%;	
+	margin-left: 11%;	
 }
 .page button {
 	background-color: #cd1417;
