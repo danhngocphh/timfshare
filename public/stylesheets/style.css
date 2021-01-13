@@ -27,6 +27,44 @@ h1, h2, h3, h4, h5, h6 {
 .wrap-search input {
 	position: relative;
 	box-sizing : border-box;
+	width: 70%;
+	display: inline-block;
+	padding: 8px 20px;
+	border-radius: 50px;
+	border: 2px solid rgb(88, 88, 88);
+	outline: none;
+	font-size: 15px;
+	font-family: 'Quicksand', sans-serif;
+	margin-top: 25%;
+	margin-left: 15%;	
+}
+
+
+.wrap-search img {
+	position: absolute;
+	top: 96%;
+	right: 16%;
+	transform: translate(0, -50%);
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	/* margin-top: 25px; */
+
+
+}
+.wrap-search img.close {
+	right: 17.5%;
+	display: none;
+}
+
+.wrap-search-inresult {
+	position: relative;
+	display: none;
+	
+}
+.wrap-search-inresult input {
+	position: relative;
+	box-sizing : border-box;
 	width: 89%;
 	float: right;
 	padding: 8px 20px;
@@ -35,22 +73,24 @@ h1, h2, h3, h4, h5, h6 {
 	outline: none;
 	font-size: 15px;
 	font-family: 'Quicksand', sans-serif;
-	margin-top: 5px;	
+	
 }
-.wrap-search img {
+
+
+.wrap-search-inresult img {
 	position: absolute;
-	top: 50%;
-	right: 15px;
+	top: 5%;
+	right: 3.5%;
 	transform: translate(0, -50%);
 	width: 20px;
 	height: 20px;
 	cursor: pointer;
-	margin-top: 25px;
+	/* margin-top: 25px; */
 
 
 }
-.wrap-search img.close {
-	right: 45px;
+.wrap-search-inresult img.close {
+	right: 17.5%;
 	display: none;
 }
 
@@ -59,9 +99,9 @@ h1, h2, h3, h4, h5, h6 {
 .wrap-content ul {
 	padding-left: 10px;
 	padding-right: 10px;	
-	width: 90%;
+	width: 55%;
 	float: left;
-	margin-left: 11%;			
+	margin-left: 1%;				
 }
 .wrap-content li.total {
 	color: rgb(88, 88, 88);
@@ -86,7 +126,7 @@ h1, h2, h3, h4, h5, h6 {
 .wrap-recommend ul {
 	padding-left: 20px;
 	padding-right: 20px;
-	width: 40%;
+	width: 15%;
 	float: right;
 	/* margin-top: 2%; */
 }
@@ -130,8 +170,8 @@ h1, h2, h3, h4, h5, h6 {
 .wrap-recommendkey ul {
 	padding-left: 20px;
 	padding-right: 20px;
-	width: 40%;
-	float: left;
+	width: 15%;
+	float: right;
 	/* margin-top: 2%; */
 	margin-left: 10%;	
 }
@@ -170,16 +210,16 @@ h1, h2, h3, h4, h5, h6 {
 	transform: translate(-50%, -50%);
 }
 img.cse {
-	display: none;
+	/* display:block; */
 	width: 30%;
 }
 
 img.logo {
-	display:block;
-	width: 10%;
-	float: left;
-	margin: 1px;
-
+	position: fixed;
+	left: 50%;
+	top: 35%;
+	transform: translate(-50%, -50%);
+	width: 25%;
 
 }
 
@@ -187,9 +227,9 @@ img.logo {
 	margin-top: 50px;
 	text-align: center;
 	display: none;
-	width: 90%;
+	width: 55%;
 	float: left;
-	margin-left: 11%;	
+	margin-left: 1%;	
 }
 .page button {
 	background-color: #cd1417;

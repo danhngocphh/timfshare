@@ -12,7 +12,9 @@
   const $Searchkey = $('#searchkey');
   const $imgClose = $('#img-close');
   const $imgCse = $('#img-cse');
+  const $imglogooutside = $('#logo-outside');
   const $hotlink = $('.hotlink');
+
   
 
   const updatePagination = () => {
@@ -67,31 +69,31 @@
       data = _data;
       console.log(data);
       $loader.css('display', 'none');
-    //   var i_link = 0;
-    //   var i_key = 0;
-    //   $recommend.html(`<li class="total">Top 10 Link </li>`);   
+      var i_link = 0;
+      var i_key = 0;
+      $recommend.html(`<li class="total">Top 10 Link </li>`);   
       
-    //   $.each(data.toplink, function(index, value) {
-    //     i_link++;
-    //     $recommend.append(`
-    //     <li class="item">#${i_link} 
-    //     <a href="#" onclick="getLink('${data.q}','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
-    // </li>
-    //     `); 
-    //   });
+      $.each(data.toplink, function(index, value) {
+        i_link++;
+        $recommend.append(`
+        <li class="item">#${i_link} 
+        <a href="#" onclick="getLink('${data.q}','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
+    </li>
+        `); 
+      });
 
       
 
-    //   $recommendkey.html(`<li class="total">Top 10 Key Search </li>`);   
+      $recommendkey.html(`<li class="total">Top 10 Key Search </li>`);   
       
-    //   $.each(data.topkey, function(index, value) {
-    //     i_key++;
-    //     $recommendkey.append(`
-    //     <li class="item">#${i_key} 
-    //     <a onclick="topkey1('${value[0]}')" class="title" id="searchkey">${value[0]}</a>
-    // </li>
-    //     `); 
-    //   });
+      $.each(data.topkey, function(index, value) {
+        i_key++;
+        $recommendkey.append(`
+        <li class="item">#${i_key} 
+        <a onclick="topkey1('${value[0]}')" class="title" id="searchkey">${value[0]}</a>
+    </li>
+        `); 
+      });
 
 
       
@@ -104,9 +106,7 @@
             
            <div class="snippet">${o.link}</div>
             <div class="snippet">${o.snippet}</div>
-            ${o.img ?
-              `<a href=${o.img}><img src="${o.img}" alt="image"></a>`
-              : ''}
+            
           </li>
         `);
       });
@@ -145,15 +145,37 @@
 
   const updateViewOnSearch = () => {
     $results.html('');
-    $recommend.html('');
-    $recommendkey.html('');
-    $pagination.css('display', 'none');
-    $loader.css('display', 'block');
-    $imgClose.css('display', 'block');
-    $imgCse.css('display', 'none');
-    $recommend.css('display', 'none');
-  $recommendkey.css('display', 'none');
-    $hotlink.css('display', 'none');
+  $recommend.html('');
+  $recommendkey.html('');
+  $pagination.css('display', 'none');
+  $loader.css('display', 'block');
+  $imgClose.css('display', 'block');
+  // $imgSearch.css('display', 'none');
+  // $imgClose.css('display', 'none');
+  // $imgCse.css('display', 'none');
+  // $imglogooutside.css('display', 'none');
+  // float: right;
+  // margin-top: 25%;
+  // margin-left: 15%;	
+  // top: 5%;
+	// right: 3.5%;
+
+  $inputSearch.css('width', '89%');
+  $inputSearch.css('float', 'right');
+  $inputSearch.css('margin-top', '0%');
+  $inputSearch.css('margin-left', '0%');
+  $imgSearch.css('margin-top', '1.1%');
+  $imgSearch.css('right', '1%');
+  $imgClose.css('margin-top', '1.1%');  
+  $imgClose.css('right', '2.5%');
+  $imglogooutside.css('position', 'relative');
+  $imglogooutside.css('width', '10%');
+  $imglogooutside.css('left', '5%');
+  $imglogooutside.css('margin-top', '1%');
+  $imglogooutside.css('float', 'left');
+  $recommend.css('display', 'block');
+  $recommendkey.css('display', 'block');
+  $hotlink.css('display', 'none');
   }
 
   $inputSearch.on('input', (e) => {
@@ -237,7 +259,12 @@ function getLink( value, link, title) {
   },
   function(data, status){
     //alert("Data: " + data + "\nStatus: " + status);
-    window.location.href = link;
+
+
+    window.open(
+      link,
+      '_blank' // <- This is what makes it open in a new window.
+    );
   }).fail(function() {
     alert( "loi ket noi toi server" );
   });
@@ -266,6 +293,8 @@ const updateViewOnSearch = () => {
   $loader.css('display', 'block');
   $imgClose.css('display', 'block');
   $imgCse.css('display', 'none');
+  $imglogooutside.css('display', 'none');
+  $inputSearch.css('display', 'none');
   $recommend.css('display', 'none');
   $recommendkey.css('display', 'none');
   $hotlink.css('display', 'none');
