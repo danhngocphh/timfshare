@@ -64,6 +64,7 @@ router.get('/', async function (req, res, next) {
       });
 
       await Values.aggregate([
+        { $match : { date : Date('2013-07-26T18:23:37.000Z') } },
         { $group: { _id: '$value', i_total: { $sum: 1 }}},
         { $project: { _id: 1, i_total: 1, title: 1 }},
         { $sort: { i_total: -1 } },
