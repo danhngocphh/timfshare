@@ -31,15 +31,19 @@ function autocomplete(inp, arr) {
                 
                 closeAllLists();
             });
-            b.addEventListener('keypress', function (e) {
-              if (e.key === 'Enter') {
-                topkey1(123);
-              }
-              closeAllLists();
-          });
+          
             a.appendChild(b);
           }
         }
+      }
+    );
+
+    inp.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        //console.log("Enter 2 handle");
+        topkey1(inp.value);
+      }
+      closeAllLists();
     });
     
     inp.addEventListener("keydown", function(e) {
@@ -57,7 +61,7 @@ function autocomplete(inp, arr) {
           addActive(x);
         } else if (e.keyCode == 13) {
           
-          e.preventDefault();
+          //e.preventDefault();
           if (currentFocus > -1) {
             
             if (x) x[currentFocus].click();

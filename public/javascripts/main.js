@@ -183,19 +183,25 @@
 
   $inputSearch.on('input', (e) => {
     if ($inputSearch.val() != '')
-      $imgClose.css('display', 'block');
+    {
+      $autocomplete.css('margin-top', '20px');
+  $autocomplete.css('width', '20%');
+  $imgClose.css('display', 'block');
+    }
+     
     else
       $imgClose.css('display', 'none');
   })
 
-  $inputSearch.on('keypress', (e) => {
-    if (e.which !== 13) return;
-    // only handle press enter key
-    const q = $inputSearch.val();
-    if (!q || q === '') return;
-    updateViewOnSearch();
-    cse(q);
-  })
+  // $inputSearch.on('keypress', (e) => {
+  //   if (e.which !== 13) return;
+  //   console.log("Enter handle");
+  //   // only handle press enter key
+  //   const q = $inputSearch.val();
+  //   if (!q || q === '') return;
+  //   updateViewOnSearch();
+  //   cse(q);
+  // })
 
   $imgSearch.click(() => {
     const q = $inputSearch.val();
@@ -271,7 +277,7 @@ function getLink( value, link, title) {
   }).fail(function() {
     alert( "loi ket noi toi server" );
   });
-
+};
   
   
   // request(options, function (error, response, body) {
@@ -279,7 +285,7 @@ function getLink( value, link, title) {
   //     console.log(body.id) // Print the shortened url.
   //   }
   // });
-}
+
 function getDate(){
   let today = new Date(Date.now());
   let date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
