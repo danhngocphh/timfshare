@@ -38,51 +38,51 @@ const customsearch = google.customsearch('v1');
 /* GET home page. */
 router.get('/', async function (req, res, next) {
 
-      var toplink = {};
-      var topkey = {};
+      // var toplink = {};
+      // var topkey = {};
       var keysearch = [];
 
 
-      await Links.aggregate([
-        { $group: { _id: '$link',title : { $first:  "$title" }, i_total: { $sum: 1 }}},
-        { $project: { _id: 1, i_total: 1, title: 1 }},
-        { $sort: { i_total: -1 } },
-        { $limit : 10 }
-      ]).
-      then(function (result) {
+      // await Links.aggregate([
+      //   { $group: { _id: '$link',title : { $first:  "$title" }, i_total: { $sum: 1 }}},
+      //   { $project: { _id: 1, i_total: 1, title: 1 }},
+      //   { $sort: { i_total: -1 } },
+      //   { $limit : 10 }
+      // ]).
+      // then(function (result) {
         
-        for (let i in result) {
+      //   for (let i in result) {
            
-                let val = result[i];    
+      //           let val = result[i];    
 
-                toplink[val["_id"]] = [val["_id"], val["i_total"],val["title"]];
+      //           toplink[val["_id"]] = [val["_id"], val["i_total"],val["title"]];
                 
                 
            
-        }
+      //   }
         
-      });
+      // });
 
-      await Values.aggregate([
-        { $match : { date : Date('2013-07-26T18:23:37.000Z') } },
-        { $group: { _id: '$value', i_total: { $sum: 1 }}},
-        { $project: { _id: 1, i_total: 1, title: 1 }},
-        { $sort: { i_total: -1 } },
-        { $limit : 10 }
-      ]).
-      then(function (result) {
+      // await Values.aggregate([
+      //   { $match : { value : { $gt:  Date('2021-01-18T18:23:37.000Z'), $lt: Date('2021-01-18T18:23:37.000Z')} } },
+      //   { $group: { _id: '$value', i_total: { $sum: 1 }}},
+      //   { $project: { _id: 1, i_total: 1, title: 1 }},
+      //   { $sort: { i_total: -1 } },
+      //   { $limit : 10 }
+      // ]).
+      // then(function (result) {
         
-        for (let i in result) {
+      //   for (let i in result) {
            
-                let val = result[i];    
+      //           let val = result[i];    
 
-                topkey[val["_id"]] = [val["_id"], val["i_total"]];
+      //           topkey[val["_id"]] = [val["_id"], val["i_total"]];
                 
                 
            
-        }
+      //   }
         
-      });
+      // });
 
       await Values.aggregate([
         { $group: { _id: '$value'}},
@@ -109,14 +109,73 @@ router.get('/', async function (req, res, next) {
 
 
 
-  res.render('index', { title: 'Fshare Search' , toplink : toplink, topkey: topkey, keysearch: keysearch });
+  res.render('index', { title: 'Fshare Search' ,keysearch: keysearch });
 });
 
 router.get('/search', (req, res, next) => {
 
 
-  const { q, start, num } = req.query;
-  console.log(q, start, num);
+  const { q, gettopkey,gettoplink, start, num } = req.query;
+  console.log(q,gettopkey, start, gettoplink, num);
+
+
+  switch (gettopkey) {
+    case null:
+      var dategte = new Date("2020-12-06T07:30:19.063Z");
+      var datelt = new  Date("2021-01-14T07:30:19.063Z");
+      break;
+    case 'all':
+      var dategte = new Date("2020-12-06T07:30:19.063Z");
+      var datelt = new  Date("2021-01-14T07:30:19.063Z");
+      break;
+    case "month":
+      var dategte = new Date("2021-01-01T07:30:19.063Z");
+      var datelt = new  Date("2021-01-31T07:30:19.063Z");
+      break;
+    case "week":
+      var dategte = new Date("2021-01-11T07:30:19.063Z");
+      var datelt = new  Date("2021-01-13T07:30:19.063Z");
+        break;
+    default:
+      var dategte = new Date("2020-12-06T07:30:19.063Z");
+      var datelt = new  Date("2021-01-14T07:30:19.063Z");
+  }
+
+
+  switch (gettoplink) {
+    case null:
+      var dategtelink = new Date("2020-12-06T07:30:19.063Z");
+      var dateltlink = new  Date("2021-01-14T07:30:19.063Z");
+      break;
+    case 'all':
+      var dategtelink = new Date("2020-12-06T07:30:19.063Z");
+      var dateltlink = new  Date("2021-01-14T07:30:19.063Z");
+      break;
+    case "month":
+      var dategtelink = new Date("2021-01-01T07:30:19.063Z");
+      var dateltlink = new  Date("2021-01-31T07:30:19.063Z");
+      break;
+    case "week":
+      var dategtelink = new Date("2021-01-11T07:30:19.063Z");
+      var dateltlink = new  Date("2021-01-13T07:30:19.063Z");
+        break;
+    default:
+      var dategtelink = new Date("2020-12-06T07:30:19.063Z");
+      var dateltlink = new  Date("2021-01-14T07:30:19.063Z");
+  }
+
+  // if(gettopkey == null || gettopkey == 'all'){
+  //   var dategte = new Date("2020-12-06T07:30:19.063Z");
+  //   var datelt = new  Date("2021-01-14T07:30:19.063Z");
+  // }else if(gettopkey == 'month'){
+  //   var dategte = new Date("2021-01-01T07:30:19.063Z");
+  //   var datelt = new  Date("2021-01-31T07:30:19.063Z");
+
+  // }else{
+  //   var dategte = new Date("2021-01-11T07:30:19.063Z");
+  //   var datelt = new  Date("2021-01-13T07:30:19.063Z");
+
+  // }
 
   customsearch.cse.list({
     auth: config.ggApiKey,
@@ -135,6 +194,7 @@ router.get('/search', (req, res, next) => {
 
 
       await Links.aggregate([
+        { $match : {date:  {$gte: dategtelink, $lt: dateltlink}}},
         { $group: { _id: '$link',title : { $first:  "$title" }, i_total: { $sum: 1 }}},
         { $project: { _id: 1, i_total: 1, title: 1 }},
         { $sort: { i_total: -1 } },
@@ -155,8 +215,9 @@ router.get('/search', (req, res, next) => {
       });
 
       await Values.aggregate([
-        { $group: { _id: '$value', i_total: { $sum: 1 }}},
-        { $project: { _id: 1, i_total: 1, title: 1 }},
+        { $match : {date:  {$gte: dategte, $lt: datelt}}},
+        { $group: { _id: '$value',date : { $first:  "$date" },  i_total: { $sum: 1 }}},
+        { $project: { _id: 1, i_total: 1, date: 1}},
         { $sort: { i_total: -1 } },
         { $limit : 10 }
       ]).
@@ -173,6 +234,8 @@ router.get('/search', (req, res, next) => {
         }
         
       });
+
+     
 
       // toplink.set("link", "123");
       
