@@ -117,28 +117,36 @@ router.get('/search', (req, res, next) => {
 
   const { q, gettopkey,gettoplink, start, num } = req.query;
   console.log(q,gettopkey, start, gettoplink, num);
+  var namekeylink = "";
+  var nametoplink = "";
 
 
   switch (gettopkey) {
     case null:
       var dategte = new Date("2020-12-06T07:30:19.063Z");
       var datelt = new  Date("2021-01-14T07:30:19.063Z");
+      namekeylink = "topkeyall";
+      
       break;
     case 'all':
       var dategte = new Date("2020-12-06T07:30:19.063Z");
       var datelt = new  Date("2021-01-14T07:30:19.063Z");
+      namekeylink = "topkeyall";
       break;
     case "month":
       var dategte = new Date("2021-01-01T07:30:19.063Z");
       var datelt = new  Date("2021-01-31T07:30:19.063Z");
+      namekeylink = "topkeymoth";
       break;
     case "week":
       var dategte = new Date("2021-01-11T07:30:19.063Z");
       var datelt = new  Date("2021-01-13T07:30:19.063Z");
+      namekeylink = "topkeyweek";
         break;
     default:
       var dategte = new Date("2020-12-06T07:30:19.063Z");
       var datelt = new  Date("2021-01-14T07:30:19.063Z");
+      namekeylink = "topkeyall";
   }
 
 
@@ -146,22 +154,27 @@ router.get('/search', (req, res, next) => {
     case null:
       var dategtelink = new Date("2020-12-06T07:30:19.063Z");
       var dateltlink = new  Date("2021-01-14T07:30:19.063Z");
+      nametoplink = "toplinkall";
       break;
     case 'all':
       var dategtelink = new Date("2020-12-06T07:30:19.063Z");
       var dateltlink = new  Date("2021-01-14T07:30:19.063Z");
+      nametoplink = "toplinkall";
       break;
     case "month":
       var dategtelink = new Date("2021-01-01T07:30:19.063Z");
       var dateltlink = new  Date("2021-01-31T07:30:19.063Z");
+      nametoplink = "toplinkmonth";
       break;
     case "week":
       var dategtelink = new Date("2021-01-11T07:30:19.063Z");
       var dateltlink = new  Date("2021-01-13T07:30:19.063Z");
+      nametoplink = "toplinkweek";
         break;
     default:
       var dategtelink = new Date("2020-12-06T07:30:19.063Z");
       var dateltlink = new  Date("2021-01-14T07:30:19.063Z");
+      nametoplink = "toplinkall";
   }
 
   // if(gettopkey == null || gettopkey == 'all'){
@@ -177,6 +190,7 @@ router.get('/search', (req, res, next) => {
 
   // }
 
+  // siterestrict
   customsearch.cse.list({
     auth: config.ggApiKey,
     cx: config.ggCx,
@@ -189,8 +203,11 @@ router.get('/search', (req, res, next) => {
       const page = (queries.request || [])[0] || {};
       const previousPage = (queries.previousPage || [])[0] || {};
       const nextPage = (queries.nextPage || [])[0] || {};
-      var toplink = {};
-      var topkey = {};
+      var toplink = [];
+      var topkey = [];
+      var topKeyStorageTmp = [];
+      var topLinkStorageTmp = [];
+
 
 
       await Links.aggregate([
@@ -202,15 +219,42 @@ router.get('/search', (req, res, next) => {
       ]).
       then(function (result) {
         
+        topLinkStorageTmp = topLinkStorageTmp.splice(0); 
         for (let i in result) {
+
+          
            
                 let val = result[i];    
 
-                toplink[val["_id"]] = [val["_id"], val["i_total"],val["title"]];
+                toplink[i] = [val["_id"], val["i_total"],val["title"]];
+                let posTmp = parseInt(i) + 1;
+                topLinkStorageTmp[parseInt(i)] = {'position' : posTmp, 'link': val["_id"], 'title': val["title"] , 'search_total' : val["i_total"]}
                 
                 
            
         }
+
+        // let dateT = new Date(Date.now());
+        // dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
+        // options = {
+        
+        //   uri: 'http://localhost:1239/toplinks',
+        //   method: 'POST',
+        //   json: {
+        //     "name": nametoplink,
+        //     "date": dateT,
+        //     "value": topLinkStorageTmp
+        //   }
+        // };
+
+        // request(options, function (error, response, body) {
+        //   if (!error && response.statusCode == 200) {
+        //     console.log(body.id) // Print the shortened url.
+        //   }
+        // });
+
+        
+        
         
       });
 
@@ -223,15 +267,37 @@ router.get('/search', (req, res, next) => {
       ]).
       then(function (result) {
         
+        topKeyStorageTmp = topKeyStorageTmp.splice(0); 
         for (let i in result) {
            
                 let val = result[i];    
 
-                topkey[val["_id"]] = [val["_id"], val["i_total"]];
-                
+                topkey[i] = [val["_id"], val["i_total"]];
+                let posTmp = parseInt(i) + 1;
+                topKeyStorageTmp[parseInt(i)] = {'position' : posTmp, 'keyword': val["_id"], 'search_total' : val["i_total"]}
                 
            
         }
+
+        // let dateT = new Date(Date.now());
+        // dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
+        // options = {
+        
+        //   uri: 'http://localhost:1239/toplinks',
+        //   method: 'POST',
+        //   json: {
+        //     "name": namekeylink,
+        //     "date": dateT,
+        //     "value": topKeyStorageTmp
+        //   }
+        // };
+
+        // request(options, function (error, response, body) {
+        //   if (!error && response.statusCode == 200) {
+        //     console.log(body.id) // Print the shortened url.
+        //   }
+        // });
+
         
       });
 
