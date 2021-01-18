@@ -72,25 +72,25 @@
       $loader.css('display', 'none');
       var i_link = 0;
       var i_key = 0;
-      $recommend.html(`<li class="total">Top 10 Link <a onclick="topkey1('${data.q}','all','week')" class="title" id="searchkey">Week </a><a onclick="topkey1('${data.q}','all','month')" class="title" id="searchkey">Month </a><a onclick="topkey1('${data.q}','all','all')" class="title" id="searchkey">All</a></li>`);   
+      $recommend.html(`<li class="total">Top 10 Link <a onclick="topkey1('${data.q}','all','week')" class="title" id="searchkey">Week </a><a onclick="topkey1('${data.q}','all','month')" class="title" id="searchkey">Month </a><a onclick="topkey1('${data.q}','all','year')" class="title" id="searchkey">Year </a><a onclick="topkey1('${data.q}','all','all')" class="title" id="searchkey">All</a></li>`);   
       
       $.each(data.toplink, function(index, value) {
         i_link++;
         $recommend.append(`
-        <li class="item">#${i_link} 
-        <a href="#" onclick="getLink('${data.q}','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
+        <li class="item">#${value[3]} 
+        <a target="_blank" href="${value[0]}" onclick="getLink('${data.q}','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
     </li>
         `); 
       });
 
       
 
-      $recommendkey.html(`<li class="total">Top 10 Key Search <a onclick="topkey1('${data.q}','week')" class="title" id="searchkey">Week </a><a onclick="topkey1('${data.q}','month')" class="title" id="searchkey">Month </a><a onclick="topkey1('${data.q}','all')" class="title" id="searchkey">All</a></li>`);   
+      $recommendkey.html(`<li class="total">Top 10 Key Search <a onclick="topkey1('${data.q}','week')" class="title" id="searchkey">Week </a><a onclick="topkey1('${data.q}','month')" class="title" id="searchkey">Month </a><a onclick="topkey1('${data.q}','year')" class="title" id="searchkey">Year </a><a onclick="topkey1('${data.q}','all')" class="title" id="searchkey">All</a></li>`);   
       
       $.each(data.topkey, function(index, value) {
         i_key++;
         $recommendkey.append(`
-        <li class="item">#${i_key} 
+        <li class="item">#${value[2]} 
         <a onclick="topkey1('${value[0]}','all')" class="title" id="searchkey">${value[0]}</a>
     </li>
         `); 
@@ -103,7 +103,7 @@
       data.items.map(o => {
         $results.append(`
           <li class="item">
-            <a href="#"  onclick="getLink('${data.q}','${o.link}','${o.title}')" class="title" id="vegar">${o.title}</a>
+            <a target="_blank" href="${o.link}"  onclick="getLink('${data.q}','${o.link}','${o.title}')" class="title" id="vegar">${o.title}</a>
             
            <div class="snippet">${o.link}</div>
             <div class="snippet">${o.snippet}</div>
@@ -270,10 +270,10 @@ function getLink( value, link, title) {
     //alert("Data: " + data + "\nStatus: " + status);
 
 
-    window.open(
-      link,
-      '_blank' // <- This is what makes it open in a new window.
-    );
+    // window.open(
+    //   link,
+    //   '_blank' // <- This is what makes it open in a new window.
+    // );
   }).fail(function() {
     alert( "loi ket noi toi server" );
   });

@@ -22,6 +22,13 @@ const schemaLink = mongoose.Schema({
 });
 const Links = mongoose.model('links', schemaLink);
 
+var schematopLink = mongoose.Schema({
+  name: String,
+  date: Date,
+  value: Object
+});
+var topLinks = mongoose.model('top', schematopLink);
+
 mongoose.connect("mongodb+srv://vegarnom:vegar8226@cluster0.eotns.mongodb.net/dbda1?retryWrites=true&w=majority",{useNewUrlParser: true});
 
 
@@ -136,11 +143,16 @@ router.get('/search', (req, res, next) => {
     case "month":
       var dategte = new Date("2021-01-01T07:30:19.063Z");
       var datelt = new  Date("2021-01-31T07:30:19.063Z");
-      namekeylink = "topkeymoth";
+      namekeylink = "topkeymonth";
       break;
+    case "year":
+      var dategte = new Date("2021-01-01T07:30:19.063Z");
+      var datelt = new  Date("2021-01-31T07:30:19.063Z");
+      namekeylink = "topkeyyear";
+        break;
     case "week":
-      var dategte = new Date("2021-01-11T07:30:19.063Z");
-      var datelt = new  Date("2021-01-13T07:30:19.063Z");
+      var dategte = new Date("2021-01-17T07:30:19.063Z");
+      var datelt = new  Date("2021-01-25T07:30:19.063Z");
       namekeylink = "topkeyweek";
         break;
     default:
@@ -167,9 +179,14 @@ router.get('/search', (req, res, next) => {
       nametoplink = "toplinkmonth";
       break;
     case "week":
-      var dategtelink = new Date("2021-01-11T07:30:19.063Z");
-      var dateltlink = new  Date("2021-01-13T07:30:19.063Z");
+      var dategtelink = new Date("2021-01-17T07:30:19.063Z");
+      var dateltlink = new  Date("2021-01-25T07:30:19.063Z");
       nametoplink = "toplinkweek";
+        break;
+    case "year":
+      var dategtelink = new Date("2020-12-06T07:30:19.063Z");
+      var dateltlink = new  Date("2021-12-06T07:30:19.063Z");
+      nametoplink = "toplinkyear";
         break;
     default:
       var dategtelink = new Date("2020-12-06T07:30:19.063Z");
@@ -210,29 +227,21 @@ router.get('/search', (req, res, next) => {
 
 
 
-      await Links.aggregate([
-        { $match : {date:  {$gte: dategtelink, $lt: dateltlink}}},
-        { $group: { _id: '$link',title : { $first:  "$title" }, i_total: { $sum: 1 }}},
-        { $project: { _id: 1, i_total: 1, title: 1 }},
-        { $sort: { i_total: -1 } },
-        { $limit : 10 }
-      ]).
+      await topLinks.findOne({name: namekeylink}, {}).
       then(function (result) {
-        
-        topLinkStorageTmp = topLinkStorageTmp.splice(0); 
-        for (let i in result) {
+  
+       
 
-          
-           
-                let val = result[i];    
+        for (let i in result.value) {
+     
+                  let val = result.value[i];    
+                  
+                  topkey[i] = [val.keyword, val.search_total, val.position, i];
+                 
+             
+          }
 
-                toplink[i] = [val["_id"], val["i_total"],val["title"]];
-                let posTmp = parseInt(i) + 1;
-                topLinkStorageTmp[parseInt(i)] = {'position' : posTmp, 'link': val["_id"], 'title': val["title"] , 'search_total' : val["i_total"]}
-                
-                
-           
-        }
+          selectionSortkey(topkey);
 
         // let dateT = new Date(Date.now());
         // dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
@@ -258,26 +267,23 @@ router.get('/search', (req, res, next) => {
         
       });
 
-      await Values.aggregate([
-        { $match : {date:  {$gte: dategte, $lt: datelt}}},
-        { $group: { _id: '$value',date : { $first:  "$date" },  i_total: { $sum: 1 }}},
-        { $project: { _id: 1, i_total: 1, date: 1}},
-        { $sort: { i_total: -1 } },
-        { $limit : 10 }
-      ]).
-      then(function (result) {
-        
-        topKeyStorageTmp = topKeyStorageTmp.splice(0); 
-        for (let i in result) {
-           
-                let val = result[i];    
 
-                topkey[i] = [val["_id"], val["i_total"]];
-                let posTmp = parseInt(i) + 1;
-                topKeyStorageTmp[parseInt(i)] = {'position' : posTmp, 'keyword': val["_id"], 'search_total' : val["i_total"]}
-                
-           
-        }
+      await topLinks.findOne({name: nametoplink}, {}).
+      then(function (result) {
+  
+ 
+
+        for (let i in result.value) {
+     
+                  let link = result.value[i];    
+                  
+                  toplink[i] = [link.link, link.search_total, link.title, link.position, i];
+                  // let posTmp = parseInt(i) + 1;
+                  // topLinkStorageTmp[parseInt(i)] = {'position' : posTmp, 'link': link.link, 'title': link.title , 'search_total' : link.search_total}
+             
+          }
+
+          selectionSort(toplink);
 
         // let dateT = new Date(Date.now());
         // dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
@@ -286,9 +292,9 @@ router.get('/search', (req, res, next) => {
         //   uri: 'http://localhost:1239/toplinks',
         //   method: 'POST',
         //   json: {
-        //     "name": namekeylink,
+        //     "name": "topkeyyear",
         //     "date": dateT,
-        //     "value": topKeyStorageTmp
+        //     "value": topLinkStorageTmp
         //   }
         // };
 
@@ -299,7 +305,52 @@ router.get('/search', (req, res, next) => {
         // });
 
         
+        
+        
       });
+
+      // await Values.aggregate([
+      //   { $match : {date:  {$gte: dategte, $lt: datelt}}},
+      //   { $group: { _id: '$value',date : { $first:  "$date" },  i_total: { $sum: 1 }}},
+      //   { $project: { _id: 1, i_total: 1, date: 1}},
+      //   { $sort: { i_total: -1 } },
+      //   { $limit : 10 }
+      // ]).
+      // then(function (result) {
+        
+      //   topKeyStorageTmp = topKeyStorageTmp.splice(0); 
+      //   for (let i in result) {
+           
+      //           let val = result[i];    
+
+      //           topkey[i] = [val["_id"], val["i_total"]];
+      //           let posTmp = parseInt(i) + 1;
+      //           topKeyStorageTmp[parseInt(i)] = {'position' : posTmp, 'keyword': val["_id"], 'search_total' : val["i_total"]}
+                
+           
+      //   }
+
+      //   // let dateT = new Date(Date.now());
+      //   // dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
+      //   // options = {
+        
+      //   //   uri: 'http://localhost:1239/toplinks',
+      //   //   method: 'POST',
+      //   //   json: {
+      //   //     "name": namekeylink,
+      //   //     "date": dateT,
+      //   //     "value": topKeyStorageTmp
+      //   //   }
+      //   // };
+
+      //   // request(options, function (error, response, body) {
+      //   //   if (!error && response.statusCode == 200) {
+      //   //     console.log(body.id) // Print the shortened url.
+      //   //   }
+      //   // });
+
+        
+      // });
 
      
 
@@ -353,6 +404,34 @@ router.get('/search', (req, res, next) => {
       res.status(500).send(err);
     });
 })
+
+function selectionSort(array){
+  for(let i = 0; i < array.length - 1; i++){
+    let idmin = i;
+    for(let j = i + 1; j < array.length; j++){
+      if(array[j][3] < array[idmin][3]) idmin = j;
+    }
+ 
+    // swap
+    let t = array[i];
+    array[i] = array[idmin];
+    array[idmin] = t; 
+  }
+ }
+
+ function selectionSortkey(array){
+  for(let i = 0; i < array.length - 1; i++){
+    let idmin = i;
+    for(let j = i + 1; j < array.length; j++){
+      if(array[j][2] < array[idmin][2]) idmin = j;
+    }
+ 
+    // swap
+    let t = array[i];
+    array[i] = array[idmin];
+    array[idmin] = t; 
+  }
+ }
 
 
 module.exports = router;
