@@ -123,6 +123,10 @@ h1, h2, h3, h4, h5, h6 {
 	height: 90px;
 }
 
+.wrap-content a:hover {
+	text-decoration: underline;
+  }
+
 .wrap-recommend ul {
 	padding-left: 20px;
 	padding-right: 20px;
@@ -144,6 +148,7 @@ h1, h2, h3, h4, h5, h6 {
 	float: right;
 	width: 89%;
 	
+	
 }
 
 .wrap-recommend li.item {
@@ -164,8 +169,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .wrap-recommend a {
 	color: #497e99;
-	text-decoration: none;	
+	text-decoration: none;
 }
+
+.wrap-recommend a:hover {
+	text-decoration: underline;
+  }
 
 .wrap-recommendkey ul {
 	padding-left: 20px;
@@ -201,6 +210,10 @@ h1, h2, h3, h4, h5, h6 {
 	color: #497e99;
 	text-decoration: none;	
 }
+
+.wrap-recommendkey a:hover {
+	text-decoration: underline;
+  }
 
 .loader, img.cse {
 	position: fixed;
