@@ -41,7 +41,6 @@ module.exports = {
         let title = '123';
         let values = {};
         let links = {};
-        
 
         await Values.count({}, function( err, count){
                     totalkey = count;
