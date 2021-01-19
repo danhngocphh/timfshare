@@ -15,6 +15,7 @@
   const $imglogooutside = $('#logo-outside');
   const $hotlink = $('.hotlink');
   const $autocomplete = $('#input-searchautocomplete-list');
+  var data;
 
   
 
@@ -137,7 +138,7 @@
 
 
 
-  let data;
+  // let data;
   
 
 
@@ -219,12 +220,12 @@
 
   $btnNext.click(() => {
     updateViewOnSearch();
-    cse(data.q, data.nextPage);
+    cse(data.q,'all','all', data.nextPage);
   });
 
   $btnPrev.click(() => {
     updateViewOnSearch();
-    cse(data.q, data.previousPage);
+    cse(data.q,'all','all', data.previousPage);
   })
 
   $imgClose.click(() => {
@@ -331,11 +332,11 @@ const updateViewOnSearch = () => {
   $hotlink.css('display', 'none');
 }
 
-function topkey1(q, gettopkey, gettoplink) {
+function topkey1(q ,gettopkey, gettoplink,start) {
     
     
   updateViewOnSearch();
-  cse(q,gettopkey,gettoplink);
+  cse(q, gettopkey,gettoplink,start);
   document.getElementById("input-search").value = q;
 
   
