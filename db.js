@@ -24,8 +24,7 @@ module.exports = {
     connectDB : function() {
         mongoose.connect("mongodb+srv://vegarnom:vegar8226@cluster0.eotns.mongodb.net/dbda1?retryWrites=true&w=majority  ");
         // mongoose.connect("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false");
-
-    },
+},
 
     updateGauge : function() {
         Values.count(function(err, result) {
