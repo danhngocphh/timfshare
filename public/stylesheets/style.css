@@ -27,15 +27,17 @@ h1, h2, h3, h4, h5, h6 {
 .wrap-search input {
 	position: relative;
 	box-sizing : border-box;
-	width: 63%;
+	width: 70%;
+	z-index: 0;
 	display: inline-block;
-	padding: 8px 20px;
+	padding: 8px 130px;
 	border-radius: 50px;
 	border: 2px solid rgb(88, 88, 88);
 	outline: none;
 	font-size: 15px;
 	font-family: 'Quicksand', sans-serif;
 	margin-top: 25%;
+	margin-left: 15%;
 }
 
 
@@ -281,10 +283,11 @@ img.logo {
   
   .dropdown {
 	display: inline-block;
-	position: relative;
+	position: absolute;
+	z-index: 1;
 	overflow: hidden;
-	height: 38px;
-	width: 7%;
+	height: 39px;
+	width: 6%;
 	background: #ffffff;
 	/* padding: 8px 20px; */
 	border-radius: 50px;
