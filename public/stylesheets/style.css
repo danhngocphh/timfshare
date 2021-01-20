@@ -27,23 +27,21 @@ h1, h2, h3, h4, h5, h6 {
 .wrap-search input {
 	position: relative;
 	box-sizing : border-box;
-	width: 70%;
+	width: 63%;
 	display: inline-block;
 	padding: 8px 20px;
 	border-radius: 50px;
 	border: 2px solid rgb(88, 88, 88);
-	outline: none;
-	font-size: 15px;
+	border-radius: 3px;
 	font-family: 'Quicksand', sans-serif;
 	margin-top: 25%;
-	margin-left: 15%;	
 }
 
 
 .wrap-search img {
 	position: absolute;
-	top: 96%;
-	right: 16%;
+	top: 96.7%;
+	right: 15%;
 	transform: translate(0, -50%);
 	width: 20px;
 	height: 20px;
@@ -213,7 +211,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .wrap-recommendkey a:hover {
 	text-decoration: underline;
-  }
+}
+
+.margrin-top-cus{
+	margin-top: 40px;
+}
 
 .loader, img.cse {
 	position: fixed;
@@ -270,3 +272,143 @@ img.logo {
 		width: 96%
 	}
 }
+
+.dropdown {
+	margin: 0 20px;
+	vertical-align: top;
+  }
+  
+  .dropdown {
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	height: 35px;
+	width: 7%;
+	background: #ffffff;
+	border-radius: 50px;
+	border: 2px solid rgb(88, 88, 88);
+	border-radius: 3px;
+	/* background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+	background-image: -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+	background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+	background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.06));
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08); */
+	margin-top: 25%;
+	margin-left: 15%;
+  }
+  
+  .dropdown:before, .dropdown:after {
+	content: '';
+	position: absolute;
+	z-index: 2;
+	top: 9px;
+	right: 10px;
+	width: 0;
+	height: 0;
+	border: 4px dashed;
+	border-color: #888888 transparent;
+	pointer-events: none;
+  }
+  
+  .dropdown:before {
+	border-bottom-style: solid;
+	border-top: none;
+  }
+  
+  .dropdown:after {
+	margin-top: 7px;
+	border-top-style: solid;
+	border-bottom: none;
+  }
+  
+  .dropdown-select {
+	position: relative;
+	width: 130%;
+	margin: 0;
+	padding: 6px 8px 6px 10px;
+	height: 35px;
+	line-height: 14px;
+	font-size: 12px;
+	color: #62717a;
+	text-shadow: 0 1px white;
+	background: #ffffff; /* Fallback for IE 8 */
+	background: rgba(0, 0, 0, 0) !important; /* "transparent" doesn't work with Opera */
+	border: 0;
+	border-radius: 0;
+	-webkit-appearance: none;
+  }
+  
+  .dropdown-select:focus {
+	z-index: 3;
+	width: 100%;
+	color: #394349;
+	outline: 2px solid #49aff2;
+	outline: 2px solid -webkit-focus-ring-color;
+	outline-offset: -2px;
+  }
+  
+  .dropdown-select > option {
+	margin: 3px;
+	padding: 6px 8px;
+	text-shadow: none;
+	background: #f2f2f2;
+	border-radius: 3px;
+	cursor: pointer;
+  }
+  
+  /* Fix for IE 8 putting the arrows behind the select element. */
+  
+  .lt-ie9 .dropdown {
+	z-index: 1;
+  }
+  
+  .lt-ie9 .dropdown-select {
+	z-index: -1;
+  }
+  
+  .lt-ie9 .dropdown-select:focus {
+	z-index: 3;
+  }
+  
+  /* Dirty fix for Firefox adding padding where it shouldn't. */
+  
+  @-moz-document url-prefix() {
+	.dropdown-select {
+	  padding-left: 6px;
+	}
+  }
+  
+  .dropdown-dark {
+	background: #444;
+	border-color: #111111 #0a0a0a black;
+	background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.4));
+	background-image: -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.4));
+	background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.4));
+	background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.4));
+	-webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dropdown-dark:before {
+	border-bottom-color: rgb(247, 247, 247);
+  }
+  
+  .dropdown-dark:after {
+	border-top-color: rgb(255, 255, 255);
+  }
+  
+  .dropdown-dark .dropdown-select {
+	color: #aaa;
+	text-shadow: 0 1px black;
+	background: #444;  /* Fallback for IE 8 */
+  }
+  
+  .dropdown-dark .dropdown-select:focus {
+	color: #ccc;
+  }
+  
+  .dropdown-dark .dropdown-select > option {
+	background: #444;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.4);
+  }

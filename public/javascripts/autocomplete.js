@@ -41,7 +41,9 @@ function autocomplete(inp, arr) {
     inp.addEventListener('keypress', function (e) {
       if (e.key === 'Enter') {
         //console.log("Enter 2 handle");
-        topkey1(inp.value);
+        const q = $domainvalue.val()+" "+$inputSearch.val();
+          updateViewOnSearch();
+          cse(q);
       }
       closeAllLists();
     });
@@ -66,6 +68,8 @@ function autocomplete(inp, arr) {
             
             if (x) x[currentFocus].click();
           }
+          
+          
         }
     });
     function addActive(x) {

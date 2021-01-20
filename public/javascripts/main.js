@@ -1,6 +1,7 @@
 // var request = require('request');
-
   const $inputSearch = $('#input-search');
+  const $domainvalue = $('#cusSelectboxValue');
+  const $domain = $('#cusSelectbox');
   const $results = $('#results');
   const $recommend = $('#recommend');
   const $recommendkey = $('#recommendkey');
@@ -15,6 +16,7 @@
   const $imglogooutside = $('#logo-outside');
   const $hotlink = $('.hotlink');
   const $autocomplete = $('#input-searchautocomplete-list');
+  var currentPage = 'home';
   var data;
 
   
@@ -146,6 +148,7 @@
 
 
   const updateViewOnSearch = () => {
+    currentPage = 'result-page';
     $results.html('');
   $recommend.html('');
   $recommendkey.html('');
@@ -162,10 +165,14 @@
   // top: 5%;
 	// right: 3.5%;
 
-  $inputSearch.css('width', '89%');
+  $inputSearch.css('width', '80%');
   $inputSearch.css('float', 'right');
   $inputSearch.css('margin-top', '0%');
   $inputSearch.css('margin-left', '0%');
+  $domain.css('margin-top', '0%');
+  $domain.css('margin-left', '0%');
+  $domain.css('float', 'right');
+  
   $imgSearch.css('margin-top', '1.1%');
   $imgSearch.css('right', '1%');
   $imgClose.css('margin-top', '1.1%');  
@@ -174,8 +181,13 @@
   $imglogooutside.css('width', '10%');
   $imglogooutside.css('left', '5%');
   $imglogooutside.css('margin-top', '1%');
-  $autocomplete.css('margin-top', '20px');
-  $autocomplete.css('width', '20%');
+  // $inputSearch.on('keyup', function(){
+  //   setTimeout(function(){
+  //     $autocomplete.css('margin-top', '20px');
+  //     $autocomplete.css('width', '20%');
+  //   },250);
+  // });
+  
   $imglogooutside.css('float', 'left');
   $recommend.css('display', 'block');
   $recommendkey.css('display', 'block');
@@ -185,9 +197,9 @@
   $inputSearch.on('input', (e) => {
     if ($inputSearch.val() != '')
     {
-      $autocomplete.css('margin-top', '20px');
-  $autocomplete.css('width', '20%');
-  $imgClose.css('display', 'block');
+      // $autocomplete.css('margin-top', '20px');
+      // $autocomplete.css('width', '20%');
+      $imgClose.css('display', 'block');
     }
      
     else
@@ -198,25 +210,27 @@
   //   if (e.which !== 13) return;
   //   console.log("Enter handle");
   //   // only handle press enter key
-  //   const q = $inputSearch.val();
+  //   const q = $domain.val()+" "+$inputSearch.val();
   //   if (!q || q === '') return;
   //   updateViewOnSearch();
   //   cse(q);
   // })
 
   $imgSearch.click(() => {
-    const q = $inputSearch.val();
+    
+    const q = $domainvalue.val()+" "+$inputSearch.val();
+
     if (!q || q === '') return;
     updateViewOnSearch();
     cse(q);
   })
 
-  $Searchkey.click(() => {
-    const q = $inputSearch.val();
-    if (!q || q === '') return;
-    updateViewOnSearch();
-    cse(q);
-  })
+  // $Searchkey.click(() => {
+  //   const q = $domain.val()+"Searchkey "+$inputSearch.val();
+  //   if (!q || q === '') return;
+  //   updateViewOnSearch();
+  //   cse(q);
+  // })
 
   $btnNext.click(() => {
     updateViewOnSearch();
@@ -234,8 +248,35 @@
     $imgClose.css('display', 'none');
   })
 
+//   $inputSearch.on('keypress',function(e) {
+//     if(e.which == 13) {
+//       const q = $domain.val()+" "+$inputSearch.val();
+
+//       if (!q || q === '') return;
+//       updateViewOnSearch();
+//       cse(q);
+//     }
+// });
+
+  $inputSearch.keyup(function(){
+   
+      console.log("__keyup");
+      console.log("__keyup-curr-page", currentPage);
+      if(currentPage == 'result-page'){
+        // $('#input-searchautocomplete-list').addClass('margrin-top-cus');
+        // $autocomplete.css('margin-top', '20px');
+        // $autocomplete.css('width', '20%');
+
+      }
+    
+  });
+
   function onInit() {
-    const q = $inputSearch.val();
+
+    var q = $inputSearch.val();
+
+
+    
     if (q && q != '') {
       updateViewOnSearch();
       cse(q);
@@ -296,6 +337,7 @@ function getDate(){
 }
 
 const updateViewOnSearch = () => {
+  currentPage = 'result-page';
   $results.html('');
   $recommend.html('');
   $recommendkey.html('');
@@ -312,18 +354,21 @@ const updateViewOnSearch = () => {
   // top: 5%;
 	// right: 3.5%;
 
-  $inputSearch.css('width', '89%');
+  $inputSearch.css('width', '79%');
   $inputSearch.css('float', 'right');
-  $inputSearch.css('margin-top', '0%');
+  $inputSearch.css('margin-top', '0.2%');
   $inputSearch.css('margin-left', '0%');
-  $imgSearch.css('margin-top', '1.1%');
+  $domain.css('margin-top', '0.2%');
+  $domain.css('margin-left', '12%');
+  // $domain.css('float', 'right');
+  $imgSearch.css('margin-top', '-0.8%');
   $imgSearch.css('right', '1%');
-  $imgClose.css('margin-top', '1.1%');  
+  $imgClose.css('margin-top', '-0.8%');  
   $imgClose.css('right', '2.5%');
   $imglogooutside.css('position', 'relative');
   $imglogooutside.css('width', '10%');
   $imglogooutside.css('left', '5%');
-  $imglogooutside.css('margin-top', '1%');
+  $imglogooutside.css('margin-top', '-0.7%');
   $imglogooutside.css('float', 'left');
   $autocomplete.css('margin-top', '20px');
   $autocomplete.css('width', '20%');

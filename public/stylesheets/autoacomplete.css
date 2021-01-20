@@ -39,7 +39,7 @@
     z-index: 99;
     /*position the autocomplete items to be the same width as the container:*/
     top: 100%;
-    left: 16%;
+    left: 25%;
     right: 16%;
   }
   
