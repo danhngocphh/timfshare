@@ -27,7 +27,8 @@ function autocomplete(inp, arr) {
             b.addEventListener("click", function(e) {
                
                 inp.value = this.getElementsByTagName("input")[0].value;
-                topkey1(inp.value);
+                updateViewOnSearch();
+                // cse($domainvalue.val()+" "+inp.value);
                 
                 closeAllLists();
             });

@@ -75,7 +75,7 @@
       $loader.css('display', 'none');
       var i_link = 0;
       var i_key = 0;
-      $recommend.html(`<li class="total">Top 10 Link <a onclick="topkey1('${data.q}','all','week')" class="title" id="searchkey">Week </a><a onclick="topkey1('${data.q}','all','month')" class="title" id="searchkey">Month </a><a onclick="topkey1('${data.q}','all','year')" class="title" id="searchkey">Year </a><a onclick="topkey1('${data.q}','all','all')" class="title" id="searchkey">All</a></li>`);   
+      $recommend.html(`<li class="total">Top 10 Link | <a onclick="topkey1('${data.q}','all','week')" class="title" id="searchkey">Week</a> | <a onclick="topkey1('${data.q}','all','month')" class="title" id="searchkey">Month</a>	| <a onclick="topkey1('${data.q}','all','year')" class="title" id="searchkey">Year</a>	| <a onclick="topkey1('${data.q}','all','all')" class="title" id="searchkey">All</a></li>`);   
       
       $.each(data.toplink, function(index, value) {
         i_link++;
@@ -88,7 +88,7 @@
 
       
 
-      $recommendkey.html(`<li class="total">Top 10 Key Search <a onclick="topkey1('${data.q}','week')" class="title" id="searchkey">Week </a><a onclick="topkey1('${data.q}','month')" class="title" id="searchkey">Month </a><a onclick="topkey1('${data.q}','year')" class="title" id="searchkey">Year </a><a onclick="topkey1('${data.q}','all')" class="title" id="searchkey">All</a></li>`);   
+      $recommendkey.html(`<li class="total">Top 10 Key Search | <a onclick="topkey1('${data.q}','week')" class="title" id="searchkey">Week</a>	| <a onclick="topkey1('${data.q}','month')" class="title" id="searchkey">Month</a>	| <a onclick="topkey1('${data.q}','year')" class="title" id="searchkey">Year</a>	| <a onclick="topkey1('${data.q}','all')" class="title" id="searchkey">All</a></li>`);   
       
       $.each(data.topkey, function(index, value) {
         i_key++;
@@ -256,12 +256,17 @@
    
       console.log("__keyup");
       console.log("__keyup-curr-page", currentPage);
-      if(currentPage == 'result-page'){
-        // $('#input-searchautocomplete-list').addClass('margrin-top-cus');
-        // $autocomplete.css('margin-top', '20px');
-        // $autocomplete.css('width', '20%');
-
-      }
+      // setTimeout(function(){ 
+        
+        if(currentPage == 'result-page'){
+          $('#input-searchautocomplete-list').addClass('margrin-top-cus');
+          // $autocomplete.css('margin-top', '20px');
+          // $autocomplete.css('width', '20%');
+  
+        }
+      
+      // }, 200);
+     
     
   });
 
