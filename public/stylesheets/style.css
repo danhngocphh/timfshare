@@ -32,7 +32,8 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 8px 20px;
 	border-radius: 50px;
 	border: 2px solid rgb(88, 88, 88);
-	border-radius: 3px;
+	outline: none;
+	font-size: 15px;
 	font-family: 'Quicksand', sans-serif;
 	margin-top: 25%;
 }
@@ -40,8 +41,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .wrap-search img {
 	position: absolute;
-	top: 96.7%;
-	right: 15%;
+	top: 96%;
+	right: 16%;
 	transform: translate(0, -50%);
 	width: 20px;
 	height: 20px;
@@ -282,12 +283,14 @@ img.logo {
 	display: inline-block;
 	position: relative;
 	overflow: hidden;
-	height: 35px;
+	height: 38px;
 	width: 7%;
 	background: #ffffff;
+	/* padding: 8px 20px; */
 	border-radius: 50px;
 	border: 2px solid rgb(88, 88, 88);
-	border-radius: 3px;
+	outline: none;
+	font-size: 15px;
 	/* background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
 	background-image: -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
 	background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
@@ -327,7 +330,7 @@ img.logo {
 	width: 130%;
 	margin: 0;
 	padding: 6px 8px 6px 10px;
-	height: 35px;
+	height: 38px;
 	line-height: 14px;
 	font-size: 12px;
 	color: #62717a;
