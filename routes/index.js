@@ -223,7 +223,7 @@ router.get('/search', (req, res, next) => {
   // }
 
   // siterestrict
-  customsearch.cse.list({
+  customsearch.cse.siterestrict.list({
     auth: config.ggApiKey,
     cx: config.ggCx,
     q, start, num
@@ -231,10 +231,19 @@ router.get('/search', (req, res, next) => {
     .then(result => result.data)
     .then(async (result) => {
 
-
+      var { queries, items, searchInformation } = result;
       var itemsfinal = [];
       var itemsfshare = [];
       // var itemsfshare2 = [];
+      const page = (queries.request || [])[0] || {};
+      const previousPage = (queries.previousPage || [])[0] || {};
+      const nextPage = (queries.nextPage || [])[0] || {};
+      var toplink = [];
+      var topkey = [];
+      var topKeyStorageTmp = [];
+      var topLinkStorageTmp = [];
+
+     
 
       const datas = await requestPromise('https://thuvienhd.com/?feed=rss&search=' + q);
 
@@ -242,7 +251,9 @@ router.get('/search', (req, res, next) => {
 
       if(result11.rss.channel.item)
       {
-        itemsfshare.push(...result11.rss.channel.item);
+        if(page.startIndex==1)
+        {
+          itemsfshare.push(...result11.rss.channel.item);
         let itemstest = itemsfshare.map(o => ({
 
 
@@ -255,6 +266,9 @@ router.get('/search', (req, res, next) => {
         console.log(itemstest)
 
           itemsfinal.push(...itemstest);
+
+        }
+        
 
       }
       
@@ -294,7 +308,7 @@ router.get('/search', (req, res, next) => {
       //   console.log(itemsfinal);
       // });
 
-      var { queries, items, searchInformation } = result;
+      
 
       // itemsfinal = [
       //   {
@@ -320,13 +334,7 @@ router.get('/search', (req, res, next) => {
 
       // console.log(itemsfinal);
 
-      const page = (queries.request || [])[0] || {};
-      const previousPage = (queries.previousPage || [])[0] || {};
-      const nextPage = (queries.nextPage || [])[0] || {};
-      var toplink = [];
-      var topkey = [];
-      var topKeyStorageTmp = [];
-      var topLinkStorageTmp = [];
+      
 
 
 
