@@ -149,43 +149,43 @@
 
   const updateViewOnSearch = () => {
     currentPage = 'result-page';
-  $results.html('');
-  $recommend.html('');
-  $recommendkey.html('');
-  $pagination.css('display', 'none');
-  $loader.css('display', 'block');
-  $imgClose.css('display', 'block');
-  // $imgSearch.css('display', 'none');
-  // $imgClose.css('display', 'none');
-  // $imgCse.css('display', 'none');
-  // $imglogooutside.css('display', 'none');
-  // float: right;
-  // margin-top: 25%;
-  // margin-left: 15%;	
-  // top: 5%;
-	// right: 3.5%;
-
-  $inputSearch.css('width', '79%');
-  $inputSearch.css('float', 'right');
-  $inputSearch.css('margin-top', '0.2%');
-  $inputSearch.css('margin-left', '0%');
-  $domain.css('margin-top', '0.2%');
-  $domain.css('margin-left', '12%');
-  // $domain.css('float', 'right');
-  $imgSearch.css('margin-top', '-0.8%');
-  $imgSearch.css('right', '1%');
-  $imgClose.css('margin-top', '-0.8%');  
-  $imgClose.css('right', '2.5%');
-  $imglogooutside.css('position', 'relative');
-  $imglogooutside.css('width', '10%');
-  $imglogooutside.css('left', '5%');
-  $imglogooutside.css('margin-top', '-0.7%');
-  $imglogooutside.css('float', 'left');
-  $autocomplete.css('margin-top', '20px');
-  $autocomplete.css('width', '20%');
-  $recommend.css('display', 'block');
-  $recommendkey.css('display', 'block');
-  $hotlink.css('display', 'none');
+    $results.html('');
+    $recommend.html('');
+    $recommendkey.html('');
+    $pagination.css('display', 'none');
+    $loader.css('display', 'block');
+    $imgClose.css('display', 'block');
+    // $imgSearch.css('display', 'none');
+    // $imgClose.css('display', 'none');
+    // $imgCse.css('display', 'none');
+    // $imglogooutside.css('display', 'none');
+    // float: right;
+    // margin-top: 25%;
+    // margin-left: 15%;	
+    // top: 5%;
+    // right: 3.5%;
+  
+    $inputSearch.css('width', '88.5%');
+    $inputSearch.css('float', 'right');
+    $inputSearch.css('margin-top', '0.2%');
+    $inputSearch.css('margin-left', '0%');
+    $domain.css('margin-top', '0.2%');
+    $domain.css('margin-left', '11.5%');
+    // $domain.css('float', 'right');
+    $imgSearch.css('margin-top', '1.2%');
+    $imgSearch.css('right', '1%');
+    $imgClose.css('margin-top', '1.2%');  
+    $imgClose.css('right', '2.5%');
+    $imglogooutside.css('position', 'relative');
+    $imglogooutside.css('width', '10%');
+    $imglogooutside.css('left', '5%');
+    $imglogooutside.css('margin-top', '1.4%');
+    $imglogooutside.css('float', 'left');
+    $autocomplete.css('margin-top', '20px');
+    $autocomplete.css('width', '20%');
+    $recommend.css('display', 'block');
+    $recommendkey.css('display', 'block');
+    $hotlink.css('display', 'none');
   }
 
   $inputSearch.on('input', (e) => {
@@ -278,7 +278,7 @@
     
     if (q && q != '') {
       updateViewOnSearch();
-      cse(q);
+      cse(q);x
     }
     // top("123");
   }

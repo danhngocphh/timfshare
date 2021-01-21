@@ -14,13 +14,15 @@
     "dotenv": "^5.0.1",
     "ejs": "~2.5.7",
     "express": "^4.17.1",
-    "googleapis": "^31.0.2",
+    "googleapis": "^67.0.0",
+    "jquery": "^3.5.1",
     "mongoose": "^5.11.8",
     "morgan": "^1.9.1",
     "node-statsd": "^0.1.1",
     "nodemon": "^2.0.6",
     "request": "^2.88.2",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
