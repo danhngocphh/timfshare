@@ -19,6 +19,10 @@ ul {
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 900;
 }
+.top-detail{
+	margin-left: 40%;
+	margin-top: 0.5%;
+}
 
 .wrap-search {
 	position: relative;
@@ -43,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .wrap-search img {
 	position: absolute;
-	top: 96%;
+	top: 95%;
 	right: 16%;
 	transform: translate(0, -50%);
 	width: 20px;
@@ -215,6 +219,99 @@ h1, h2, h3, h4, h5, h6 {
 .wrap-recommendkey a:hover {
 	text-decoration: underline;
 }
+
+.wrap-recommendkey-out {
+	
+	display: none;
+	/* margin-top: 2%; */
+	/* margin-left: 10%;	 */
+}
+
+.wrap-recommendkey-out ul {
+	padding-left: 20px;
+	padding-right: 20px;
+	width: 40%;
+	float: left;
+
+	/* margin-top: 2%; */
+	margin-left: 11%;	
+}
+	
+
+.wrap-recommendkey-out li.total {
+	color: rgb(88, 88, 88);
+	margin-top: 20px;
+}
+.wrap-recommendkey-out li.item {
+	margin-top: 25px;
+	
+}
+.wrap-recommendkey-out li.item a.title {
+	font-weight: 900;
+}
+.wrap-recommendkey-out li.item div.snippet {
+	margin-top: 5px;
+	margin-bottom: 15px;
+}
+.wrap-recommendkey-out li.item img {
+	width: 90px;
+	height: 90px;
+}
+
+.wrap-recommendkey-out a {
+	color: #497e99;
+	text-decoration: none;	
+}
+
+.wrap-recommendkey-out a:hover {
+	text-decoration: underline;
+}
+
+.wrap-recommend-out {
+	display: none;
+	/* margin-top: 2%; */
+	/* margin-left: 10%;	 */
+}
+
+.wrap-recommend-out ul {
+	padding-left: 20px;
+	padding-right: 20px;
+	width: 40%;
+	float: left;
+	margin-top: -1%;
+	/* margin-left: 51%;	 */
+}
+	
+
+.wrap-recommend-out li.total {
+	color: rgb(88, 88, 88);
+	margin-top: 20px;
+}
+.wrap-recommend-out li.item {
+	margin-top: 25px;
+	
+}
+.wrap-recommend-out li.item a.title {
+	font-weight: 900;
+}
+.wrap-recommend-out li.item div.snippet {
+	margin-top: 5px;
+	margin-bottom: 15px;
+}
+.wrap-recommend-out li.item img {
+	width: 90px;
+	height: 90px;
+}
+
+.wrap-recommend-out a {
+	color: #497e99;
+	text-decoration: none;	
+}
+
+.wrap-recommend-out a:hover {
+	text-decoration: underline;
+}
+
 
 .margrin-top-cus{
 	margin-top: 40px;

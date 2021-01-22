@@ -5,6 +5,8 @@
   const $results = $('#results');
   const $recommend = $('#recommend');
   const $recommendkey = $('#recommendkey');
+  const $tablerecommend = $('.wrap-recommend-out');
+  const $tablerecommendkey = $('.wrap-recommendkey-out');
   const $loader = $('#loader');
   const $btnPrev = $('#btn-prev');
   const $btnNext = $('#btn-next');
@@ -14,7 +16,7 @@
   const $imgClose = $('#img-close');
   const $imgCse = $('#img-cse');
   const $imglogooutside = $('#logo-outside');
-  const $hotlink = $('.hotlink');
+  const $hotlink = $('.top-detail');
   const $autocomplete = $('#input-searchautocomplete-list');
   var currentPage = 'home';
   var data;
@@ -75,7 +77,7 @@
       $loader.css('display', 'none');
       var i_link = 0;
       var i_key = 0;
-      $recommend.html(`<li class="total">Top 10 Link | <a onclick="topkey1('${data.q}','all','week')" class="title" id="searchkey">Week</a> | <a onclick="topkey1('${data.q}','all','month')" class="title" id="searchkey">Month</a>	| <a onclick="topkey1('${data.q}','all','year')" class="title" id="searchkey">Year</a>	| <a onclick="topkey1('${data.q}','all','all')" class="title" id="searchkey">All</a></li>`);   
+      $recommend.html(`<li class="total">Top 10 Link | <a onclick="topkeypage()" class="title" id="searchkey">Week</a> | <a onclick="topkeypage()" class="title" id="searchkey">Month</a>	| <a onclick="topkeypage()" class="title" id="searchkey">Year</a>	| <a onclick="topkeypage()" class="title" id="searchkey">All</a></li>`);   
       
       $.each(data.toplink, function(index, value) {
         i_link++;
@@ -88,7 +90,7 @@
 
       
 
-      $recommendkey.html(`<li class="total">Top 10 Key Search | <a onclick="topkey1('${data.q}','week')" class="title" id="searchkey">Week</a>	| <a onclick="topkey1('${data.q}','month')" class="title" id="searchkey">Month</a>	| <a onclick="topkey1('${data.q}','year')" class="title" id="searchkey">Year</a>	| <a onclick="topkey1('${data.q}','all')" class="title" id="searchkey">All</a></li>`);   
+      $recommendkey.html(`<li class="total">Top 10 Key Search | <a onclick="topkeypage()" class="title" id="searchkey">Week</a>	| <a onclick="topkeypage()" class="title" id="searchkey">Month</a>	| <a onclick="topkeypage()" class="title" id="searchkey">Year</a>	| <a onclick="topkeypage()" class="title" id="searchkey">All</a></li>`);   
       
       $.each(data.topkey, function(index, value) {
         i_key++;
@@ -149,43 +151,43 @@
 
   const updateViewOnSearch = () => {
     currentPage = 'result-page';
-    $results.html('');
-    $recommend.html('');
-    $recommendkey.html('');
-    $pagination.css('display', 'none');
-    $loader.css('display', 'block');
-    $imgClose.css('display', 'block');
-    // $imgSearch.css('display', 'none');
-    // $imgClose.css('display', 'none');
-    // $imgCse.css('display', 'none');
-    // $imglogooutside.css('display', 'none');
-    // float: right;
-    // margin-top: 25%;
-    // margin-left: 15%;	
-    // top: 5%;
-    // right: 3.5%;
-  
-    $inputSearch.css('width', '88.5%');
-    $inputSearch.css('float', 'right');
-    $inputSearch.css('margin-top', '0.2%');
-    $inputSearch.css('margin-left', '0%');
-    $domain.css('margin-top', '0.2%');
-    $domain.css('margin-left', '11.5%');
-    // $domain.css('float', 'right');
-    $imgSearch.css('margin-top', '1.2%');
-    $imgSearch.css('right', '1%');
-    $imgClose.css('margin-top', '1.2%');  
-    $imgClose.css('right', '2.5%');
-    $imglogooutside.css('position', 'relative');
-    $imglogooutside.css('width', '10%');
-    $imglogooutside.css('left', '5%');
-    $imglogooutside.css('margin-top', '1.4%');
-    $imglogooutside.css('float', 'left');
-    $autocomplete.css('margin-top', '20px');
-    $autocomplete.css('width', '20%');
-    $recommend.css('display', 'block');
-    $recommendkey.css('display', 'block');
-    $hotlink.css('display', 'none');
+  $results.html('');
+  $recommend.html('');
+  $recommendkey.html('');
+  $pagination.css('display', 'none');
+  $loader.css('display', 'block');
+  $imgClose.css('display', 'block');
+  // $imgSearch.css('display', 'none');
+  // $imgClose.css('display', 'none');
+  // $imgCse.css('display', 'none');
+  // $imglogooutside.css('display', 'none');
+  // float: right;
+  // margin-top: 25%;
+  // margin-left: 15%;	
+  // top: 5%;
+	// right: 3.5%;
+
+  $inputSearch.css('width', '88.5%');
+  $inputSearch.css('float', 'right');
+  $inputSearch.css('margin-top', '0.2%');
+  $inputSearch.css('margin-left', '0%');
+  $domain.css('margin-top', '0.2%');
+  $domain.css('margin-left', '11.5%');
+  // $domain.css('float', 'right');
+  $imgSearch.css('margin-top', '1.7%');
+  $imgSearch.css('right', '1%');
+  $imgClose.css('margin-top', '1.7%');  
+  $imgClose.css('right', '3%');
+  $imglogooutside.css('position', 'relative');
+  $imglogooutside.css('width', '10%');
+  $imglogooutside.css('left', '5%');
+  $imglogooutside.css('margin-top', '1.8%');
+  $imglogooutside.css('float', 'left');
+  $autocomplete.css('margin-top', '20px');
+  $autocomplete.css('width', '20%');
+  $recommend.css('display', 'block');
+  $recommendkey.css('display', 'block');
+  $hotlink.css('display', 'none');
   }
 
   $inputSearch.on('input', (e) => {
@@ -360,19 +362,64 @@ const updateViewOnSearch = () => {
   $domain.css('margin-top', '0.2%');
   $domain.css('margin-left', '11.5%');
   // $domain.css('float', 'right');
-  $imgSearch.css('margin-top', '1.2%');
+  $imgSearch.css('margin-top', '1.7%');
   $imgSearch.css('right', '1%');
-  $imgClose.css('margin-top', '1.2%');  
-  $imgClose.css('right', '2.5%');
+  $imgClose.css('margin-top', '1.7%');  
+  $imgClose.css('right', '3%');
   $imglogooutside.css('position', 'relative');
   $imglogooutside.css('width', '10%');
   $imglogooutside.css('left', '5%');
-  $imglogooutside.css('margin-top', '1.4%');
+  $imglogooutside.css('margin-top', '1.8%');
   $imglogooutside.css('float', 'left');
   $autocomplete.css('margin-top', '20px');
   $autocomplete.css('width', '20%');
   $recommend.css('display', 'block');
   $recommendkey.css('display', 'block');
+  $tablerecommend.css('display', 'none');
+  $tablerecommendkey.css('display', 'none');
+  $hotlink.css('display', 'none');
+}
+
+const updateViewOnTop = () => {
+  currentPage = 'result-page';
+  $results.html('');
+  $recommend.html('');
+  $recommendkey.html('');
+  $pagination.css('display', 'none');
+  
+  $imgClose.css('display', 'block');
+  // $imgSearch.css('display', 'none');
+  // $imgClose.css('display', 'none');
+  // $imgCse.css('display', 'none');
+  // $imglogooutside.css('display', 'none');
+  // float: right;
+  // margin-top: 25%;
+  // margin-left: 15%;	
+  // top: 5%;
+	// right: 3.5%;
+
+  $inputSearch.css('width', '88.5%');
+  $inputSearch.css('float', 'right');
+  $inputSearch.css('margin-top', '0.2%');
+  $inputSearch.css('margin-left', '0%');
+  $domain.css('margin-top', '0.2%');
+  $domain.css('margin-left', '11.5%');
+  // $domain.css('float', 'right');
+  $imgSearch.css('margin-top', '1.7%');
+  $imgSearch.css('right', '1%');
+  $imgClose.css('margin-top', '1.7%');  
+  $imgClose.css('right', '3%');
+  $imglogooutside.css('position', 'relative');
+  $imglogooutside.css('width', '10%');
+  $imglogooutside.css('left', '5%');
+  $imglogooutside.css('margin-top', '1.8%');
+  $imglogooutside.css('float', 'left');
+  $autocomplete.css('margin-top', '20px');
+  $autocomplete.css('width', '20%');
+  $recommend.css('display', 'block');
+  $recommendkey.css('display', 'block');
+  $tablerecommend.css('display', 'block');
+  $tablerecommendkey.css('display', 'block');
   $hotlink.css('display', 'none');
 }
 
@@ -382,6 +429,16 @@ function topkey1(q ,gettopkey, gettoplink,start) {
   updateViewOnSearch();
   cse(q, gettopkey,gettoplink,start);
   document.getElementById("input-search").value = q;
+
+  
+}
+
+function topkeypage() {
+    
+    
+  updateViewOnTop();
+  // cse(q, gettopkey,gettoplink,start);
+  // document.getElementById("input-search").value = q;
 
   
 }
