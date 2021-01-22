@@ -4,8 +4,6 @@ const config = require('../config');
 var request = require('request');
 const mongoose = require('mongoose');
 var fs = require('fs');
-var convert = require('xml-js');
-
 // var parser = require('xml2json');
 // var statsd = require('./statsd');
 
@@ -223,7 +221,7 @@ router.get('/search', (req, res, next) => {
   // }
 
   // siterestrict
-  customsearch.cse.siterestrict.list({
+  customsearch.cse.list({
     auth: config.ggApiKey,
     cx: config.ggCx,
     q, start, num
@@ -232,9 +230,8 @@ router.get('/search', (req, res, next) => {
     .then(async (result) => {
 
       var { queries, items, searchInformation } = result;
+
       var itemsfinal = [];
-      var itemsfshare = [];
-      // var itemsfshare2 = [];
       const page = (queries.request || [])[0] || {};
       const previousPage = (queries.previousPage || [])[0] || {};
       const nextPage = (queries.nextPage || [])[0] || {};
@@ -243,51 +240,60 @@ router.get('/search', (req, res, next) => {
       var topKeyStorageTmp = [];
       var topLinkStorageTmp = [];
 
-     
-
-      const datas = await requestPromise('https://thuvienhd.com/?feed=rss&search=' + q);
-
-      var result11 = JSON.parse(convert.xml2json(datas, {compact: true, spaces: 4}));
-
-      if(result11.rss.channel.item)
-      {
-        if(page.startIndex==1)
-        {
-          itemsfshare.push(...result11.rss.channel.item);
-        let itemstest = itemsfshare.map(o => ({
+      const keysearchurl = q.toString().split(' ', 3)
+      var keyfshare = q;
+      var locksearch = 0;
 
 
-
-          link: o.link.link._attributes.url,
-          title: o.title._text,
-          snippet: o.description._cdata.substr( 0, 200) + "..."
-        }))
-
-        console.log(itemstest)
-
-          itemsfinal.push(...itemstest);
-
-        }
-        
-
+      switch(keysearchurl[0]) {
+        case "inurl:hdvietnam":
+            locksearch = 1;
+          break;
+        case "inurl:fshare":
+          keyfshare = q.toString().substr(13)
+          break;
+        case "inurl:thuvienhd":
+          keyfshare = q.toString().substr(16)
+          break;
+        default:
+          // code block
       }
+
+
+
       
-      // itemsfshare2.push(JSON.parse(result11).rss.channel.item);
-      
+      // console.log(datas)
 
     //   fs.readFile( 'https://thuvienhd.com/?feed=rss&search=Vệ%20Binh%20Dải%20Ngân%20Hà', function(err, data) {
-        
-    //     console.log("to json ->", data);
+    //     var json = parser.toJson(data);
+    //     console.log("to json ->", json);
     //  });
 
     // console.log(fs.readFileSync('https://thuvienhd.com/?feed=rss&search=Vệ%20Binh%20Dải%20Ngân%20Hà', {encoding: 'utf-8'})); 
 
-      // let result1 = JSON.parse(datas);
+      
 
       // console.log(result1);
 
+      if(page.startIndex == 1 && locksearch != 1){
 
-     
+        const datas = await requestPromise('https://thuvienhd.com/?feed=fsharejson&search=' + keyfshare);
+        let result1 = JSON.parse(datas);
+
+        
+        let itemstest = result1.map(o => ({
+
+
+
+          link: o.links[0].link,
+          title: o.title,
+          snippet: o.links[0].title
+        }))
+
+          itemsfinal.push(...itemstest);
+      }
+
+    
 
       // eqruest('https://thuvienhd.com/?feed=fsharejson&search=123', await function (error, response, body) {
 
@@ -308,7 +314,7 @@ router.get('/search', (req, res, next) => {
       //   console.log(itemsfinal);
       // });
 
-      
+     
 
       // itemsfinal = [
       //   {
