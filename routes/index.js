@@ -166,9 +166,6 @@ router.get('/search', (req, res, next) => {
       const nextPage = (queries.nextPage || [])[0] || {};
       var toplink = [];
       var topkey = [];
-      var topKeyStorageTmp = [];
-      var topLinkStorageTmp = [];
-
       const keysearchurl = q.toString().split(' ', 3)
       var keyfshare = q;
       var locksearch = 0;
@@ -193,23 +190,18 @@ router.get('/search', (req, res, next) => {
 
         const datas = await requestPromise('https://thuvienhd.com/?feed=fsharejson&search=' + keyfshare);
         let result1 = JSON.parse(datas);
-
-        if(result1[0].links[0].link)
-        {
-          let itemstest = result1.map(o => ({
-
-
-
+        result1.forEach(function(value, index){
+          if(value.links.length == 0){
+            result1.splice(index, 1);
+          }
+        });
+        let itemstest = result1.map(o => ({
             link: o.links[0].link,
             title: o.title,
             snippet: o.links[0].title
-          }))
-  
-            itemsfinal.push(...itemstest);
-
+          })) 
+        itemsfinal.push(...itemstest);
         }
-       
-      }
 
 
       itemsfinal.push(...items);
