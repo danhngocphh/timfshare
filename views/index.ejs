@@ -51,7 +51,7 @@
 
 
   <div class="top-detail">
-    <a onclick="topkeypage()" class="title" id="searchkey">Top Keysearch | Top Link</a>
+    <a onclick="topkeypage('topkeyall','toplinkall')" class="title" id="searchkey">Top Keysearch | Top Link</a>
  
 </div> 
 
@@ -68,12 +68,6 @@
    
   </div> 
 
-
-
-
-
-
-
   <div class="wrap-content">
      <ul id="results" />
   </div>
@@ -85,37 +79,6 @@
 </div> 
 
 
-<div class="wrap-recommendkey-out">
-
-      
-  <ul id="recommend">
-
-    <li class="total">Top 10 Key Search | <a onclick="topkeypage()" class="title" id="searchkey">Week</a>	| <a onclick="topkeypage()" class="title" id="searchkey">Month</a>	| <a onclick="topkeypage()" class="title" id="searchkey">Year</a>	| <a onclick="topkeypage()" class="title" id="searchkey">All</a></li>
-    
-  <% for(var i=0; i < topkey.length; i++) { %>
-    <li class="item">#<%= topkey[i][2] %> 
-      <a onclick="topkey1('<%= topkey[i][0] %>','all')" class="title" id="searchkey"><%= topkey[i][0] %></a>
-  </li>
-  <% } %>
-</ul>
-</div>
-
-
-<div class="wrap-recommend-out">
-
-  
-  <ul id="recommend">
-
-    <li class="total">Top 10 Link | <a onclick="topkeypage()" class="title" id="searchkey">Week</a> | <a onclick="topkeypage()" class="title" id="searchkey">Month</a>	| <a onclick="topkeypage()" class="title" id="searchkey">Year</a>	| <a onclick="topkeypage()" class="title" id="searchkey">All</a></li>
-    
-  <% for(var i=0; i < toplink.length; i++) { %>
-    <li class="item">#<%= toplink[i][3] %> 
-      <a target="_blank" href="<%= toplink[i][0] %> " onclick="getLink('','<%= toplink[i][0] %> ','<%= toplink[i][2] %> ')" class="title" id="vegar"><%= toplink[i][2] %> </a>
-  </li>
-  <% } %>
-</ul>
-
-</div> 
 
 
 

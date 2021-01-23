@@ -4,8 +4,6 @@ const config = require('../config');
 var request = require('request');
 const mongoose = require('mongoose');
 var fs = require('fs');
-// var parser = require('xml2json');
-// var statsd = require('./statsd');
 
 const requestPromise = (url) => {
   return new Promise((resolve, reject) => {
@@ -58,63 +56,46 @@ const customsearch = google.customsearch('v1');
 /* GET home page. */
 router.get('/', async function (req, res, next) {
 
-  var toplink = [];
-  var topkey = [];
-  var keysearch = [];
+        var toplink = [];
+        var topkey = [];
+        var keysearch = [];
 
 
-  await topLinks.findOne({ name: "topkeyall" }, {}).
-  then(function (result) {
+          await topLinks.findOne({ name: "topkeyall" }, {}).
+          then(result => {
+            for (let i in result.value) {
 
+              let val = result.value[i];
 
+              topkey[i] = [val.keyword, val.search_total, val.position, i];
+            }
+            selectionSortkey(topkey);
+           });
 
-    for (let i in result.value) {
+        await topLinks.findOne({ name: "toplinkall" }, {}).
+              then( result => {
 
-      let val = result.value[i];
+                for (let i in result.value) {
 
-      topkey[i] = [val.keyword, val.search_total, val.position, i];
+                  let link = result.value[i];
 
+                  toplink[i] = [link.link, link.search_total, link.title, link.position, i];
 
-    }
+                }
+                selectionSort(toplink);
+              });
 
-    selectionSortkey(topkey);
-
-    console.log(topkey)
-
-
-
-
-  });
-
-  await topLinks.findOne({ name: "toplinkall" }, {}).
-        then(function (result) {
-
-
-
-          for (let i in result.value) {
-
-            let link = result.value[i];
-
-            toplink[i] = [link.link, link.search_total, link.title, link.position, i];
-            // let posTmp = parseInt(i) + 1;
-            // topLinkStorageTmp[parseInt(i)] = {'position' : posTmp, 'link': link.link, 'title': link.title , 'search_total' : link.search_total}
-
-          }
-
-          selectionSort(toplink);
-
-
-
-
-
-
+        await Values.aggregate([
+          { $group: { _id: '$value'}},
+          { $project: { _id: 1}}
+        ]).then( result => {
+          for (let i in result) {
+                  let val = result[i];   
+                  keysearch[i] = val["_id"];
+        }
+          
         });
-
-
-  
-
-
-  res.render('index', { title: 'Fshare Search', keysearch: keysearch,  topkey, toplink });
+        res.render('index', { title: 'Fshare Search', keysearch,  topkey, toplink });
 });
 
 
@@ -124,7 +105,7 @@ router.get('/search', (req, res, next) => {
   const { q, gettopkey, gettoplink, start, num } = req.query;
 
   console.log(q, gettopkey, start, gettoplink, num);
-  var namekeylink = "";
+                                  var namekeylink = "";
   var nametoplink = "";
 
 
@@ -169,20 +150,6 @@ router.get('/search', (req, res, next) => {
       nametoplink = "toplinkall";
   }
 
-  // if(gettopkey == null || gettopkey == 'all'){
-  //   var dategte = new Date("2020-12-06T07:30:19.063Z");
-  //   var datelt = new  Date("2021-01-14T07:30:19.063Z");
-  // }else if(gettopkey == 'month'){
-  //   var dategte = new Date("2021-01-01T07:30:19.063Z");
-  //   var datelt = new  Date("2021-01-31T07:30:19.063Z");
-
-  // }else{
-  //   var dategte = new Date("2021-01-11T07:30:19.063Z");
-  //   var datelt = new  Date("2021-01-13T07:30:19.063Z");
-
-  // }
-
-  // siterestrict
   customsearch.cse.list({
     auth: config.ggApiKey,
     cx: config.ggCx,
@@ -222,21 +189,6 @@ router.get('/search', (req, res, next) => {
       }
 
 
-
-      
-      // console.log(datas)
-
-    //   fs.readFile( 'https://thuvienhd.com/?feed=rss&search=Vệ%20Binh%20Dải%20Ngân%20Hà', function(err, data) {
-    //     var json = parser.toJson(data);
-    //     console.log("to json ->", json);
-    //  });
-
-    // console.log(fs.readFileSync('https://thuvienhd.com/?feed=rss&search=Vệ%20Binh%20Dải%20Ngân%20Hà', {encoding: 'utf-8'})); 
-
-      
-
-      // console.log(result1);
-
       if(page.startIndex == 1 && locksearch != 1){
 
         const datas = await requestPromise('https://thuvienhd.com/?feed=fsharejson&search=' + keyfshare);
@@ -259,56 +211,8 @@ router.get('/search', (req, res, next) => {
        
       }
 
-    
-
-      // eqruest('https://thuvienhd.com/?feed=fsharejson&search=123', await function (error, response, body) {
-
-      //   let result = JSON.parse(body);
-
-      //   let itemstest = result.map(o => ({
-
-
-
-      //     link: o.title,
-      //     title: o.title,
-      //     snippet: o.title
-      //   }))
-
-      //   itemsfinal.push(...itemstest);
-
-
-      //   console.log(itemsfinal);
-      // });
-
-     
-
-      // itemsfinal = [
-      //   {
-      //     kind: 'customsearch#result',
-      //     title: 'Hí lô ae :)))))',
-      //     htmlTitle: '[Thúy Nga|ISO|PBN <b>123</b>] Paris by Night <b>123</b>: Ảo Ảnh 2017 Blu-ray ...',
-      //     link: 'http://www.hdvietnam.com/threads/thuy-nga-iso-pbn-123-paris-by-night-123-ao-anh-2017-blu-ray-avc-1080i-dd2-0-ao-anh-2017.1352269/',
-      //     displayLink: 'www.hdvietnam.com',
-      //     snippet: '1 Tháng Mười Hai 2017 ... Paris by Night 123: Ảo Ảnh 2017 Blu-ray AVC 1080i DD2.0 - ẢO ẢNH 2017 [IMG] \n' +
-      //       'Disc Title: PBN123_Bluray Disc Size: 48.446.807.644...',
-      //     htmlSnippet: '1 Tháng Mười Hai 2017 <b>...</b> Paris by Night <b>123</b>: Ảo Ảnh 2017 Blu-ray AVC 1080i DD2.0 - ẢO ẢNH 2017 [IMG] <br>\n' +
-      //       'Disc Title: PBN123_Bluray Disc Size: 48.446.807.644...',
-      //     cacheId: 'begW43Q17asJ',
-      //     formattedUrl: 'www.hdvietnam.com/.../thuy-nga-iso-pbn-123-paris-by-night-123-ao-anh- 2017-blu-ray-avc-1080i-dd2-0-ao-anh-2017.1352269/',
-      //     htmlFormattedUrl: 'www.hdvietnam.com/.../thuy-nga-iso-pbn-<b>123</b>-paris-by-night-<b>123</b>-ao-anh- 2017-blu-ray-avc-1080i-dd2-0-ao-anh-2017.1352269/',
-
-      //   }
-      // ]
 
       itemsfinal.push(...items);
-      // console.log(items);
-
-
-      // console.log(itemsfinal);
-
-      
-
-
 
       await topLinks.findOne({ name: namekeylink }, {}).
         then(function (result) {
@@ -326,28 +230,6 @@ router.get('/search', (req, res, next) => {
 
           selectionSortkey(topkey);
 
-          // let dateT = new Date(Date.now());
-          // dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
-          // options = {
-
-          //   uri: 'http://localhost:1239/toplinks',
-          //   method: 'POST',
-          //   json: {
-          //     "name": nametoplink,
-          //     "date": dateT,
-          //     "value": topLinkStorageTmp
-          //   }
-          // };
-
-          // request(options, function (error, response, body) {
-          //   if (!error && response.statusCode == 200) {
-          //     console.log(body.id) // Print the shortened url.
-          //   }
-          // });
-
-
-
-
         });
 
 
@@ -361,84 +243,12 @@ router.get('/search', (req, res, next) => {
             let link = result.value[i];
 
             toplink[i] = [link.link, link.search_total, link.title, link.position, i];
-            // let posTmp = parseInt(i) + 1;
-            // topLinkStorageTmp[parseInt(i)] = {'position' : posTmp, 'link': link.link, 'title': link.title , 'search_total' : link.search_total}
 
           }
 
           selectionSort(toplink);
 
-          // let dateT = new Date(Date.now());
-          // dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
-          // options = {
-
-          //   uri: 'http://localhost:1239/toplinks',
-          //   method: 'POST',
-          //   json: {
-          //     "name": "topkeyyear",
-          //     "date": dateT,
-          //     "value": topLinkStorageTmp
-          //   }
-          // };
-
-          // request(options, function (error, response, body) {
-          //   if (!error && response.statusCode == 200) {
-          //     console.log(body.id) // Print the shortened url.
-          //   }
-          // });
-
-
-
-
         });
-
-      // await Values.aggregate([
-      //   { $match : {date:  {$gte: dategte, $lt: datelt}}},
-      //   { $group: { _id: '$value',date : { $first:  "$date" },  i_total: { $sum: 1 }}},
-      //   { $project: { _id: 1, i_total: 1, date: 1}},
-      //   { $sort: { i_total: -1 } },
-      //   { $limit : 10 }
-      // ]).
-      // then(function (result) {
-
-      //   topKeyStorageTmp = topKeyStorageTmp.splice(0); 
-      //   for (let i in result) {
-
-      //           let val = result[i];    
-
-      //           topkey[i] = [val["_id"], val["i_total"]];
-      //           let posTmp = parseInt(i) + 1;
-      //           topKeyStorageTmp[parseInt(i)] = {'position' : posTmp, 'keyword': val["_id"], 'search_total' : val["i_total"]}
-
-
-      //   }
-
-      //   // let dateT = new Date(Date.now());
-      //   // dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
-      //   // options = {
-
-      //   //   uri: 'http://localhost:1239/toplinks',
-      //   //   method: 'POST',
-      //   //   json: {
-      //   //     "name": namekeylink,
-      //   //     "date": dateT,
-      //   //     "value": topKeyStorageTmp
-      //   //   }
-      //   // };
-
-      //   // request(options, function (error, response, body) {
-      //   //   if (!error && response.statusCode == 200) {
-      //   //     console.log(body.id) // Print the shortened url.
-      //   //   }
-      //   // });
-
-
-      // });
-
-
-
-      // toplink.set("link", "123");
-
 
       const data = {
         q,
@@ -482,6 +292,50 @@ router.get('/search', (req, res, next) => {
       console.log(err);
       res.status(500).send(err);
     });
+})
+
+router.get('/listtop', async (req, res, next) => {
+
+  const { nametoplink, nametopkey } = req.query;
+
+  console.log(req.query);
+
+  let toplink = [];
+  let topkey = [];
+
+  await topLinks.findOne({ name: nametopkey }, {}).
+          then(result => {
+            for (let i in result.value) {
+
+              let val = result.value[i];
+
+              topkey[i] = [val.keyword, val.search_total, val.position, i];
+            }
+            selectionSortkey(topkey);
+           });
+
+  await topLinks.findOne({ name: nametoplink }, {}).
+              then( result => {
+
+                for (let i in result.value) {
+
+                  let link = result.value[i];
+
+                  toplink[i] = [link.link, link.search_total, link.title, link.position, i];
+
+                }
+                selectionSort(toplink);
+              });
+
+  const data = {
+        toplink: toplink,
+        topkey: topkey,
+  }
+
+  console.log(data)
+
+      // res.status(200).send(result);
+  res.status(200).send(data);    
 })
 
 function selectionSort(array) {
