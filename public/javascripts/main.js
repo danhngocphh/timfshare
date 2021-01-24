@@ -35,40 +35,12 @@
       $btnPrev.addClass('disabled');
   }
 
-  const cse = (q, gettopkey, gettoplink, start) => {
-    $.get('/search', { q, gettopkey, gettoplink, start }).done(_data => {
+  const cse = (q, start) => {
+    $.get('/search', { q, start }).done(_data => {
       data = _data;
-      console.log(data);
       $loader.css('display', 'none');
-      var i_link = 0;
-      var i_key = 0;
-      $recommend.html(`<li class="total">Top 10 Link | <a onclick="topkeypage('topkeyall','toplinkweek')" class="title" id="searchkey">Week</a> | <a onclick="topkeypage('topkeyall','toplinkmonth')" class="title" id="searchkey">Month</a>	| <a onclick="topkeypage('topkeyall','toplinkyear')" class="title" id="searchkey">Year</a>	| <a onclick="topkeypage('topkeyall','toplinkall')" class="title" id="searchkey">All</a></li>`);   
-      
-      $.each(data.toplink, function(index, value) {
-        i_link++;
-        $recommend.append(`
-        <li class="item">#${value[3]} 
-        <a target="_blank" href="${value[0]}" onclick="getLink('${data.q}','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
-    </li>
-        `); 
-      });
-
-      
-
-      $recommendkey.html(`<li class="total">Top 10 Key Search | <a onclick="topkeypage('topkeyweek','toplinkall')" class="title" id="searchkey">Week</a>	| <a onclick="topkeypage('topkeymonth','toplinkall')" class="title" id="searchkey">Month</a>	| <a onclick="topkeypage('topkeyyear','toplinkall')" class="title" id="searchkey">Year</a>	| <a onclick="topkeypage('topkeyall','toplinkall')" class="title" id="searchkey">All</a></li>`);   
-      
-      $.each(data.topkey, function(index, value) {
-        i_key++;
-        $recommendkey.append(`
-        <li class="item">#${value[2]} 
-        <a onclick="topkey1('${value[0]}','all')" class="title" id="searchkey">${value[0]}</a>
-    </li>
-        `); 
-      });
-
-
-      
-      
+      gettopkey("topkeyall");
+      gettoplink("toplinkall");
       $results.html(`<li class="total">Total about ${data.totalResults} results in ${data.time} seconds.</li>`);
       data.items.map(o => {
         $results.append(`
@@ -91,7 +63,7 @@
 (() => {
 
   const updateViewOnSearch = () => {
-    currentPage = 'result-page';
+   currentPage = 'result-page';
   $results.html('');
   $recommend.html('');
   $recommendkey.html('');
@@ -116,7 +88,13 @@
   $autocomplete.css('margin-top', '20px');
   $autocomplete.css('width', '20%');
   $recommend.css('display', 'block');
+  $recommend.css('float', 'right');
+  $recommend.css('width', '30%');
   $recommendkey.css('display', 'block');
+  $recommendkey.css('float', 'right');
+  $recommendkey.css('width', '30%');
+  $recommendkey.css('margin-left', '0%');
+  $recommendkey.css('margin-top', '0%');
   $hotlink.css('display', 'none');
   }
 
@@ -143,12 +121,12 @@
 
   $btnNext.click(() => {
     updateViewOnSearch();
-    cse(data.q,'all','all', data.nextPage);
+    cse(data.q, data.nextPage);
   });
 
   $btnPrev.click(() => {
     updateViewOnSearch();
-    cse(data.q,'all','all', data.previousPage);
+    cse(data.q, data.previousPage);
   })
 
   $imgClose.click(() => {
@@ -172,7 +150,7 @@
     var q = $inputSearch.val();
     if (q && q != '') {
       updateViewOnSearch();
-      cse(q);x
+      cse(q);
     }
   }
   onInit();
@@ -242,8 +220,6 @@ const updateViewOnSearch = () => {
 const updateViewOnTop = () => {
   currentPage = 'result-page';
   $results.html('');
-  $recommend.html('');
-  $recommendkey.html('');
   $pagination.css('display', 'none');
   $imgClose.css('display', 'block');
   $inputSearch.css('width', '88.5%');
@@ -274,32 +250,51 @@ const updateViewOnTop = () => {
   $hotlink.css('display', 'none');
 }
 
-function topkey1(q ,gettopkey, gettoplink,start) {
+function _searchkey(q) {
     
     
   updateViewOnSearch();
-  cse(q, gettopkey,gettoplink,start);
+  cse(q);
   document.getElementById("input-search").value = q;
 
   
 }
 
-const topkeypage = (nametopkey, nametoplink) => {
+const topkeypage = () => {
 
   updateViewOnTop();
-    
-    
-  
+  gettopkey("topkeyall");
+  gettoplink("toplinkall");  
+}
 
-  $.get('/listtop', { nametopkey, nametoplink }).done(_data => {
+const gettopkey = (nametopkey) => { 
+
+  $.get('/topkey', {nametopkey}).done(_data => {
 
     const list = _data;
-    
-    console.log(_data);
 
-    $recommend.html(`<li class="total">Top 10 Link | <a onclick="topkeypage('topkeyall','toplinkweek')" class="title" id="searchkey">Week</a> | <a onclick="topkeypage('topkeyall','toplinkmonth')" class="title" id="searchkey">Month</a>	| <a onclick="topkeypage('topkeyall','toplinkyear')" class="title" id="searchkey">Year</a>	| <a onclick="topkeypage('topkeyall','toplinkall')" class="title" id="searchkey">All</a></li>`);   
+    $recommendkey.html(`<li class="total">Top 10 Key Search | <a onclick="gettopkey('topkeyweek')" class="title" id="searchkey">Week</a>	| <a onclick="gettopkey('topkeymonth')" class="title" id="searchkey">Month</a>	| <a onclick="gettopkey('topkeyyear')" class="title" id="searchkey">Year</a>	| <a onclick="gettopkey('topkeyall')" class="title" id="searchkey">All</a></li>`);   
     
-    $.each(list.toplink, function(index, value) {
+    $.each(list, function(index, value) {
+      $recommendkey.append(`
+      <li class="item">#${value[2]} 
+      <a onclick="_searchkey('${value[0]}')" class="title" id="searchkey">${value[0]}</a>
+  </li>
+      `); 
+    });
+  })
+    .fail(err => console.log("err:",err))
+}
+
+const gettoplink = (nametoplink) => { 
+
+  $.get('/toplink', {nametoplink}).done(_data => {
+
+    const list = _data;
+
+    $recommend.html(`<li class="total">Top 10 Link | <a onclick="gettoplink('toplinkweek')" class="title" id="searchkey">Week</a> | <a onclick="gettoplink('toplinkmonth')" class="title" id="searchkey">Month</a>	| <a onclick="gettoplink('toplinkyear')" class="title" id="searchkey">Year</a>	| <a onclick="gettoplink('toplinkall')" class="title" id="searchkey">All</a></li>`);   
+    
+    $.each(list, function(index, value) {
       $recommend.append(`
       <li class="item">#${value[3]} 
       <a target="_blank" href="${value[0]}" onclick="getLink('','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
@@ -307,27 +302,6 @@ const topkeypage = (nametopkey, nametoplink) => {
       `); 
     });
 
-    
-
-    $recommendkey.html(`<li class="total">Top 10 Key Search | <a onclick="topkeypage('topkeyweek','toplinkall')" class="title" id="searchkey">Week</a>	| <a onclick="topkeypage('topkeymonth','toplinkall')" class="title" id="searchkey">Month</a>	| <a onclick="topkeypage('topkeyyear','toplinkall')" class="title" id="searchkey">Year</a>	| <a onclick="topkeypage('topkeyall','toplinkall')" class="title" id="searchkey">All</a></li>`);   
-    
-    $.each(list.topkey, function(index, value) {
-      $recommendkey.append(`
-      <li class="item">#${value[2]} 
-      <a onclick="topkey1('${value[0]}','all')" class="title" id="searchkey">${value[0]}</a>
-  </li>
-      `); 
-    });
-
-
-    
-  
-    
-    // updatePagination();
   })
     .fail(err => console.log("err:",err))
-  // cse(q, gettopkey,gettoplink,start);
-  // document.getElementById("input-search").value = q;
-
-  
 }

@@ -102,53 +102,7 @@ router.get('/', async function (req, res, next) {
 
 router.get('/search', (req, res, next) => {
 
-  const { q, gettopkey, gettoplink, start, num } = req.query;
-
-  console.log(q, gettopkey, start, gettoplink, num);
-                                  var namekeylink = "";
-  var nametoplink = "";
-
-
-  switch (gettopkey) {
-    case null:
-      namekeylink = "topkeyall";
-      break;
-    case 'all':
-     namekeylink = "topkeyall";
-      break;
-    case "month":
-      namekeylink = "topkeymonth";
-      break;
-    case "year":
-      namekeylink = "topkeyyear";
-      break;
-    case "week":
-      namekeylink = "topkeyweek";
-      break;
-    default:
-      namekeylink = "topkeyall";
-  }
-
-
-  switch (gettoplink) {
-    case null:
-      nametoplink = "toplinkall";
-      break;
-    case 'all':
-      nametoplink = "toplinkall";
-      break;
-    case "month":
-      nametoplink = "toplinkmonth";
-      break;
-    case "week":
-      nametoplink = "toplinkweek";
-      break;
-    case "year":
-      nametoplink = "toplinkyear";
-      break;
-    default:
-      nametoplink = "toplinkall";
-  }
+  const { q, start, num } = req.query;
 
   customsearch.cse.list({
     auth: config.ggApiKey,
@@ -190,11 +144,8 @@ router.get('/search', (req, res, next) => {
 
         const datas = await requestPromise('https://thuvienhd.com/?feed=fsharejson&search=' + keyfshare);
         let result1 = JSON.parse(datas);
-        result1.forEach(function(value, index){
-          if(value.links.length == 0){
-            result1.splice(index, 1);
-          }
-        });
+        result1.forEach(function(value, index){ if(value.links.length == 0){ result1.splice(index, 1); } });
+      
         let itemstest = result1.map(o => ({
             link: o.links[0].link,
             title: o.title,
@@ -202,45 +153,8 @@ router.get('/search', (req, res, next) => {
           })) 
         itemsfinal.push(...itemstest);
         }
+        itemsfinal.push(...items);
 
-
-      itemsfinal.push(...items);
-
-      await topLinks.findOne({ name: namekeylink }, {}).
-        then(function (result) {
-
-
-
-          for (let i in result.value) {
-
-            let val = result.value[i];
-
-            topkey[i] = [val.keyword, val.search_total, val.position, i];
-
-
-          }
-
-          selectionSortkey(topkey);
-
-        });
-
-
-      await topLinks.findOne({ name: nametoplink }, {}).
-        then(function (result) {
-
-
-
-          for (let i in result.value) {
-
-            let link = result.value[i];
-
-            toplink[i] = [link.link, link.search_total, link.title, link.position, i];
-
-          }
-
-          selectionSort(toplink);
-
-        });
 
       const data = {
         q,
@@ -250,8 +164,6 @@ router.get('/search', (req, res, next) => {
         nextPage: nextPage.startIndex,
         previousPage: previousPage.startIndex,
         time: searchInformation.searchTime,
-        toplink: toplink,
-        topkey: topkey,
         items: itemsfinal.map(o => ({
           link: o.link,
           title: o.title,
@@ -286,13 +198,10 @@ router.get('/search', (req, res, next) => {
     });
 })
 
-router.get('/listtop', async (req, res, next) => {
+router.get('/topkey', async (req, res, next) => {
 
-  const { nametoplink, nametopkey } = req.query;
+  const {nametopkey} = req.query;
 
-  console.log(req.query);
-
-  let toplink = [];
   let topkey = [];
 
   await topLinks.findOne({ name: nametopkey }, {}).
@@ -305,6 +214,16 @@ router.get('/listtop', async (req, res, next) => {
             }
             selectionSortkey(topkey);
            });
+
+
+  const data = topkey;
+  res.status(200).send(data);    
+})
+
+router.get('/toplink', async (req, res, next) => {
+
+  const {nametoplink} = req.query;
+  let toplink = [];
 
   await topLinks.findOne({ name: nametoplink }, {}).
               then( result => {
@@ -319,14 +238,9 @@ router.get('/listtop', async (req, res, next) => {
                 selectionSort(toplink);
               });
 
-  const data = {
-        toplink: toplink,
-        topkey: topkey,
-  }
+  const data = toplink;
 
-  console.log(data)
 
-      // res.status(200).send(result);
   res.status(200).send(data);    
 })
 
