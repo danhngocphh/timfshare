@@ -132,20 +132,20 @@ h1, h2, h3, h4, h5, h6 {
 	text-decoration: underline;
   }
 
-.wrap-recommend ul {
+.wrap-recommendlink ul {
 	padding-left: 20px;
 	padding-right: 20px;
 	width: 30%;
 	float: right;
 	/* margin-top: 2%; */
 }
-.wrap-recommend li.total {
+.wrap-recommendlink li.total {
 	color: rgb(88, 88, 88);
 	margin-top: 20px;
 	
 }
 
-.wrap-recommend p.hotlink {
+.wrap-recommendlink p.hotlink {
 	color: rgb(221, 14, 14);
 	margin-top: 30px;
 	text-align:center;	
@@ -156,28 +156,28 @@ h1, h2, h3, h4, h5, h6 {
 	
 }
 
-.wrap-recommend li.item {
+.wrap-recommendlink li.item {
 	margin-top: 25px;
 	
 }
-.wrap-recommend li.item a.title {
+.wrap-recommendlink li.item a.title {
 	font-weight: 900;
 }
-.wrap-recommend li.item div.snippet {
+.wrap-recommendlink li.item div.snippet {
 	margin-top: 5px;
 	margin-bottom: 15px;
 }
-.wrap-recommend li.item img {
+.wrap-recommendlink li.item img {
 	width: 90px;
 	height: 90px;
 }
 
-.wrap-recommend a {
+.wrap-recommendlink a {
 	color: #497e99;
 	text-decoration: none;
 }
 
-.wrap-recommend a:hover {
+.wrap-recommendlink a:hover {
 	text-decoration: underline;
   }
 

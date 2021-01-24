@@ -3,7 +3,7 @@
   const $domainvalue = $('#cusSelectboxValue');
   const $domain = $('#cusSelectbox');
   const $results = $('#results');
-  const $recommend = $('#recommend');
+  const $recommendlink = $('#recommendlink');
   const $recommendkey = $('#recommendkey');
   const $loader = $('#loader');
   const $btnPrev = $('#btn-prev');
@@ -65,7 +65,7 @@
   const updateViewOnSearch = () => {
    currentPage = 'result-page';
   $results.html('');
-  $recommend.html('');
+  $recommendlink.html('');
   $recommendkey.html('');
   $pagination.css('display', 'none');
   $loader.css('display', 'block');
@@ -87,9 +87,9 @@
   $imglogooutside.css('float', 'left');
   $autocomplete.css('margin-top', '20px');
   $autocomplete.css('width', '20%');
-  $recommend.css('display', 'block');
-  $recommend.css('float', 'right');
-  $recommend.css('width', '30%');
+  $recommendlink.css('display', 'block');
+  $recommendlink.css('float', 'right');
+  $recommendlink.css('width', '30%');
   $recommendkey.css('display', 'block');
   $recommendkey.css('float', 'right');
   $recommendkey.css('width', '30%');
@@ -184,7 +184,7 @@ function getDate(){
 const updateViewOnSearch = () => {
   currentPage = 'result-page';
   $results.html('');
-  $recommend.html('');
+  $recommendlink.html('');
   $recommendkey.html('');
   $pagination.css('display', 'none');
   $loader.css('display', 'block');
@@ -206,9 +206,9 @@ const updateViewOnSearch = () => {
   $imglogooutside.css('float', 'left');
   $autocomplete.css('margin-top', '20px');
   $autocomplete.css('width', '20%');
-  $recommend.css('display', 'block');
-  $recommend.css('float', 'right');
-  $recommend.css('width', '30%');
+  $recommendlink.css('display', 'block');
+  $recommendlink.css('float', 'right');
+  $recommendlink.css('width', '30%');
   $recommendkey.css('display', 'block');
   $recommendkey.css('float', 'right');
   $recommendkey.css('width', '30%');
@@ -239,9 +239,9 @@ const updateViewOnTop = () => {
   $imglogooutside.css('float', 'left');
   $autocomplete.css('margin-top', '20px');
   $autocomplete.css('width', '20%');
-  $recommend.css('display', 'block');
-  $recommend.css('float', 'left');
-  $recommend.css('width', '40%');
+  $recommendlink.css('display', 'block');
+  $recommendlink.css('float', 'left');
+  $recommendlink.css('width', '40%');
   $recommendkey.css('display', 'block');
   $recommendkey.css('float', 'right');
   $recommendkey.css('width', '40%');
@@ -292,10 +292,10 @@ const gettoplink = (nametoplink) => {
 
     const list = _data;
 
-    $recommend.html(`<li class="total">Top 10 Link | <a onclick="gettoplink('toplinkweek')" class="title" id="searchkey">Week</a> | <a onclick="gettoplink('toplinkmonth')" class="title" id="searchkey">Month</a>	| <a onclick="gettoplink('toplinkyear')" class="title" id="searchkey">Year</a>	| <a onclick="gettoplink('toplinkall')" class="title" id="searchkey">All</a></li>`);   
+    $recommendlink.html(`<li class="total">Top 10 Link | <a onclick="gettoplink('toplinkweek')" class="title" id="searchkey">Week</a> | <a onclick="gettoplink('toplinkmonth')" class="title" id="searchkey">Month</a>	| <a onclick="gettoplink('toplinkyear')" class="title" id="searchkey">Year</a>	| <a onclick="gettoplink('toplinkall')" class="title" id="searchkey">All</a></li>`);   
     
     $.each(list, function(index, value) {
-      $recommend.append(`
+      $recommendlink.append(`
       <li class="item">#${value[3]} 
       <a target="_blank" href="${value[0]}" onclick="getLink('','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
   </li>
