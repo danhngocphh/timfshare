@@ -63,13 +63,22 @@ router.get('/', async function (req, res, next) {
 
   await topLinks.findOne({ name: "topkeyall" }, {}).
     then(result => {
-      for (let i in result.value) {
+      if (!result) {
 
-        let val = result.value[i];
+        console.log("err");
 
-        topkey[i] = [val.keyword, val.search_total, val.position, i];
+      }else{
+
+        for (let i in result.value) {
+
+          let val = result.value[i];
+  
+          topkey[i] = [val.keyword, val.search_total, val.position, i];
+        }
+        selectionSortkey(topkey);
+
       }
-      selectionSortkey(topkey);
+      
     }).catch(err => {
       console.log(err)
 
@@ -78,14 +87,25 @@ router.get('/', async function (req, res, next) {
   await topLinks.findOne({ name: "toplinkall" }, {}).
     then(result => {
 
-      for (let i in result.value) {
+      if (!result) {
 
-        let link = result.value[i];
+        console.log("err");
 
-        toplink[i] = [link.link, link.search_total, link.title, link.position, i];
+      }else{
+        for (let i in result.value) {
+
+          let link = result.value[i];
+  
+          toplink[i] = [link.link, link.search_total, link.title, link.position, i];
+  
+        }
+        selectionSort(toplink);
 
       }
-      selectionSort(toplink);
+
+
+
+      
     }).catch(err => {
       console.log(err)
 
@@ -95,10 +115,16 @@ router.get('/', async function (req, res, next) {
     { $group: { _id: '$value' } },
     { $project: { _id: 1 } }
   ]).then(result => {
+    if (!result) {
+
+      console.log("err");
+
+    }else{
+
     for (let i in result) {
       let val = result[i];
       keysearch[i] = val["_id"];
-    }
+    }}
 
   }).catch(err => {
     console.log(err)
