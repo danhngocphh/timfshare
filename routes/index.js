@@ -40,7 +40,7 @@ var schematopLink = mongoose.Schema({
 });
 var topLinks = mongoose.model('top', schematopLink);
 
-mongoose.connect("mongodb+srv://vegarnom:vegar8226@cluster0.eotns.mongodb.net/dbda1?retryWrites=true&w=majority", { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/myapp1', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 
@@ -70,7 +70,10 @@ router.get('/', async function (req, res, next) {
               topkey[i] = [val.keyword, val.search_total, val.position, i];
             }
             selectionSortkey(topkey);
-           });
+           }).catch(err => {
+            console.log(err)
+    
+        });
 
         await topLinks.findOne({ name: "toplinkall" }, {}).
               then( result => {
@@ -83,7 +86,10 @@ router.get('/', async function (req, res, next) {
 
                 }
                 selectionSort(toplink);
-              });
+              }).catch(err => {
+                console.log(err)
+        
+            });
 
         await Values.aggregate([
           { $group: { _id: '$value'}},
@@ -94,7 +100,10 @@ router.get('/', async function (req, res, next) {
                   keysearch[i] = val["_id"];
         }
           
-        });
+        }).catch(err => {
+          console.log(err)
+  
+      });
         res.render('index', { title: 'Fshare Search', keysearch,  topkey, toplink });
 });
 
@@ -214,7 +223,10 @@ router.get('/topkey', async (req, res, next) => {
               topkey[i] = [val.keyword, val.search_total, val.position, i];
             }
             selectionSortkey(topkey);
-           });
+           }).catch(err => {
+            console.log(err)
+    
+        });
 
 
   const data = topkey;
@@ -237,7 +249,10 @@ router.get('/toplink', async (req, res, next) => {
 
                 }
                 selectionSort(toplink);
-              });
+              }).catch(err => {
+                console.log(err)
+        
+            });
 
   const data = toplink;
 

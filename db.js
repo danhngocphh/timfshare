@@ -415,6 +415,9 @@ module.exports = {
             }
             var title = process.env.TITLE || 'Fshare demo'
             res.render('table-data-key-detail', {title,key: key,values: values , total: total});
+        }).catch(err => {
+            console.log(err.message);
+    
         });
     },
 
@@ -454,6 +457,9 @@ module.exports = {
             }
             let keysearch = key;
             res.render('table-data-linkbykey-detail', {keysearch,key: key,values: values , total: total});
+        }).catch(err => {
+            res.render('table-data-linkbykey-detail', {keysearch = "null",key: "null",values: {} , total: "null"});
+    
         });
     },
 
@@ -493,6 +499,9 @@ module.exports = {
             }
             let link = key;
             res.render('table-data-linkbylink-detail', {link,key: key,values: values , total: total});
+        }).catch(err => {
+            res.render('table-data-linkbylink-detail', {link = "null",key: "null",values: {} , total: "null"});
+    
         });
     },
 
