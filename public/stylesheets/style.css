@@ -137,6 +137,8 @@ h1, h2, h3, h4, h5, h6 {
 	padding-right: 20px;
 	width: 30%;
 	float: right;
+	display: none;
+	visibility: hidden;
 	/* margin-top: 2%; */
 }
 .wrap-recommendlink li.total {
@@ -186,6 +188,8 @@ h1, h2, h3, h4, h5, h6 {
 	padding-right: 20px;
 	width: 30%;
 	float: right;
+	display: none;
+	visibility: hidden;
 	/* margin-top: 2%; */
 	/* margin-left: 10%;	 */
 }

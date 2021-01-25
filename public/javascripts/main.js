@@ -39,8 +39,10 @@
     $.get('/search', { q, start }).done(_data => {
       data = _data;
       $loader.css('display', 'none');
-      gettopkey("topkeyall");
-      gettoplink("toplinkall");
+      $recommendkey.css('display', 'block');
+      $recommendkey.css('visibility', 'visible');
+      $recommendlink.css('display', 'block');
+      $recommendlink.css('visibility', 'visible');
       $results.html(`<li class="total">Total about ${data.totalResults} results in ${data.time} seconds.</li>`);
       data.items.map(o => {
         $results.append(`
@@ -65,8 +67,10 @@
   const updateViewOnSearch = () => {
    currentPage = 'result-page';
   $results.html('');
-  $recommendlink.html('');
-  $recommendkey.html('');
+  $recommendkey.css('display', 'none');
+  $recommendkey.css('visibility', 'hidden');
+  $recommendlink.css('display', 'none');
+  $recommendlink.css('visibility', 'hidden');
   $pagination.css('display', 'none');
   $loader.css('display', 'block');
   $imgClose.css('display', 'block');
@@ -157,6 +161,7 @@
 
 })();
 
+
 function getLink( value, link, title) {
 
   let dateT = new Date(Date.now());
@@ -184,8 +189,10 @@ function getDate(){
 const updateViewOnSearch = () => {
   currentPage = 'result-page';
   $results.html('');
-  $recommendlink.html('');
-  $recommendkey.html('');
+  $recommendkey.css('display', 'none');
+  $recommendkey.css('visibility', 'hidden');
+  $recommendlink.css('display', 'none');
+  $recommendlink.css('visibility', 'hidden');
   $pagination.css('display', 'none');
   $loader.css('display', 'block');
   $imgClose.css('display', 'block');
@@ -220,6 +227,10 @@ const updateViewOnSearch = () => {
 const updateViewOnTop = () => {
   currentPage = 'result-page';
   $results.html('');
+  $recommendkey.css('display', 'block');
+  $recommendkey.css('visibility', 'visible');
+  $recommendlink.css('display', 'block');
+  $recommendlink.css('visibility', 'visible');
   $pagination.css('display', 'none');
   $imgClose.css('display', 'block');
   $inputSearch.css('width', '88.5%');
@@ -260,12 +271,6 @@ function _searchkey(q) {
   
 }
 
-const topkeypage = () => {
-
-  updateViewOnTop();
-  gettopkey("topkeyall");
-  gettoplink("toplinkall");  
-}
 
 const gettopkey = (nametopkey) => { 
 
@@ -305,3 +310,6 @@ const gettoplink = (nametoplink) => {
   })
     .fail(err => console.log("err:",err))
 }
+
+gettopkey("topkeyall");
+gettoplink("toplinkall");  

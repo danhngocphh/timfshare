@@ -104,13 +104,14 @@ router.get('/search', (req, res, next) => {
 
   const { q, start, num } = req.query;
 
-  customsearch.cse.list({
+  customsearch.cse.siterestrict.list({
     auth: config.ggApiKey,
     cx: config.ggCx,
     q, start, num
   })
     .then(result => result.data)
     .then(async (result) => {
+
 
       var { queries, items, searchInformation } = result;
 
@@ -142,7 +143,7 @@ router.get('/search', (req, res, next) => {
 
       if(page.startIndex == 1 && locksearch != 1){
 
-        const datas = await requestPromise('https://thuvienhd.com/?feed=fsharejson&search=' + keyfshare);
+        const datas = await requestPromise('https://thuvienhd.com/?feed=fsharejson&search=' + encodeURI(keyfshare));
         let result1 = JSON.parse(datas);
         result1.forEach(function(value, index){ if(value.links.length == 0){ result1.splice(index, 1); } });
       
