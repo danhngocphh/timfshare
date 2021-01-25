@@ -56,55 +56,55 @@ const customsearch = google.customsearch('v1');
 /* GET home page. */
 router.get('/', async function (req, res, next) {
 
-        var toplink = [];
-        var topkey = [];
-        var keysearch = [];
+  var toplink = [];
+  var topkey = [];
+  var keysearch = [];
 
 
-          await topLinks.findOne({ name: "topkeyall" }, {}).
-          then(result => {
-            for (let i in result.value) {
+  await topLinks.findOne({ name: "topkeyall" }, {}).
+    then(result => {
+      for (let i in result.value) {
 
-              let val = result.value[i];
+        let val = result.value[i];
 
-              topkey[i] = [val.keyword, val.search_total, val.position, i];
-            }
-            selectionSortkey(topkey);
-           }).catch(err => {
-            console.log(err)
-    
-        });
+        topkey[i] = [val.keyword, val.search_total, val.position, i];
+      }
+      selectionSortkey(topkey);
+    }).catch(err => {
+      console.log(err)
 
-        await topLinks.findOne({ name: "toplinkall" }, {}).
-              then( result => {
+    });
 
-                for (let i in result.value) {
+  await topLinks.findOne({ name: "toplinkall" }, {}).
+    then(result => {
 
-                  let link = result.value[i];
+      for (let i in result.value) {
 
-                  toplink[i] = [link.link, link.search_total, link.title, link.position, i];
+        let link = result.value[i];
 
-                }
-                selectionSort(toplink);
-              }).catch(err => {
-                console.log(err)
-        
-            });
+        toplink[i] = [link.link, link.search_total, link.title, link.position, i];
 
-        await Values.aggregate([
-          { $group: { _id: '$value'}},
-          { $project: { _id: 1}}
-        ]).then( result => {
-          for (let i in result) {
-                  let val = result[i];   
-                  keysearch[i] = val["_id"];
-        }
-          
-        }).catch(err => {
-          console.log(err)
-  
-      });
-        res.render('index', { title: 'Fshare Search', keysearch,  topkey, toplink });
+      }
+      selectionSort(toplink);
+    }).catch(err => {
+      console.log(err)
+
+    });
+
+  await Values.aggregate([
+    { $group: { _id: '$value' } },
+    { $project: { _id: 1 } }
+  ]).then(result => {
+    for (let i in result) {
+      let val = result[i];
+      keysearch[i] = val["_id"];
+    }
+
+  }).catch(err => {
+    console.log(err)
+
+  });
+  res.render('index', { title: 'Fshare Search', keysearch, topkey, toplink });
 });
 
 
@@ -135,9 +135,9 @@ router.get('/search', (req, res, next) => {
       var locksearch = 0;
 
 
-      switch(keysearchurl[0]) {
+      switch (keysearchurl[0]) {
         case "inurl:hdvietnam":
-            locksearch = 1;
+          locksearch = 1;
           break;
         case "inurl:fshare":
           keyfshare = q.toString().substr(13)
@@ -146,24 +146,24 @@ router.get('/search', (req, res, next) => {
           keyfshare = q.toString().substr(16)
           break;
         default:
-          // code block
+        // code block
       }
 
 
-      if(page.startIndex == 1 && locksearch != 1){
+      if (page.startIndex == 1 && locksearch != 1) {
 
         const datas = await requestPromise('https://thuvienhd.com/?feed=fsharejson&search=' + encodeURI(keyfshare));
         let result1 = JSON.parse(datas);
-        result1.forEach(function(value, index){ if(value.links.length == 0){ result1.splice(index, 1); } });
-      
+        result1.forEach(function (value, index) { if (value.links.length == 0) { result1.splice(index, 1); } });
+
         let itemstest = result1.map(o => ({
-            link: o.links[0].link,
-            title: o.title,
-            snippet: o.links[0].title
-          })) 
+          link: o.links[0].link,
+          title: o.title,
+          snippet: o.links[0].title
+        }))
         itemsfinal.push(...itemstest);
-        }
-        itemsfinal.push(...items);
+      }
+      itemsfinal.push(...items);
 
 
       const data = {
@@ -210,54 +210,69 @@ router.get('/search', (req, res, next) => {
 
 router.get('/topkey', async (req, res, next) => {
 
-  const {nametopkey} = req.query;
+  const { nametopkey } = req.query;
 
   let topkey = [];
 
   await topLinks.findOne({ name: nametopkey }, {}).
-          then(result => {
-            for (let i in result.value) {
+    then(result => {
+      if (!result) {
 
-              let val = result.value[i];
+        console.log("err");
 
-              topkey[i] = [val.keyword, val.search_total, val.position, i];
-            }
-            selectionSortkey(topkey);
-           }).catch(err => {
-            console.log(err)
-    
-        });
+      }
+      else {
+        for (let i in result.value) {
 
+          let val = result.value[i];
 
-  const data = topkey;
-  res.status(200).send(data);    
-})
+          topkey[i] = [val.keyword, val.search_total, val.position, i];
+        }
+        selectionSortkey(topkey);
+
+      }
+
+    }).catch(err => {
+      console.log(err);
+    })
+
+      const data = topkey;
+      res.status(200).send(data);
+    })
 
 router.get('/toplink', async (req, res, next) => {
 
-  const {nametoplink} = req.query;
+  const { nametoplink } = req.query;
   let toplink = [];
 
   await topLinks.findOne({ name: nametoplink }, {}).
-              then( result => {
+    then(result => {
+      if(!result){
+        console.log("err");
 
-                for (let i in result.value) {
+      }else{
 
-                  let link = result.value[i];
+        for (let i in result.value) {
 
-                  toplink[i] = [link.link, link.search_total, link.title, link.position, i];
+          let link = result.value[i];
+  
+          toplink[i] = [link.link, link.search_total, link.title, link.position, i];
+  
+        }
+        selectionSort(toplink);
 
-                }
-                selectionSort(toplink);
-              }).catch(err => {
-                console.log(err)
-        
-            });
+      }
+
+      
+    }).catch(err => {
+      console.log(err)
+
+    });
 
   const data = toplink;
 
 
-  res.status(200).send(data);    
+  res.status(200).send(data);
 })
 
 function selectionSort(array) {
