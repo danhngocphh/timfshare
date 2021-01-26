@@ -4,6 +4,8 @@ const config = require('../config');
 var request = require('request');
 const mongoose = require('mongoose');
 var fs = require('fs');
+var _ = require('lodash');
+
 
 const requestPromise = (url) => {
   return new Promise((resolve, reject) => {
@@ -38,10 +40,12 @@ var schematopLink = mongoose.Schema({
   date: Date,
   value: Object
 });
-var topLinks = mongoose.model('top', schematopLink);
+var topLinks = mongoose.model('tops', schematopLink);
 
-mongoose.connect('mongodb://localhost:27017/myapp1', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false", { useNewUrlParser: true, useUnifiedTopology: true });
 
+
+// mongoose.connect("mongodb+srv://vegarnom:vegar8226@cluster0.eotns.mongodb.net/dbda1?retryWrites=true&w=majority");
 
 
 
@@ -63,49 +67,47 @@ router.get('/', async function (req, res, next) {
 
   await topLinks.findOne({ name: "topkeyall" }, {}).
     then(result => {
-      if (!result) {
+      let i = 0;
 
-        console.log("err");
-
+      if(!result){
+        console.log("Can't find topkey!")
       }else{
 
-        for (let i in result.value) {
-
-          let val = result.value[i];
-  
-          topkey[i] = [val.keyword, val.search_total, val.position, i];
-        }
+        _.map(result.value, o => {
+          topkey[i] = [o.keyword, o.search_total, o.position, i];
+          i++;
+       });
+        
         selectionSortkey(topkey);
 
       }
+
+     
+
       
     }).catch(err => {
       console.log(err)
 
     });
 
-  await topLinks.findOne({ name: "toplinkall" }, {}).
+    await topLinks.findOne({ name: "toplinkall" }, {}).
     then(result => {
 
-      if (!result) {
-
-        console.log("err");
-
+      if(!result){
+        console.log("Can't find toplink!")
       }else{
-        for (let i in result.value) {
 
-          let link = result.value[i];
-  
-          toplink[i] = [link.link, link.search_total, link.title, link.position, i];
-  
-        }
-        selectionSort(toplink);
+      let i = 0;
 
+      _.map(result.value, o =>{
+        toplink[i] = [o.link, o.search_total, o.title, o.position, i];
+        i++;
+
+      });
+
+      selectionSort(toplink);
       }
-
-
-
-      
+  
     }).catch(err => {
       console.log(err)
 
@@ -115,16 +117,15 @@ router.get('/', async function (req, res, next) {
     { $group: { _id: '$value' } },
     { $project: { _id: 1 } }
   ]).then(result => {
-    if (!result) {
+    let i = 0;
 
-      console.log("err");
+    _.map( result,o=>{
 
-    }else{
+      keysearch[i] = o["_id"];
+      i++;
 
-    for (let i in result) {
-      let val = result[i];
-      keysearch[i] = val["_id"];
-    }}
+
+    })
 
   }).catch(err => {
     console.log(err)
@@ -212,7 +213,7 @@ router.get('/search', (req, res, next) => {
       dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
       options = {
 
-        uri: 'http://fptda1admin.herokuapp.com/values',
+        uri: 'http://localhost:1239/values',
         method: 'POST',
         json: {
           "value": data.q,
@@ -240,54 +241,24 @@ router.get('/topkey', async (req, res, next) => {
 
   let topkey = [];
 
-  await topLinks.findOne({ name: nametopkey }, {}).
+    await topLinks.findOne({ name: nametopkey }, {}).
     then(result => {
-      if (!result) {
+      let i = 0;
 
-        console.log("err");
+      if(!result){
+        console.log("Can't find topkey!")
+      }else{
 
-      }
-      else {
-        for (let i in result.value) {
-
-          let val = result.value[i];
-
-          topkey[i] = [val.keyword, val.search_total, val.position, i];
-        }
+        _.map(result.value, o => {
+          topkey[i] = [o.keyword, o.search_total, o.position, i];
+          i++;
+       });
+        
         selectionSortkey(topkey);
 
       }
 
-    }).catch(err => {
-      console.log(err);
-    })
-
-      const data = topkey;
-      res.status(200).send(data);
-    })
-
-router.get('/toplink', async (req, res, next) => {
-
-  const { nametoplink } = req.query;
-  let toplink = [];
-
-  await topLinks.findOne({ name: nametoplink }, {}).
-    then(result => {
-      if(!result){
-        console.log("err");
-
-      }else{
-
-        for (let i in result.value) {
-
-          let link = result.value[i];
-  
-          toplink[i] = [link.link, link.search_total, link.title, link.position, i];
-  
-        }
-        selectionSort(toplink);
-
-      }
+     
 
       
     }).catch(err => {
@@ -295,10 +266,40 @@ router.get('/toplink', async (req, res, next) => {
 
     });
 
-  const data = toplink;
+      res.status(200).send(topkey);
+    })
+
+router.get('/toplink', async (req, res, next) => {
+
+  const { nametoplink } = req.query;
+  let toplink = [];
+
+    await topLinks.findOne({ name: nametoplink }, {}).
+    then(result => {
+
+      if(!result){
+        console.log("Can't find toplink!")
+      }else{
+
+      let i = 0;
+
+      _.map(result.value, o =>{
+        toplink[i] = [o.link, o.search_total, o.title, o.position, i];
+        i++;
+
+      });
+
+      selectionSort(toplink);
+      }
+  
+    }).catch(err => {
+      console.log(err)
+
+    });
 
 
-  res.status(200).send(data);
+
+  res.status(200).send(toplink);
 })
 
 function selectionSort(array) {
