@@ -24,6 +24,10 @@ h1, h2, h3, h4, h5, h6 {
 	margin-top: 0.5%;
 }
 
+.top-detail a:hover {
+	text-decoration: underline;
+  }
+
 .wrap-search {
 	position: relative;
 	
@@ -251,10 +255,11 @@ img.logo {
 }
 
 .page {
-	margin-top: 50px;
+	margin-top: 30px;
+	margin-bottom: 30px;
 	text-align: center;
 	display: none;
-	width: 55%;
+	width: 50%;
 	float: left;
 	margin-left: 11%;	
 }

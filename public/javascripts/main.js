@@ -44,21 +44,29 @@ const cse = (q, start) => {
     $recommendkey.css('visibility', 'visible');
     $recommendlink.css('display', 'block');
     $recommendlink.css('visibility', 'visible');
-    $results.html(`<li class="total">Đã tìm được ${data.totalResults} kết quả trong ${data.time} giây.</li>`);
-    data.items.map(o => {
-      $results.append(`
-          <li class="item">
-            <a target="_blank" href="${o.link}"  onclick="getLink('${data.q}','${o.link}','${o.title}')" class="title" id="vegar">${o.title}</a>
-            
-           <div class="snippet">${o.link}</div>
-            <div class="snippet">${o.snippet}</div>
-            
-          </li>
+    if (data) {
+
+      $results.html(`<li class="total">Đã tìm được ${data.totalResults} kết quả trong ${data.time} giây.</li>`);
+      data.items.map(o => {
+        $results.append(`
+            <li class="item">
+              <a target="_blank" href="${o.link}"  onclick="getLink('${data.q}','${o.link}','${o.title}')" class="title" id="vegar">${o.title}</a>
+              
+            <div class="snippet">${o.link}</div>
+              <div class="snippet">${o.snippet}</div>
+              
+            </li>
         `);
-    });
+        updatePagination();
+      });
 
+    } else {
 
-    updatePagination();
+      $pagination.css('display', 'none');
+      $results.html(`<li class="total">Không tìm thấy kết quả.</li>`);
+
+    }
+
   })
     .fail(err => console.log(err))
 }
@@ -278,7 +286,7 @@ const gettopkey = (nametopkey) => {
 
     const list = _data;
 
-    $recommendkey.html(`<li class="total">Top 10 Key Search | <a onclick="gettopkey('topkeyweek')" class="title" id="searchkey">Tuần</a>	| <a onclick="gettopkey('topkeymonth')" class="title" id="searchkey">Tháng</a>	| <a onclick="gettopkey('topkeyyear')" class="title" id="searchkey">Năm</a>	| <a onclick="gettopkey('topkeyall')" class="title" id="searchkey">Tất cả</a></li>`);
+    $recommendkey.html(`<li class="total">Top 10 Từ Khóa | <a onclick="gettopkey('topkeyweek')" class="title" id="searchkey">Tuần</a>	| <a onclick="gettopkey('topkeymonth')" class="title" id="searchkey">Tháng</a>	| <a onclick="gettopkey('topkeyyear')" class="title" id="searchkey">Năm</a>	| <a onclick="gettopkey('topkeyall')" class="title" id="searchkey">Tất cả</a></li>`);
 
     $.each(list, function (index, value) {
       $recommendkey.append(`

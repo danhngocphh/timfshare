@@ -147,42 +147,55 @@ router.get('/search', (req, res, next) => {
 
       if (page.startIndex == 1 && locksearch != 1) {
 
-        const datas = await requestPromise('https://thuvienhd.com/?feed=fsharejson&search=' + encodeURI(q));
+        const datas = await requestPromise('https://thuvienhd.com/?feed=timfsharejson&search=' + encodeURI(q));
         let result1 = JSON.parse(datas);
-        result1.forEach(function (value, index) {
-          value.title = value.title.replace("&&", "-");
-          if (value.links.length == 0) {
-            result1.splice(index, 1);
-          }
-        });
 
-        let itemstest = result1.map(o => ({
-          link: o.links[0].link,
-          title: o.title,
-          snippet: o.links[0].title
-        }))
-        itemsfinal.push(...itemstest);
+
+        // console.log(result1[0].data);
+        if (result1.status == 'success') {
+          let datafshare = result1.data;
+          datafshare.forEach(function (value, index) {
+            if (value.links.length > 0) {
+              //await datafshare.splice(index, 1);
+              let itemstest = {
+                link: value.links[0].link,
+                title: value.title,
+                snippet: value.links[0].title
+              };
+              itemsfinal.push(itemstest);
+            }
+          });
+        }
       }
-      itemsfinal.push(...items);
+      itemsfinal = items != undefined ? itemsfinal.concat(items) : itemsfinal;
 
+      let data;
 
-      const data = {
-        q: _keysave,
-        totalResults: page.totalResults,
-        count: page.count,
-        startIndex: page.startIndex,
-        nextPage: nextPage.startIndex,
-        previousPage: previousPage.startIndex,
-        time: searchInformation.searchTime,
-        items: itemsfinal.map(o => ({
-          link: o.link,
-          title: o.title,
-          snippet: o.snippet
-        }))
+      if (itemsfinal.length > 0) {
+        data = {
+          q: _keysave,
+          totalResults: page.totalResults,
+          count: page.count,
+          startIndex: page.startIndex,
+          nextPage: nextPage.startIndex,
+          previousPage: previousPage.startIndex,
+          time: searchInformation.searchTime,
+          items: itemsfinal.map(o => ({
+            link: o.link,
+            title: o.title,
+            snippet: o.snippet
+          }))
+        }
+
       }
+
+
+
+
 
       //send data to localhost:1239
-      let dateT = new Date(Date.now());
+      if(data){
+        let dateT = new Date(Date.now());
       dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
       options = {
 
@@ -199,6 +212,7 @@ router.get('/search', (req, res, next) => {
           console.log(body.id) // Print the shortened url.
         }
       });
+      }
       // res.status(200).send(result);
       res.status(200).send(data);
     })

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,12 @@
   <meta name="description" content="Custom Search Engine (CSE) in Node.js with Google APIs">
   <meta name="keywords" content="cse, googleapis, node.js, custom search engine, google api, heroku, herokuapp">
 
-  <title><%= title %></title>
+  <title>
+    <%= title %>
+  </title>
 
   <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
-  
+
   <link href="//fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
   <link rel="stylesheet" href="/stylesheets/loader.css">
   <link rel='stylesheet' href="/stylesheets/style.css">
@@ -19,14 +22,14 @@
 </head>
 
 <body>
-  
 
-  
+
+
   <div class="wrap-search">
 
-    
+
     <div class="dropdown" id="cusSelectbox">
-      <select name="one" class="dropdown-select" id="cusSelectboxValue" >
+      <select name="one" class="dropdown-select" id="cusSelectboxValue">
         <option value="">Tất cả</option>
         <option value="inurl:fshare">Fshare</option>
         <option value="inurl:hdvietnam">HDvietnam</option>
@@ -34,50 +37,50 @@
       </select>
     </div>
 
-    
+
     <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..." id="input-search" name="q">
 
 
 
-    
- 
+
+
     <img src="/images/search.png" alt="Search" class="search" id="img-search">
     <img src="/images/close.png" alt="Close" class="close" id="img-close">
 
 
-    
-    
+
+
   </div>
 
 
   <div class="top-detail">
-    <a onclick="updateViewOnTop()" class="title" id="searchkey">| Top Từ Khóa | Top Đường Link |</a>
- 
-</div> 
+   <a onclick="updateViewOnTop()" class="title" id="searchkey">Top Từ Khóa</a> | <a onclick="updateViewOnTop()" class="title" id="searchkey">Top Đường Link</a>
 
-
-
-
-
-  <a href="/" ><img src="/images/cse.png" alt="" class="logo" id="logo-outside"></a>
-
-
-  
-  <div class="wrap-recommendlink">
-      <ul id="recommendlink"></ul>
-   
-  </div> 
-  
-
-  <div class="wrap-content">
-     <ul id="results" />
   </div>
 
-    
+
+
+
+
+  <a href="/"><img src="/images/cse.png" alt="" class="logo" id="logo-outside"></a>
+
+
+
+  <div class="wrap-recommendlink">
+    <ul id="recommendlink"></ul>
+
+  </div>
+
+
+  <div class="wrap-content">
+    <ul id="results" />
+  </div>
+
+
   <div class="wrap-recommendkey">
 
     <ul id="recommendkey"></ul>
-</div> 
+  </div>
 
 
 
@@ -90,7 +93,7 @@
     <button class="prev" id="btn-prev">Trang trước</button>
     <button class="next" id="btn-next">Trang kế</button>
   </div>
-  
+
   <div id="loader" style="color: #eb1a58" class="la-ball-climbing-dot la-3x loader">
     <div></div>
     <div></div>
@@ -103,24 +106,27 @@
   <img src="/images/cse.png" alt="Fshare Search" class="cse" id="img-cse">
   <script src="/javascripts/autocomplete.js"></script>
 
-  <span style="display: none;" id="key_value"><%= JSON.stringify(keysearch) %></span>
+  <span style="display: none;" id="key_value">
+    <%= JSON.stringify(keysearch) %>
+  </span>
   <script src="/javascripts/main.js"></script>
   <script>
-    $( document ).ready(function() {
-      var key = $('#key_value').html(); 
+    $(document).ready(function () {
+      var key = $('#key_value').html();
       //key = unescape(key);
       key = JSON.parse(key);
-      autocomplete(document.getElementById("input-search"), key );
-      if(currentPage){
+      autocomplete(document.getElementById("input-search"), key);
+      if (currentPage) {
         currentPage = 'home';
       }
     });
   </script>
-    
-    
 
 
 
-  
+
+
+
 </body>
+
 </html>
