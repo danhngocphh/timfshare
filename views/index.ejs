@@ -7,7 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="description" content="Custom Search Engine (CSE) in Node.js with Google APIs">
   <meta name="keywords" content="cse, googleapis, node.js, custom search engine, google api, heroku, herokuapp">
-
   <title>
     <%= title %>
   </title>
@@ -22,12 +21,7 @@
 </head>
 
 <body>
-
-
-
   <div class="wrap-search">
-
-
     <div class="dropdown" id="cusSelectbox">
       <select name="one" class="dropdown-select" id="cusSelectboxValue">
         <option value="">Tất cả</option>
@@ -36,76 +30,37 @@
         <option value="inurl:thuvienhd">ThuvienHD</option>
       </select>
     </div>
-
-
     <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..." id="input-search" name="q">
-
-
-
-
-
     <img src="/images/search.png" alt="Search" class="search" id="img-search">
     <img src="/images/close.png" alt="Close" class="close" id="img-close">
-
-
-
-
   </div>
-
-
   <div class="top-detail">
-   <a onclick="updateViewOnTop()" class="title" id="searchkey">Top Từ Khóa</a> | <a onclick="updateViewOnTop()" class="title" id="searchkey">Top Đường Link Hot</a>
-
+    <a onclick="updateViewOnTop()" class="title" id="searchkey">Top Từ Khóa</a> | <a onclick="updateViewOnTop()"
+      class="title" id="searchkey">Top Đường Link Hot</a>
   </div>
-
-
-
-
-
   <a href="/"><img src="/images/cse.png" alt="" class="logo" id="logo-outside"></a>
-
-
-
   <div class="wrap-recommendlink">
     <ul id="recommendlink"></ul>
-
   </div>
-
-
   <div class="wrap-content">
     <ul id="results" />
   </div>
-
-
   <div class="wrap-recommendkey">
-
     <ul id="recommendkey"></ul>
   </div>
-
-
-
-
-
-
-
-
   <div class="page" id="pagination">
     <button class="prev" id="btn-prev">Trang trước</button>
     <button class="next" id="btn-next">Trang kế</button>
   </div>
-
   <div id="loader" style="color: #eb1a58" class="la-ball-climbing-dot la-3x loader">
     <div></div>
     <div></div>
     <div></div>
     <div></div>
   </div>
-
   <div id="input-searchautocomplete-list" class="autocomplete-items"></div>
-
   <img src="/images/cse.png" alt="Fshare Search" class="cse" id="img-cse">
   <script src="/javascripts/autocomplete.js"></script>
-
   <span style="display: none;" id="key_value">
     <%= JSON.stringify(keysearch) %>
   </span>
@@ -121,12 +76,6 @@
       }
     });
   </script>
-
-
-
-
-
-
 </body>
 
 </html>

@@ -5,7 +5,6 @@ var request = require('request');
 const { topLinks, Values, Links } = require('../db');
 var _ = require('lodash');
 
-
 const requestPromise = (url) => {
   return new Promise((resolve, reject) => {
     request(url, (error, response, body) => {
@@ -16,7 +15,6 @@ const requestPromise = (url) => {
     })
   })
 }
-
 var options;
 
 var router = express.Router();
@@ -26,89 +24,58 @@ const customsearch = google.customsearch('v1');
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
-
   var toplink = [];
   var topkey = [];
   var keysearch = [];
-
-
   await topLinks.findOne({ name: "topkeyall" }, {}).
     then(result => {
       let i = 0;
-
       if (!result) {
         console.log("Can't find topkey!")
       } else {
-
         _.map(result.value, o => {
           topkey[i] = [o.keyword, o.search_total, o.position, i];
           i++;
         });
-
         selectionSortkey(topkey);
-
       }
-
-
-
-
     }).catch(err => {
       console.log(err)
-
     });
-
   await topLinks.findOne({ name: "toplinkall" }, {}).
     then(result => {
-
       if (!result) {
         console.log("Can't find toplink!")
       } else {
-
         let i = 0;
-
         _.map(result.value, o => {
           toplink[i] = [o.link, o.search_total, o.title, o.position, i];
           i++;
-
         });
-
         selectionSort(toplink);
       }
-
     }).catch(err => {
       console.log(err)
-
     });
-
   await Values.aggregate([
     { $group: { _id: '$value' } },
     { $project: { _id: 1 } }
   ]).then(result => {
     let i = 0;
-
     _.map(result, o => {
-
       keysearch[i] = o["_id"];
       i++;
-
-
     })
-
   }).catch(err => {
     console.log(err)
-
   });
   res.render('index', { title: 'Fshare Search', keysearch, topkey, toplink });
 });
 
-
-
 router.get('/search', (req, res, next) => {
-
   var { q, start, num } = req.query;
   const _keysave = q;
   q = q.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
   customsearch.cse.siterestrict.list({
     auth: config.ggApiKey,
     cx: config.ggCx,
@@ -116,10 +83,7 @@ router.get('/search', (req, res, next) => {
   })
     .then(result => result.data)
     .then(async (result) => {
-
-
       var { queries, items, searchInformation } = result;
-
       var itemsfinal = [];
       const page = (queries.request || [])[0] || {};
       const previousPage = (queries.previousPage || [])[0] || {};
@@ -128,8 +92,6 @@ router.get('/search', (req, res, next) => {
       var topkey = [];
       const keysearchurl = q.toString().split(' ', 3)
       var locksearch = 0;
-
-
       switch (keysearchurl[0]) {
         case "inurl:hdvietnam":
           locksearch = 1;
@@ -143,14 +105,9 @@ router.get('/search', (req, res, next) => {
         default:
         // code block
       }
-
-
       if (page.startIndex == 1 && locksearch != 1) {
-
         const datas = await requestPromise('https://thuvienhd.com/?feed=timfsharejson&search=' + encodeURI(q));
         let result1 = JSON.parse(datas);
-
-
         // console.log(result1[0].data);
         if (result1.status == 'success') {
           let datafshare = result1.data;
@@ -168,9 +125,7 @@ router.get('/search', (req, res, next) => {
         }
       }
       itemsfinal = items != undefined ? itemsfinal.concat(items) : itemsfinal;
-
       let data;
-
       if (itemsfinal.length > 0) {
         data = {
           q: _keysave,
@@ -186,32 +141,24 @@ router.get('/search', (req, res, next) => {
             snippet: o.snippet
           }))
         }
-
       }
-
-
-
-
-
       //send data to localhost:1239
-      if(data){
+      if (data) {
         let dateT = new Date(Date.now());
-      dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
-      options = {
-
-        uri: 'http://localhost:1239/values',
-        method: 'POST',
-        json: {
-          "value": data.q,
-          "date": dateT
-        }
-      };
-
-      request(options, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          console.log(body.id) // Print the shortened url.
-        }
-      });
+        dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
+        options = {
+          uri: 'http://localhost:1239/values',
+          method: 'POST',
+          json: {
+            "value": data.q,
+            "date": dateT
+          }
+        };
+        request(options, function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            console.log(body.id) // Print the shortened url.
+          }
+        });
       }
       // res.status(200).send(result);
       res.status(200).send(data);
@@ -223,71 +170,46 @@ router.get('/search', (req, res, next) => {
 })
 
 router.get('/topkey', async (req, res, next) => {
-
   const { nametopkey } = req.query;
-
   let topkey = [];
-
   await topLinks.findOne({ name: nametopkey }, {}).
     then(result => {
       let i = 0;
-
       if (!result) {
         console.log("Can't find topkey!")
       } else {
-
         _.map(result.value, o => {
           topkey[i] = [o.keyword, o.search_total, o.position, i];
           i++;
         });
-
         selectionSortkey(topkey);
-
       }
-
-
-
-
     }).catch(err => {
       console.log(err)
-
     });
-
   res.status(200).send(topkey);
 })
 
 router.get('/toplink', async (req, res, next) => {
-
   const { nametoplink } = req.query;
   let toplink = [];
-
   await topLinks.findOne({ name: nametoplink }, {}).
     then(result => {
-
       if (!result) {
         console.log("Can't find toplink!")
       } else {
-
         let i = 0;
-
         _.map(result.value, o => {
           toplink[i] = [o.link, o.search_total, o.title, o.position, i];
           i++;
-
         });
-
         selectionSort(toplink);
       }
-
     }).catch(err => {
       console.log(err)
-
     });
-
-
-
   res.status(200).send(toplink);
-})
+});
 
 function selectionSort(array) {
   for (let i = 0; i < array.length - 1; i++) {
@@ -295,7 +217,6 @@ function selectionSort(array) {
     for (let j = i + 1; j < array.length; j++) {
       if (array[j][3] < array[idmin][3]) idmin = j;
     }
-
     // swap
     let t = array[i];
     array[i] = array[idmin];
@@ -309,13 +230,11 @@ function selectionSortkey(array) {
     for (let j = i + 1; j < array.length; j++) {
       if (array[j][2] < array[idmin][2]) idmin = j;
     }
-
     // swap
     let t = array[i];
     array[i] = array[idmin];
     array[idmin] = t;
   }
 }
-
 
 module.exports = router;

@@ -19,16 +19,12 @@ const $autocomplete = $('#input-searchautocomplete-list');
 var currentPage = 'home';
 var data;
 
-
-
 const updatePagination = () => {
   $pagination.css('display', 'block');
-
   if (data.nextPage)
     $btnNext.removeClass('disabled');
   else
     $btnNext.addClass('disabled');
-
   if (data.previousPage)
     $btnPrev.removeClass('disabled');
   else
@@ -45,34 +41,26 @@ const cse = (q, start) => {
     $recommendlink.css('display', 'block');
     $recommendlink.css('visibility', 'visible');
     if (data) {
-
       $results.html(`<li class="total">Đã tìm được ${data.totalResults} kết quả trong ${data.time} giây.</li>`);
       data.items.map(o => {
         $results.append(`
             <li class="item">
-              <a target="_blank" href="${o.link}"  onclick="getLink('${data.q}','${o.link}','${o.title}')" class="title" id="vegar">${o.title}</a>
-              
+              <a target="_blank" href="${o.link}"  onclick="getLink('${data.q}','${o.link}','${o.title}')" class="title" id="vegar">${o.title}</a>         
             <div class="snippet">${o.link}</div>
-              <div class="snippet">${o.snippet}</div>
-              
+              <div class="snippet">${o.snippet}</div>              
             </li>
         `);
         updatePagination();
       });
-
     } else {
-
       $pagination.css('display', 'none');
       $results.html(`<li class="total">Không tìm thấy kết quả.</li>`);
-
     }
-
   })
     .fail(err => console.log(err))
 }
 
 (() => {
-
   const updateViewOnSearch = () => {
     currentPage = 'result-page';
     $results.html('');
@@ -110,55 +98,41 @@ const cse = (q, start) => {
     $recommendkey.css('margin-top', '0%');
     $hotlink.css('display', 'none');
   }
-
   $inputSearch.on('input', (e) => {
     if ($inputSearch.val() != '') {
       $imgClose.css('display', 'block');
     }
-
     else
       $imgClose.css('display', 'none');
   })
 
 
   $imgSearch.click(() => {
-
     const q = $domainvalue.val() + " " + $inputSearch.val();
-
     if (!q || q === '') return;
     updateViewOnSearch();
     cse(q);
   })
-
-
   $btnNext.click(() => {
     updateViewOnSearch();
     cse(data.q, data.nextPage);
   });
-
   $btnPrev.click(() => {
     updateViewOnSearch();
     cse(data.q, data.previousPage);
   })
-
   $imgClose.click(() => {
     data = null;
     $inputSearch.val('');
     $imgClose.css('display', 'none');
   })
-
-
   $inputSearch.keyup(function () {
-
-    console.log("__keyup");
-    console.log("__keyup-curr-page", currentPage);
     if (currentPage == 'result-page') {
       $('#input-searchautocomplete-list').addClass('margrin-top-cus');
     }
   });
 
   function onInit() {
-
     var q = $inputSearch.val();
     if (q && q != '') {
       updateViewOnSearch();
@@ -166,12 +140,9 @@ const cse = (q, start) => {
     }
   }
   onInit();
-
 })();
 
-
 function getLink(value, link, title) {
-
   let dateT = new Date(Date.now());
   $.post("http://localhost:1239/links",
     {
@@ -265,29 +236,19 @@ const updateViewOnTop = () => {
   $recommendkey.css('float', 'right');
   $recommendkey.css('width', '40%');
   $recommendkey.css('margin-top', '-50%');
-
   $hotlink.css('display', 'none');
 }
 
 function _searchkey(q) {
-
-
   updateViewOnSearch();
   cse(q);
   document.getElementById("input-search").value = q;
-
-
 }
 
-
 const gettopkey = (nametopkey) => {
-
   $.get('/topkey', { nametopkey }).done(_data => {
-
     const list = _data;
-
     $recommendkey.html(`<li class="total">Top 10 Từ Khóa | <a onclick="gettopkey('topkeyweek')" class="title" id="searchkey">Tuần</a>	| <a onclick="gettopkey('topkeymonth')" class="title" id="searchkey">Tháng</a>	| <a onclick="gettopkey('topkeyyear')" class="title" id="searchkey">Năm</a>	| <a onclick="gettopkey('topkeyall')" class="title" id="searchkey">Tất cả</a></li>`);
-
     $.each(list, function (index, value) {
       $recommendkey.append(`
       <li class="item">#${value[2]} 
@@ -300,13 +261,9 @@ const gettopkey = (nametopkey) => {
 }
 
 const gettoplink = (nametoplink) => {
-
   $.get('/toplink', { nametoplink }).done(_data => {
-
     const list = _data;
-
     $recommendlink.html(`<li class="total">Top 10 Link | <a onclick="gettoplink('toplinkweek')" class="title" id="searchkey">Tuần</a> | <a onclick="gettoplink('toplinkmonth')" class="title" id="searchkey">Tháng</a>	| <a onclick="gettoplink('toplinkyear')" class="title" id="searchkey">Năm</a>	| <a onclick="gettoplink('toplinkall')" class="title" id="searchkey">Tất cả</a></li>`);
-
     $.each(list, function (index, value) {
       $recommendlink.append(`
       <li class="item">#${value[3]} 
@@ -314,7 +271,6 @@ const gettoplink = (nametoplink) => {
   </li>
       `);
     });
-
   })
     .fail(err => console.log("err:", err))
 }
