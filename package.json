@@ -14,6 +14,7 @@
     "dotenv": "^5.0.1",
     "ejs": "~2.5.7",
     "express": "^4.17.1",
+    "generate-robotstxt": "^8.0.3",
     "googleapis": "^67.0.0",
     "jquery": "^3.5.1",
     "mongoose": "^5.11.8",
@@ -23,6 +24,7 @@
     "request": "^2.88.2",
     "serve-favicon": "~2.4.5",
     "simple-xml-to-json": "^1.0.7",
+    "sitemap": "^6.3.5",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {

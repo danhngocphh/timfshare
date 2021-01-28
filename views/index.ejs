@@ -22,20 +22,24 @@
 
 <body>
   <div class="wrap-search">
-    <div class="dropdown" id="cusSelectbox">
-      <select name="one" class="dropdown-select" id="cusSelectboxValue">
-        <option value="">Tất cả</option>
-        <option value="inurl:fshare">Fshare</option>
-        <option value="inurl:hdvietnam">HDvietnam</option>
-        <option value="inurl:thuvienhd">ThuvienHD</option>
-      </select>
-    </div>
-    <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..." id="input-search" name="q">
-    <img src="/images/search.png" alt="Search" class="search" id="img-search">
+    <form action="/" method="get">
+      <div class="dropdown" id="cusSelectbox">
+        <select name="site" class="dropdown-select" id="cusSelectboxValue">
+          <option value="">Tất cả</option>
+          <option value="fshare">Fshare</option>
+          <option value="hdvietnam">HDvietnam</option>
+          <option value="thuvienhd">ThuvienHD</option>
+        </select>
+      </div>
+      <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..." id="input-search" name="s">
+      <button type="submit" style="border: unset !important;" ><img src="/images/search.png" type="submit" alt="Submit" class="search" id="img-search"></button>
+    </form>
+     
+      
     <img src="/images/close.png" alt="Close" class="close" id="img-close">
   </div>
   <div class="top-detail">
-    <a onclick="updateViewOnTop()" class="title" id="searchkey">Top Từ Khóa</a> | <a onclick="updateViewOnTop()"
+    <a href="/?top=key" class="title" id="searchkey">Top Từ Khóa</a> | <a href="/?top=link"
       class="title" id="searchkey">Top Đường Link Hot</a>
   </div>
   <a href="/"><img src="/images/cse.png" alt="" class="logo" id="logo-outside"></a>

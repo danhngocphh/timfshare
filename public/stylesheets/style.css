@@ -16,6 +16,7 @@ ul {
 	list-style: none;
 }
 
+
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 900;
 }
@@ -230,7 +231,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .margrin-top-cus{
-	margin-top: 40px;
+	margin-top: 23px;
 }
 
 .loader, img.cse {

@@ -3,7 +3,7 @@ function autocomplete(inp, arr) {
   inp.addEventListener("input", function (e) {
     var a, b, i, val = this.value;
     closeAllLists();
-    if (!val) { return false;}
+    if (!val) { return false; }
     currentFocus = -1;
     a = document.createElement("DIV");
     a.setAttribute("id", this.id + "autocomplete-list");
@@ -17,9 +17,7 @@ function autocomplete(inp, arr) {
         b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
         b.addEventListener("click", function (e) {
           inp.value = this.getElementsByTagName("input")[0].value;
-          updateViewOnSearch();
-          // cse($domainvalue.val()+" "+inp.value);
-          closeAllLists();
+          window.open("/?s=" + inp.value,"_parent");
         });
         a.appendChild(b);
       }
@@ -29,9 +27,9 @@ function autocomplete(inp, arr) {
   inp.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
       //console.log("Enter 2 handle");
-      const q = $domainvalue.val() + " " + $inputSearch.val();
-      updateViewOnSearch();
-      cse(q);
+      // const q = $domainvalue.val() + " " + $inputSearch.val();
+      // updateViewOnSearch();
+      // cse(q);
     }
     closeAllLists();
   });

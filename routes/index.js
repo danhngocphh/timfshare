@@ -20,8 +20,6 @@ var options;
 var router = express.Router();
 const customsearch = google.customsearch('v1');
 
-
-
 /* GET home page. */
 router.get('/', async function (req, res, next) {
   var toplink = [];
@@ -190,6 +188,43 @@ router.get('/topkey', async (req, res, next) => {
   res.status(200).send(topkey);
 })
 
+// router.get('/sitemap.xml', function(req, res) {
+//   res.header('Content-Type', 'application/xml');
+//   res.header('Content-Encoding', 'gzip');
+//   // if we have a cached entry send it
+//   if (sitemap) {
+//     res.send(sitemap)
+//     return
+//   }
+
+//   try {
+//     const smStream = new SitemapStream({ hostname: 'https://timfshare.com/' })
+//     const pipeline = smStream.pipe(createGzip())
+
+//     // pipe your entries or directly write them.
+//     smStream.write( { url: '/', changefreq: 'monthly', priority: 0.1 })
+//     smStream.write({ url: '/?site=&s=key', changefreq: 'daily', priority: 0.2 })
+//     smStream.write({ url: '/?site=fshare&s=key', changefreq: 'daily', priority: 0.1 })    // changefreq: 'weekly',  priority: 0.5
+//     smStream.write({ url: '/?site=hdvietnam&s=key', changefreq: 'daily', priority: 0.1 })
+//     smStream.write({ url: '/?site=thuvienhd&s=key', changefreq: 'daily', priority: 0.1 })
+//     smStream.write({ url: '/?top=link', changefreq: 'daily', priority: 0.2 })
+//     smStream.write({ url: '/?top=key/', changefreq: 'daily', priority: 0.2 })
+//     /* or use
+//     Readable.from([{url: '/page-1'}...]).pipe(smStream)
+//     if you are looking to avoid writing your own loop.
+//     */
+
+//     // cache the response
+//     streamToPromise(pipeline).then(sm => sitemap = sm)
+//     // make sure to attach a write stream such as streamToPromise before ending
+//     smStream.end()
+//     // stream write the response
+//     pipeline.pipe(res).on('error', (e) => {throw e})
+//   } catch (e) {
+//     console.error(e)
+//     res.status(500).end()
+//   }
+// })
 router.get('/toplink', async (req, res, next) => {
   const { nametoplink } = req.query;
   let toplink = [];

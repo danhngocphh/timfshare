@@ -1,4 +1,3 @@
-// var request = require('request');
 const $inputSearch = $('#input-search');
 const $domainvalue = $('#cusSelectboxValue');
 const $domain = $('#cusSelectbox');
@@ -18,6 +17,13 @@ const $hotlink = $('.top-detail');
 const $autocomplete = $('#input-searchautocomplete-list');
 var currentPage = 'home';
 var data;
+
+const url_string = window.location.href;
+const url = new URL(url_string);
+const s = url.searchParams.get("s");
+var site = url.searchParams.get("site");
+const topurl = url.searchParams.get("top");
+
 
 const updatePagination = () => {
   $pagination.css('display', 'block');
@@ -77,14 +83,14 @@ const cse = (q, start) => {
     $inputSearch.css('margin-left', '0%');
     $domain.css('margin-top', '0.2%');
     $domain.css('margin-left', '11.5%');
-    $imgSearch.css('margin-top', '1.7%');
+    $imgSearch.css('margin-top', '0.2%');
     $imgSearch.css('right', '1%');
-    $imgClose.css('margin-top', '1.7%');
+    $imgClose.css('margin-top', '0.2%');
     $imgClose.css('right', '3%');
     $imglogooutside.css('position', 'relative');
     $imglogooutside.css('width', '10%');
     $imglogooutside.css('left', '5%');
-    $imglogooutside.css('margin-top', '1.8%');
+    $imglogooutside.css('margin-top', '0.2%');
     $imglogooutside.css('float', 'left');
     $autocomplete.css('margin-top', '20px');
     $autocomplete.css('width', '20%');
@@ -106,13 +112,14 @@ const cse = (q, start) => {
       $imgClose.css('display', 'none');
   })
 
-
-  $imgSearch.click(() => {
-    const q = $domainvalue.val() + " " + $inputSearch.val();
-    if (!q || q === '') return;
-    updateViewOnSearch();
-    cse(q);
-  })
+  // $imgSearch.click(() => {
+  //   const q = $domainvalue.val() + " " + s;
+  //   if (!q || q === '') return;
+  //   updateViewOnSearch();
+  //   cse(q);
+  //   document.getElementById("input-search").value = s;
+  // })
+  
   $btnNext.click(() => {
     updateViewOnSearch();
     cse(data.q, data.nextPage);
@@ -126,17 +133,25 @@ const cse = (q, start) => {
     $inputSearch.val('');
     $imgClose.css('display', 'none');
   })
+
   $inputSearch.keyup(function () {
-    if (currentPage == 'result-page') {
+    if (s) {
       $('#input-searchautocomplete-list').addClass('margrin-top-cus');
     }
   });
 
   function onInit() {
-    var q = $inputSearch.val();
-    if (q && q != '') {
+    if (site){
+      var q ="inurl:"+site+" "+s;
+    }else{
+      var q = s;
+    }
+    if (s && s != '') {
       updateViewOnSearch();
       cse(q);
+      document.getElementById("input-search").value = s;
+      $domainvalue.val(site);
+
     }
   }
   onInit();
@@ -181,14 +196,14 @@ const updateViewOnSearch = () => {
   $inputSearch.css('margin-left', '0%');
   $domain.css('margin-top', '0.2%');
   $domain.css('margin-left', '11.5%');
-  $imgSearch.css('margin-top', '1.7%');
+  $imgSearch.css('margin-top', '0.2%');
   $imgSearch.css('right', '1%');
-  $imgClose.css('margin-top', '1.7%');
+  $imgClose.css('margin-top', '0.2%');
   $imgClose.css('right', '3%');
   $imglogooutside.css('position', 'relative');
   $imglogooutside.css('width', '10%');
   $imglogooutside.css('left', '5%');
-  $imglogooutside.css('margin-top', '1.8%');
+  $imglogooutside.css('margin-top', '0.2%');
   $imglogooutside.css('float', 'left');
   $autocomplete.css('margin-top', '20px');
   $autocomplete.css('width', '20%');
@@ -218,14 +233,14 @@ const updateViewOnTop = () => {
   $inputSearch.css('margin-left', '0%');
   $domain.css('margin-top', '0.2%');
   $domain.css('margin-left', '11.5%');
-  $imgSearch.css('margin-top', '1.7%');
+  $imgSearch.css('margin-top', '0.2%');
   $imgSearch.css('right', '1%');
-  $imgClose.css('margin-top', '1.7%');
+  $imgClose.css('margin-top', '0.2%');
   $imgClose.css('right', '3%');
   $imglogooutside.css('position', 'relative');
   $imglogooutside.css('width', '10%');
   $imglogooutside.css('left', '5%');
-  $imglogooutside.css('margin-top', '1.8%');
+  $imglogooutside.css('margin-top', '0.2%');
   $imglogooutside.css('float', 'left');
   $autocomplete.css('margin-top', '20px');
   $autocomplete.css('width', '20%');
@@ -239,12 +254,6 @@ const updateViewOnTop = () => {
   $hotlink.css('display', 'none');
 }
 
-function _searchkey(q) {
-  updateViewOnSearch();
-  cse(q);
-  document.getElementById("input-search").value = q;
-}
-
 const gettopkey = (nametopkey) => {
   $.get('/topkey', { nametopkey }).done(_data => {
     const list = _data;
@@ -252,7 +261,7 @@ const gettopkey = (nametopkey) => {
     $.each(list, function (index, value) {
       $recommendkey.append(`
       <li class="item">#${value[2]} 
-      <a onclick="_searchkey('${value[0]}')" class="title" id="searchkey">${value[0]}</a>
+      <a href="/?s=${value[0]}" class="title" id="searchkey">${value[0]}</a>
   </li>
       `);
     });
@@ -277,3 +286,9 @@ const gettoplink = (nametoplink) => {
 
 gettopkey("topkeyall");
 gettoplink("toplinkall");  
+
+
+if(topurl){
+  console.log("_ls");
+  updateViewOnTop();
+}
