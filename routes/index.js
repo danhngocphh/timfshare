@@ -67,7 +67,7 @@ router.get('/', async function (req, res, next) {
   }).catch(err => {
     console.log(err)
   });
-  res.render('index', { title: 'Fshare Search', keysearch, topkey, toplink });
+  res.render('index', { title: 'TimFshare.com - Tìm kiếm link nhanh chóng, chính xác', keysearch, topkey, toplink });
 });
 
 router.get('/search', (req, res, next) => {

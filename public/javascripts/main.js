@@ -24,6 +24,10 @@ const s = url.searchParams.get("s");
 var site = url.searchParams.get("site");
 const topurl = url.searchParams.get("top");
 
+if(s){
+  document.title = s + " - Tìm Trên TimFshare";
+}
+
 
 const updatePagination = () => {
   $pagination.css('display', 'block');
