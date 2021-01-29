@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TLCCPKXGNG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-TLCCPKXGNG');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -32,15 +41,16 @@
         </select>
       </div>
       <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..." id="input-search" name="s">
-      <button type="submit" style="border: unset !important;" ><img src="/images/search.png" type="submit" alt="Submit" class="search" id="img-search"></button>
+      <button type="submit" style="border: unset !important;"><img src="/images/search.png" type="submit" alt="Submit"
+          class="search" id="img-search"></button>
     </form>
-     
-      
+
+
     <img src="/images/close.png" alt="Close" class="close" id="img-close">
   </div>
   <div class="top-detail">
-    <a href="/?top=key" class="title" id="searchkey">Top Từ Khóa</a> | <a href="/?top=link"
-      class="title" id="searchkey">Top Đường Link Hot</a>
+    <a href="/?top=key" class="title" id="searchkey">Top Từ Khóa</a> | <a href="/?top=link" class="title"
+      id="searchkey">Top Đường Link Hot</a>
   </div>
   <a href="/"><img src="/images/cse.png" alt="" class="logo" id="logo-outside"></a>
   <div class="wrap-recommendlink">
