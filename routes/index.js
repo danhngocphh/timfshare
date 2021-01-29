@@ -203,7 +203,7 @@ router.get('/sitemap.xml', function(req, res) {
   }
 
   try {
-    const smStream = new SitemapStream({ hostname: 'https://timfshare.com/' })
+    const smStream = new SitemapStream({ hostname: 'http://timfshare.com/' })
     const pipeline = smStream.pipe(createGzip())
 
     // pipe your entries or directly write them.
@@ -255,7 +255,7 @@ router.get('/sitemap-search.xml', async function(req, res) {
   }
 
   try {
-    const smStream = new SitemapStream({ hostname: 'https://timfshare.com/' })
+    const smStream = new SitemapStream({ hostname: 'http://timfshare.com/' })
     const pipeline = smStream.pipe(createGzip())
 
     // pipe your entries or directly write them.
