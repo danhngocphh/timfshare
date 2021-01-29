@@ -297,6 +297,5 @@ gettoplink("toplinkall");
 
 
 if(topurl){
-  console.log("_ls");
   updateViewOnTop();
 }
