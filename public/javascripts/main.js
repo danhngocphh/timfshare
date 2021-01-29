@@ -24,6 +24,10 @@ const s = url.searchParams.get("s");
 var site = url.searchParams.get("site");
 const topurl = url.searchParams.get("top");
 
+// set description
+document.getElementsByTagName("meta")[3].outerHTML = '<meta name="description" content="'+ s +' - Tìm Trên TimFshare">';
+
+
 if(s){
   document.title = s + " - Tìm Trên TimFshare";
 }
