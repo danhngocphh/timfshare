@@ -4,6 +4,10 @@ const config = require('../config');
 var request = require('request');
 const { topLinks, Values, Links } = require('../db');
 var _ = require('lodash');
+const { SitemapStream, streamToPromise } = require('sitemap');
+const { createGzip } = require('zlib');
+const { Readable } = require('stream');
+
 
 const requestPromise = (url) => {
   return new Promise((resolve, reject) => {
@@ -67,7 +71,7 @@ router.get('/', async function (req, res, next) {
   }).catch(err => {
     console.log(err)
   });
-  res.render('index', { title: 'TimFshare.com - Tìm kiếm link nhanh chóng, chính xác', keysearch, topkey, toplink });
+  res.render('index', { title: 'TimFshare.com - Tìm kiếm link Fshare nhanh chóng, chính xác', keysearch, topkey, toplink });
 });
 
 router.get('/search', (req, res, next) => {
@@ -188,43 +192,91 @@ router.get('/topkey', async (req, res, next) => {
   res.status(200).send(topkey);
 })
 
-// router.get('/sitemap.xml', function(req, res) {
-//   res.header('Content-Type', 'application/xml');
-//   res.header('Content-Encoding', 'gzip');
-//   // if we have a cached entry send it
-//   if (sitemap) {
-//     res.send(sitemap)
-//     return
-//   }
+router.get('/sitemap.xml', function(req, res) {
+  res.header('Content-Type', 'application/xml');
+  res.header('Content-Encoding', 'gzip');
+  let sitemap;
+  // if we have a cached entry send it
+  if (sitemap) {
+    res.send(sitemap)
+    return
+  }
 
-//   try {
-//     const smStream = new SitemapStream({ hostname: 'https://timfshare.com/' })
-//     const pipeline = smStream.pipe(createGzip())
+  try {
+    const smStream = new SitemapStream({ hostname: 'https://timfshare.com/' })
+    const pipeline = smStream.pipe(createGzip())
 
-//     // pipe your entries or directly write them.
-//     smStream.write( { url: '/', changefreq: 'monthly', priority: 0.1 })
-//     smStream.write({ url: '/?site=&s=key', changefreq: 'daily', priority: 0.2 })
-//     smStream.write({ url: '/?site=fshare&s=key', changefreq: 'daily', priority: 0.1 })    // changefreq: 'weekly',  priority: 0.5
-//     smStream.write({ url: '/?site=hdvietnam&s=key', changefreq: 'daily', priority: 0.1 })
-//     smStream.write({ url: '/?site=thuvienhd&s=key', changefreq: 'daily', priority: 0.1 })
-//     smStream.write({ url: '/?top=link', changefreq: 'daily', priority: 0.2 })
-//     smStream.write({ url: '/?top=key/', changefreq: 'daily', priority: 0.2 })
-//     /* or use
-//     Readable.from([{url: '/page-1'}...]).pipe(smStream)
-//     if you are looking to avoid writing your own loop.
-//     */
+    // pipe your entries or directly write them.
+    smStream.write({ url: '/', changefreq: 'monthly', priority: 0.1 })
+    smStream.write({ url: '/sitemap-search.xml', changefreq: 'daily', priority: 1 })
+    smStream.write({ url: '/?top=link', changefreq: 'weekly', priority: 0.6 })    // changefreq: 'weekly',  priority: 0.5
+    smStream.write({ url: '/?top=key/', changefreq: 'weekly', priority: 0.6 })
+    /* or use
+    Readable.from([{url: '/page-1'}...]).pipe(smStream)
+    if you are looking to avoid writing your own loop.
+    */
 
-//     // cache the response
-//     streamToPromise(pipeline).then(sm => sitemap = sm)
-//     // make sure to attach a write stream such as streamToPromise before ending
-//     smStream.end()
-//     // stream write the response
-//     pipeline.pipe(res).on('error', (e) => {throw e})
-//   } catch (e) {
-//     console.error(e)
-//     res.status(500).end()
-//   }
-// })
+    // cache the response
+    streamToPromise(pipeline).then(sm => sitemap = sm)
+    // make sure to attach a write stream such as streamToPromise before ending
+    smStream.end()
+    // stream write the response
+    pipeline.pipe(res).on('error', (e) => {throw e})
+  } catch (e) {
+    console.error(e)
+    res.status(500).end()
+  }
+})
+
+router.get('/sitemap-search.xml', async function(req, res) {
+  res.header('Content-Type', 'application/xml');
+  res.header('Content-Encoding', 'gzip');
+  let sitemap;
+
+  let keysearch = [];
+
+  await Values.aggregate([
+    { $group: { _id: '$value' } },
+    { $project: { _id: 1 } }
+  ]).then(result => {
+    let i = 0;
+    _.map(result, o => {
+      keysearch[i] = o["_id"];
+      i++;
+    })
+  }).catch(err => {
+    console.log(err)
+  });
+
+  // if we have a cached entry send it
+  if (sitemap) {
+    res.send(sitemap)
+    return
+  }
+
+  try {
+    const smStream = new SitemapStream({ hostname: 'https://timfshare.com/' })
+    const pipeline = smStream.pipe(createGzip())
+
+    // pipe your entries or directly write them.
+
+    _.map(keysearch, o => {
+
+      smStream.write({ url: '/?s='+ encodeURI(o), changefreq: 'monthly', priority: 0.6 })
+
+    })
+    // cache the response
+    streamToPromise(pipeline).then(sm => sitemap = sm)
+    // make sure to attach a write stream such as streamToPromise before ending
+    smStream.end()
+    // stream write the response
+    pipeline.pipe(res).on('error', (e) => {throw e})
+  } catch (e) {
+    console.error(e)
+    res.status(500).end()
+  }
+})
+
 router.get('/toplink', async (req, res, next) => {
   const { nametoplink } = req.query;
   let toplink = [];
