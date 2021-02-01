@@ -145,19 +145,7 @@ router.get('/search', (req, res, next) => {
         }
         let dateT = new Date(Date.now());
         dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
-        options = {
-          uri: req.protocol  + "://" + req.headers.host + '/values',
-          method: 'POST',
-          json: {
-            "value": data.q,
-            "date": dateT
-          }
-        };
-        request(options, function (error, response, body) {
-          if (!error && response.statusCode == 200) {
-            console.log("Add value complete") // Print the shortened url.
-          }
-        });
+        sendVal(data.q, dateT);
       }
       // res.status(200).send(result);
       res.status(200).send(data);

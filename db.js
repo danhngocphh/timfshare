@@ -35,16 +35,16 @@ module.exports = {
     topLinks,
     Values,
     Links,
-    sendVal: function (val, date, res) {
+    sendVal: function (val, date) {
         var request = new Values({ value: val, date: date });
         request.save((err, result) => {
             if (err) {
                 console.log(err);
-                res.send(JSON.stringify({ status: "error", value: "Error, db request failed" }));
-                return
+                // res.send(JSON.stringify({ status: "error", value: "Error, db request failed" }));
+                return 
             }
             statsd.increment('creations');
-            res.status(201).send(JSON.stringify({ status: "ok", value: result["value"], id: result["_id"] }));
+            // res.status(201).send(JSON.stringify({ status: "ok", value: result["value"], id: result["_id"] }));
         });
     },
     sendLink: function (val, link, title, date, res) {
