@@ -29,7 +29,7 @@ document.getElementsByTagName("meta")[3].outerHTML = '<meta name="description" c
 
 
 if(s){
-  document.title = s + " - Tìm Trên TimFshare";
+  document.title = s + " - Tìm Trên Fshare";
 }
 
 
