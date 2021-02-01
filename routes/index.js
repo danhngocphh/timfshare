@@ -2,7 +2,7 @@ var express = require('express');
 const { google } = require('googleapis');
 const config = require('../config');
 var request = require('request');
-const { topLinks, Values, Links } = require('../db');
+const { topLinks, Values, Links, sendLink, sendVal } = require('../db');
 var _ = require('lodash');
 const { SitemapStream, streamToPromise } = require('sitemap');
 const { createGzip } = require('zlib');
@@ -143,13 +143,10 @@ router.get('/search', (req, res, next) => {
             snippet: o.snippet
           }))
         }
-      }
-      //send data to localhost:1239
-      if (data) {
         let dateT = new Date(Date.now());
         dateT.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })
         options = {
-          uri: 'http://localhost:1239/values',
+          uri: req.protocol  + "://" + req.headers.host + '/values',
           method: 'POST',
           json: {
             "value": data.q,
@@ -158,7 +155,7 @@ router.get('/search', (req, res, next) => {
         };
         request(options, function (error, response, body) {
           if (!error && response.statusCode == 200) {
-            console.log(body.id) // Print the shortened url.
+            console.log("Add value complete") // Print the shortened url.
           }
         });
       }
@@ -296,6 +293,29 @@ router.get('/toplink', async (req, res, next) => {
       console.log(err)
     });
   res.status(200).send(toplink);
+});
+
+router.post('/values', function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  var val = req.body.value;
+  var date = req.body.date;
+  if (val === undefined || val === "") {
+    res.send(JSON.stringify({ status: "error", value: "Value undefined" }));
+    return
+  }
+  sendVal(val, date, res);
+});
+router.post('/links', function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  var val = req.body.value;
+  var link = req.body.link;
+  var title = req.body.title;
+  var date = req.body.date;
+  if (val === undefined || val === "") {
+    res.send(JSON.stringify({ status: "error", value: "Value undefined" }));
+    return
+  }
+  sendLink(val, link, title, date, res);
 });
 
 function selectionSort(array) {

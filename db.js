@@ -27,9 +27,37 @@ const schematopLink = mongoose.Schema({
     value: Object
 });
 
+const topLinks = mongoose.model('tops', schematopLink);
+const Values = mongoose.model('keysearches', schemaValue);
+const Links = mongoose.model('links', schemaLink);
+
 module.exports = {
-    topLinks: mongoose.model('tops', schematopLink),
-    Values: mongoose.model('keysearches', schemaValue),
-    Links: mongoose.model('links', schemaLink),
+    topLinks,
+    Values,
+    Links,
+    sendVal: function (val, date, res) {
+        var request = new Values({ value: val, date: date });
+        request.save((err, result) => {
+            if (err) {
+                console.log(err);
+                res.send(JSON.stringify({ status: "error", value: "Error, db request failed" }));
+                return
+            }
+            statsd.increment('creations');
+            res.status(201).send(JSON.stringify({ status: "ok", value: result["value"], id: result["_id"] }));
+        });
+    },
+    sendLink: function (val, link, title, date, res) {
+        var request = new Links({ value: val, link: link, title: title, date: date });
+        request.save((err, result) => {
+            if (err) {
+                console.log(err);
+                res.send(JSON.stringify({ status: "error", value: "Error, db request failed" }));
+                return
+            }
+            statsd.increment('creations');
+            res.status(201).send(JSON.stringify({ status: "ok", value: result["value"], id: result["_id"] }));
+        });
+    },
 };
 

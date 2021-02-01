@@ -167,7 +167,7 @@ const cse = (q, start) => {
 
 function getLink(value, link, title) {
   let dateT = new Date(Date.now());
-  $.post("http://localhost:1239/links",
+  $.post("/links",
     {
       "value": value,
       "link": link,
