@@ -12,10 +12,11 @@
     gtag('config', 'G-TLCCPKXGNG');
   </script>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Trang tìm kiếm link tải Fshare nhanh chóng, chính xác">
-  <meta name="keywords" content="tai fshare, timfshare, tim link tai fshare, tim kiem link fshare, tim link tai phim, tim link tai">
+  <meta name="keywords"
+    content="tai fshare, timfshare, tim link tai fshare, tim kiem link fshare, tim link tai phim, tim link tai">
   <title>
     <%= title %>
   </title>
@@ -23,73 +24,96 @@
   <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
 
   <link href="//fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+  <link href="/css/bootstrap.css" rel="stylesheet" />
   <link rel="stylesheet" href="/stylesheets/loader.css">
   <link rel='stylesheet' href="/stylesheets/style.css">
   <link rel='stylesheet' href="/stylesheets/autoacomplete.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 
 <body>
-  <div class="wrap-search">
-    <form action="/" method="get">
-      <div class="dropdown" id="cusSelectbox">
-        <select name="site" class="dropdown-select" id="cusSelectboxValue">
-          <option value="">Tất cả</option>
-          <option value="fshare">Fshare</option>
-          <option value="hdvietnam">HDvietnam</option>
-          <option value="thuvienhd">ThuvienHD</option>
-        </select>
+  <div class="container">
+    <div class="row">
+      <a href="/"><img src="/images/cse.png" alt="" class="logo top-0 start-50 translate-middle" id="logo-outside"></a>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="wrap-search">
+          <form action="/" method="get">
+            <div class=""><img src="/images/search.png" type="submit" alt="Submit" class="search" id="img-search"></div>
+            <div class="dropdown" id="cusSelectbox">
+              <select name="site" class="dropdown-select" id="cusSelectboxValue">
+                <option value="">Tất cả</option>
+                <option value="fshare">Fshare</option>
+                <option value="hdvietnam">HDvietnam</option>
+                <option value="thuvienhd">ThuvienHD</option>
+              </select>
+            </div>         
+            <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..."
+              id="input-search" name="s">
+            <!-- <button type="submit" style="border: unset !important;"> -->
+            <!-- </button> -->
+          </form>
+        </div>
       </div>
-      <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..." id="input-search" name="s">
-      <button type="submit" style="border: unset !important;"><img src="/images/search.png" type="submit" alt="Submit"
-          class="search" id="img-search"></button>
-    </form>
+    </div>
+    <div class="row">
+      <div class="col-6 ">
+        <div class="top-detail position-absolute top-60 start-50 translate-middle fw-light ">
+              <a href="/?top=key" class="title" id="searchkey">Top Từ Khóa</a> | <a href="/?top=link" class="title" id="searchkey">Top Đường Link Hot</a>
+            </div>
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="col-xl-8">
+        <div class="wrap-content">
+          <ul id="results" />
+        </div>
+      </div>
+        
+      <div class="col-xl-4">
+        <div class="wrap-recommendlink">
+          <ul id="recommendlink"></ul>
+        </div>
+        <div class="wrap-recommendkey">
+          <ul id="recommendkey"></ul>
+        </div>
+      </div>
+  </div>
 
-    <img src="/images/close.png" alt="Close" class="close" id="img-close">
+    
+
+    <div class="page" id="pagination">
+      <button class="prev" id="btn-prev">Trang trước</button>
+      <button class="next" id="btn-next">Trang kế</button>
+    </div>
+    <div id="loader" style="color: #eb1a58" class="la-ball-climbing-dot la-3x loader">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div id="input-searchautocomplete-list" class="autocomplete-items"></div>
+    <img src="/images/cse.png" alt="Fshare Search" class="cse" id="img-cse">
+    <script src="/javascripts/autocomplete.js"></script>
+    <span style="display: none;" id="key_value">
+      <%= JSON.stringify(keysearch) %>
+    </span>
+    <script src="/javascripts/main.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        var key = $('#key_value').html();
+        //key = unescape(key);
+        key = JSON.parse(key);
+        autocomplete(document.getElementById("input-search"), key);
+        if (currentPage) {
+          currentPage = 'home';
+        }
+      });
+    </script>
   </div>
-  <div class="top-detail">
-    <a href="/?top=key" class="title" id="searchkey">Top Từ Khóa</a> | <a href="/?top=link" class="title"
-      id="searchkey">Top Đường Link Hot</a>
-  </div>
-  <a href="/"><img src="/images/cse.png" alt="" class="logo" id="logo-outside"></a>
-  <div class="wrap-recommendlink">
-    <ul id="recommendlink"></ul>
-  </div>
-  <div class="wrap-content">
-    <ul id="results" />
-  </div>
-  <div class="wrap-recommendkey">
-    <ul id="recommendkey"></ul>
-  </div>
-  <div class="page" id="pagination">
-    <button class="prev" id="btn-prev">Trang trước</button>
-    <button class="next" id="btn-next">Trang kế</button>
-  </div>
-  <div id="loader" style="color: #eb1a58" class="la-ball-climbing-dot la-3x loader">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  <div id="input-searchautocomplete-list" class="autocomplete-items"></div>
-  <img src="/images/cse.png" alt="Fshare Search" class="cse" id="img-cse">
-  <script src="/javascripts/autocomplete.js"></script>
-  <span style="display: none;" id="key_value">
-    <%= JSON.stringify(keysearch) %>
-  </span>
-  <script src="/javascripts/main.js"></script>
-  <script>
-    $(document).ready(function () {
-      var key = $('#key_value').html();
-      //key = unescape(key);
-      key = JSON.parse(key);
-      autocomplete(document.getElementById("input-search"), key);
-      if (currentPage) {
-        currentPage = 'home';
-      }
-    });
-  </script>
 </body>
 
 </html>

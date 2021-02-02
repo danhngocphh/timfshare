@@ -74,6 +74,7 @@ router.get('/', async function (req, res, next) {
   res.render('index', { title: 'TimFshare.com - Tìm kiếm link Fshare nhanh chóng, chính xác', keysearch, topkey, toplink });
 });
 
+
 router.get('/search', (req, res, next) => {
   var { q, start, num } = req.query;
   const _keysave = q;
@@ -155,6 +156,8 @@ router.get('/search', (req, res, next) => {
       res.status(500).send(err);
     });
 })
+
+
 
 router.get('/topkey', async (req, res, next) => {
   const { nametopkey } = req.query;
