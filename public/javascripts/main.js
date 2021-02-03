@@ -141,7 +141,7 @@ const cse = (q, start) => {
     if (s && s != '') {
       updateViewOnSearch();
       cse(q);
-      document.getElementById("input-search").value = s;
+      document.getElementById("input-search-in").value = s;
       $domainvalue.val(site);
 
     }
