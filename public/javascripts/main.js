@@ -5,6 +5,8 @@ const $domain = $('#cusSelectbox');
 const $results = $('#results');
 const $recommendlink = $('#recommendlink');
 const $recommendkey = $('#recommendkey');
+const $recommendlinkpage = $('#recommendlinkpage');
+const $recommendkeypage = $('#recommendkeypage');
 const $loader = $('#loader');
 const $btnPrev = $('#btn-prev');
 const $btnNext = $('#btn-next');
@@ -13,9 +15,13 @@ const $imgSearch = $('#img-search');
 const $Searchkey = $('#searchkey');
 const $imgClose = $('#img-close');
 const $imgCse = $('#img-cse');
+const $logoout = $('#logoout');
+const $inputsearchout = $('#inputsearchout');
 const $imglogooutside = $('#logo-outside');
 const $hotlink = $('.top-detail');
 const $autocomplete = $('#input-searchautocomplete-list');
+const $wrapsearchin = $('.wrap-search-in');
+const $logoin = $('.logoin');
 var currentPage = 'home';
 var data;
 
@@ -55,6 +61,10 @@ const cse = (q, start) => {
     $recommendkey.css('visibility', 'visible');
     $recommendlink.css('display', 'block');
     $recommendlink.css('visibility', 'visible');
+    $wrapsearchin.css('display', 'block');
+    $wrapsearchin.css('visibility', 'visible');
+    $logoin.css('display', 'block');
+    $logoin.css('visibility', 'visible');
     if (data) {
       $results.html(`<li class="total">Đã tìm được ${data.totalResults} kết quả trong ${data.time} giây.</li>`);
       data.items.map(o => {
@@ -83,32 +93,13 @@ const cse = (q, start) => {
   $recommendkey.css('visibility', 'hidden');
   $recommendlink.css('display', 'none');
   $recommendlink.css('visibility', 'hidden');
+  $logoout.css('display', 'none');
+  $logoout.css('visibility', 'hidden');
+  $inputsearchout.css('display', 'none');
+  $inputsearchout.css('visibility', 'hidden');
   $pagination.css('display', 'none');
   $loader.css('display', 'block');
   $imgClose.css('display', 'block');
-  // $wrapsearch.css('margin-top','0px');
-  // $inputSearch.css('position', 'relative');
-  // $inputSearch.css('width', '89%');
-  // $inputSearch.css('float', 'right');
-  // $inputSearch.css('margin-top', '-20%');
-  // $inputSearch.css('margin-left', '0%');
-  // $domain.css('margin-top', '-20%');
-  // $domain.css('margin-left', '5%');
-  // $imgSearch.css('margin-top', '-19%');
-  // $imgSearch.css('right', '1%');
-  // $imgClose.css('margin-top', '0.2%');
-  // $imgClose.css('right', '3%');
-  // $imglogooutside.css('width', '10%');
-  // $imglogooutside.css('float', 'left');
-  // $imglogooutside.css('margin-left', '-55%');
-  // $autocomplete.css('margin-top', '20px');
-  // $autocomplete.css('width', '20%');
-  // $recommendlink.css('display', 'block');
-  // $recommendlink.css('float', 'right');
-  // $recommendkey.css('display', 'block');
-  // $recommendkey.css('float', 'right');
-  // $recommendkey.css('margin-left', '0%');
-  // $recommendkey.css('margin-top', '0%');
   $hotlink.css('display', 'none');
   }
   $inputSearch.on('input', (e) => {
@@ -140,12 +131,6 @@ const cse = (q, start) => {
     $inputSearch.val('');
     $imgClose.css('display', 'none');
   })
-
-  $inputSearch.keyup(function () {
-    if (s) {
-      $('#input-searchautocomplete-list').addClass('margrin-top-cus');
-    }
-  });
 
   function onInit() {
     if (site){
@@ -194,72 +179,47 @@ const updateViewOnSearch = () => {
   $recommendkey.css('visibility', 'hidden');
   $recommendlink.css('display', 'none');
   $recommendlink.css('visibility', 'hidden');
+  $logoout.css('display', 'none');
+  $logoout.css('visibility', 'hidden');
+  $inputsearchout.css('display', 'none');
+  $inputsearchout.css('visibility', 'hidden');
   $pagination.css('display', 'none');
   $loader.css('display', 'block');
   $imgClose.css('display', 'block');
-  // $wrapsearch.css('margin-top','0px');
-  // // $inputSearch.css('width', '88.5%');
-  // // $inputSearch.css('float', 'right');
-  // // $inputSearch.css('margin-top', '0.2%');
-  // // $inputSearch.css('margin-left', '0%');
-  // $domain.css('margin-top', '0.2%');
-  // $domain.css('margin-left', '11.5%');
-  // $imgSearch.css('margin-top', '0.2%');
-  // $imgSearch.css('right', '1%');
-  // $imgClose.css('margin-top', '0.2%');
-  // $imgClose.css('right', '3%');
-  // $imglogooutside.css('position', 'relative');
-  // $imglogooutside.css('width', '10%');
-  // $imglogooutside.css('float', 'left');
-  // $imglogooutside.css('margin-left', '-40%');
-  // $autocomplete.css('margin-top', '20px');
-  // $autocomplete.css('width', '20%');
-  // $recommendlink.css('display', 'block');
-  // $recommendlink.css('float', 'right');
-  // $recommendkey.css('display', 'block');
-  // $recommendkey.css('float', 'right');
-  // $recommendkey.css('margin-left', '0%');
-  // $recommendkey.css('margin-top', '0%');
-  // $hotlink.css('display', 'none');
+  $hotlink.css('display', 'none');
 }
 
 const updateViewOnTop = () => {
   currentPage = 'result-page';
   $results.html('');
-  $recommendkey.css('display', 'block');
-  $recommendkey.css('visibility', 'visible');
-  $recommendlink.css('display', 'block');
-  $recommendlink.css('visibility', 'visible');
+  $recommendkeypage.css('display', 'block');
+  $recommendkeypage.css('visibility', 'visible');
+  $recommendlinkpage.css('display', 'block');
+  $recommendlinkpage.css('visibility', 'visible');
+  $logoout.css('display', 'none');
+  $logoout.css('visibility', 'hidden');
+  $inputsearchout.css('display', 'none');
+  $inputsearchout.css('visibility', 'hidden');
+  $wrapsearchin.css('display', 'block');
+  $wrapsearchin.css('visibility', 'visible');
+  $logoin.css('display', 'block');
+  $logoin.css('visibility', 'visible');
   $pagination.css('display', 'none');
   $imgClose.css('display', 'block');
-  $inputSearch.css('width', '88.5%');
-  $inputSearch.css('float', 'right');
-  $inputSearch.css('margin-top', '0.2%');
-  $inputSearch.css('margin-left', '0%');
-  $domain.css('margin-top', '0.2%');
-  $domain.css('margin-left', '11.5%');
-  $imgSearch.css('margin-top', '0.2%');
-  $imgSearch.css('right', '1%');
-  $imgClose.css('margin-top', '0.2%');
-  $imgClose.css('right', '3%');
-  $imglogooutside.css('position', 'relative');
-  $imglogooutside.css('width', '10%');
-  $imglogooutside.css('left', '5%');
-  $imglogooutside.css('margin-top', '0.2%');
-  $imglogooutside.css('float', 'left');
-  $autocomplete.css('margin-top', '20px');
-  $autocomplete.css('width', '20%');
-  $recommendlink.css('display', 'block');
-  $recommendlink.css('float', 'left');
-  $recommendkey.css('display', 'block');
-  $recommendkey.css('float', 'right');
-  $recommendkey.css('margin-top', '-50%');
   $hotlink.css('display', 'none');
 }
 
 const gettopkey = (nametopkey) => {
   $.get('/topkey', { nametopkey }).done(_data => {
     const list = _data;
+    $recommendkeypage.html(`<li class="total">Top 10 Từ Khóa | <a onclick="gettopkey('topkeyweek')" class="title" id="searchkey">Tuần</a>	| <a onclick="gettopkey('topkeymonth')" class="title" id="searchkey">Tháng</a>	| <a onclick="gettopkey('topkeyyear')" class="title" id="searchkey">Năm</a>	| <a onclick="gettopkey('topkeyall')" class="title" id="searchkey">Tất cả</a></li>`);
+    $.each(list, function (index, value) {
+      $recommendkeypage.append(`
+      <li class="item">#${value[2]} 
+      <a href="/?s=${value[0]}" class="title" id="searchkey">${value[0]}</a>
+  </li>
+      `);
+    });
     $recommendkey.html(`<li class="total">Top 10 Từ Khóa | <a onclick="gettopkey('topkeyweek')" class="title" id="searchkey">Tuần</a>	| <a onclick="gettopkey('topkeymonth')" class="title" id="searchkey">Tháng</a>	| <a onclick="gettopkey('topkeyyear')" class="title" id="searchkey">Năm</a>	| <a onclick="gettopkey('topkeyall')" class="title" id="searchkey">Tất cả</a></li>`);
     $.each(list, function (index, value) {
       $recommendkey.append(`
@@ -275,6 +235,14 @@ const gettopkey = (nametopkey) => {
 const gettoplink = (nametoplink) => {
   $.get('/toplink', { nametoplink }).done(_data => {
     const list = _data;
+    $recommendlinkpage.html(`<li class="total">Top 10 Link | <a onclick="gettoplink('toplinkweek')" class="title" id="searchkey">Tuần</a> | <a onclick="gettoplink('toplinkmonth')" class="title" id="searchkey">Tháng</a>	| <a onclick="gettoplink('toplinkyear')" class="title" id="searchkey">Năm</a>	| <a onclick="gettoplink('toplinkall')" class="title" id="searchkey">Tất cả</a></li>`);
+    $.each(list, function (index, value) {
+      $recommendlinkpage.append(`
+      <li class="item">#${value[3]} 
+      <a target="_blank" href="${value[0]}" onclick="getLink('','${value[0]}','${value[2]}')" class="title" id="vegar">${value[2]}</a>
+  </li>
+      `);
+    });
     $recommendlink.html(`<li class="total">Top 10 Link | <a onclick="gettoplink('toplinkweek')" class="title" id="searchkey">Tuần</a> | <a onclick="gettoplink('toplinkmonth')" class="title" id="searchkey">Tháng</a>	| <a onclick="gettoplink('toplinkyear')" class="title" id="searchkey">Năm</a>	| <a onclick="gettoplink('toplinkall')" class="title" id="searchkey">Tất cả</a></li>`);
     $.each(list, function (index, value) {
       $recommendlink.append(`

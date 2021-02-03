@@ -6264,6 +6264,10 @@ textarea.form-control-lg {
   left: 0 !important;
 }
 
+.start-10 {
+  left: 10% !important;
+}
+
 .start-50 {
   left: 50% !important;
 }

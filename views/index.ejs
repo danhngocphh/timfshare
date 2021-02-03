@@ -32,13 +32,16 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <a href="/"><img src="/images/cse.png" alt="" class="logo top-0 start-50 translate-middle" id="logo-outside"></a>
+      <div class="col-12" id="logoout">
+        <a href="/"><img src="/images/cse.png" alt="" class="logo top-0 start-50 translate-middle"
+            id="logo-outside"></a>
+      </div>
     </div>
     <div class="row">
-      <div class="col-12">
-        <div class="wrap-search">
+      <div class="col-10" id="inputsearchout">
+        <div class="wrap-search start-10">
           <form action="/" method="get">
             <div class=""><img src="/images/search.png" type="submit" alt="Submit" class="search" id="img-search"></div>
             <div class="dropdown" id="cusSelectbox">
@@ -48,9 +51,8 @@
                 <option value="hdvietnam">HDvietnam</option>
                 <option value="thuvienhd">ThuvienHD</option>
               </select>
-            </div>         
-            <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..."
-              id="input-search" name="s">
+            </div>
+            <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..." id="input-search" name="s">
             <!-- <button type="submit" style="border: unset !important;"> -->
             <!-- </button> -->
           </form>
@@ -60,19 +62,67 @@
     <div class="row">
       <div class="col-6 ">
         <div class="top-detail position-absolute top-60 start-50 translate-middle fw-light ">
-              <a href="/?top=key" class="title" id="searchkey">Top Từ Khóa</a> | <a href="/?top=link" class="title" id="searchkey">Top Đường Link Hot</a>
-            </div>
+          <a href="/?top=key" class="title" id="searchkey">Top Từ Khóa</a> | <a href="/?top=link" class="title"
+            id="searchkey">Top Đường Link Hot</a>
+        </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-xl-8">
+      <div class="col-xl-2">
+        <a href="/"><img src="/images/cse.png" alt="" class="logoin start-10"
+            id="logo-outside"></a>
+      </div>
+      <div class="col-xl-10">
+        <div class="wrap-search-in">
+          <form action="/" method="get">
+            <div class=""><img src="/images/search.png" type="submit" alt="Submit" class="search" id="img-search"></div>
+            <div class="dropdown" id="cusSelectbox">
+              <select name="site" class="dropdown-select" id="cusSelectboxValue">
+                <option value="">Tất cả</option>
+                <option value="fshare">Fshare</option>
+                <option value="hdvietnam">HDvietnam</option>
+                <option value="thuvienhd">ThuvienHD</option>
+              </select>
+            </div>
+            <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..." id="input-search-in" name="s">
+            <!-- <button type="submit" style="border: unset !important;"> -->
+            <!-- </button> -->
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-2">
+      </div>
+      <div class="col-xl-5">
+        <div class="wrap-recommendlink-page">
+          <ul id="recommendlinkpage"></ul>
+        </div>
+      </div>
+      <div class="col-xl-5">
+        
+        <div class="wrap-recommendkey-page">
+          <ul id="recommendkeypage"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-2">
+      </div>
+      <div class="col-xl-7">
         <div class="wrap-content">
           <ul id="results" />
         </div>
+        <div class="page" id="pagination">
+          <button class="prev" id="btn-prev">Trang trước</button>
+          <button class="next" id="btn-next">Trang kế</button>
+        </div>
       </div>
-        
-      <div class="col-xl-4">
+
+      <div class="col-xl-3" id="recommend">
         <div class="wrap-recommendlink">
           <ul id="recommendlink"></ul>
         </div>
@@ -80,14 +130,10 @@
           <ul id="recommendkey"></ul>
         </div>
       </div>
-  </div>
-
-    
-
-    <div class="page" id="pagination">
-      <button class="prev" id="btn-prev">Trang trước</button>
-      <button class="next" id="btn-next">Trang kế</button>
     </div>
+
+
+
     <div id="loader" style="color: #eb1a58" class="la-ball-climbing-dot la-3x loader">
       <div></div>
       <div></div>
@@ -108,6 +154,7 @@
         //key = unescape(key);
         key = JSON.parse(key);
         autocomplete(document.getElementById("input-search"), key);
+        autocomplete(document.getElementById("input-search-in"), key);
         if (currentPage) {
           currentPage = 'home';
         }
