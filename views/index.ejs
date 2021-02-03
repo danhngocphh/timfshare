@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="/stylesheets/loader.css">
   <link rel='stylesheet' href="/stylesheets/style.css">
   <link rel='stylesheet' href="/stylesheets/autoacomplete.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 
@@ -35,7 +36,9 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12" id="logoout">
-        <a href="/"><img src="/images/cse.png" alt="" class="logo top-0 start-50 translate-middle"
+        <a href="/"><img src="/images/cse.png" alt="" class="logo top-0 start-50 translate-middle d-none d-sm-block"
+            id="logo-outside"></a>
+        <a href="/"><img src="/images/cse.png" alt="" class="mlogo top-0 start-50 translate-middle d-block d-sm-none"
             id="logo-outside"></a>
       </div>
     </div>
@@ -43,7 +46,7 @@
       <div class="col-10" id="inputsearchout">
         <div class="wrap-search start-10">
           <form action="/" method="get">
-            <div class=""><img src="/images/search.png" type="submit" alt="Submit" class="search" id="img-search"></div>
+            <!-- <div class=""><img src="/images/search.png" type="submit" alt="Submit" class="search" id="img-search"></div> -->
             <div class="dropdown" id="cusSelectbox">
               <select name="site" class="dropdown-select" id="cusSelectboxValue">
                 <option value="">Tất cả</option>
@@ -53,16 +56,15 @@
               </select>
             </div>
             <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..." id="input-search" name="s">
-            <!-- <button type="submit" style="border: unset !important;"> -->
-            <!-- </button> -->
+            <button type="submit" id="icon-search" style="border: unset !important;"> <i class="fas fa-search"></i>
+            </button>
           </form>
         </div>
+
       </div>
-    </div>
-    <div class="row">
-      <div class="col-6 ">
-        <div class="top-detail position-absolute top-60 start-50 translate-middle fw-light ">
-          <a href="/?top=key" class="title" id="searchkey">Top Từ Khóa</a> | <a href="/?top=link" class="title"
+      <div class="col-12">
+        <div class="top-detail">
+          <a href="/?top=key" class="title " id="searchkey">Top Từ Khóa</a> | <a href="/?top=link" class="title"
             id="searchkey">Top Đường Link Hot</a>
         </div>
       </div>
@@ -70,7 +72,8 @@
 
     <div class="row">
       <div class="col-xl-2">
-        <a href="/"><img src="/images/cse.png" alt="" class="logoin start-10"
+        <a href="/"><img src="/images/cse.png" alt="" class="logoin start-10 d-none d-sm-block" id="logo-outside"></a>
+        <a href="/"><img src="/images/cse.png" alt="" class="mlogoin start-25 logoin d-block d-sm-none"
             id="logo-outside"></a>
       </div>
       <div class="col-xl-10">
@@ -86,8 +89,8 @@
               </select>
             </div>
             <input autocomplete="off" type="text" placeholder="Nhập vào từ khóa..." id="input-search-in" name="s">
-            <!-- <button type="submit" style="border: unset !important;"> -->
-            <!-- </button> -->
+            <button type="submit" id="icon-search" style="border: unset !important;" > <i class="fas fa-search"></i>
+            </button>
           </form>
         </div>
       </div>
@@ -102,7 +105,7 @@
         </div>
       </div>
       <div class="col-xl-5">
-        
+
         <div class="wrap-recommendkey-page">
           <ul id="recommendkeypage"></ul>
         </div>
