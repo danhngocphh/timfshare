@@ -22,10 +22,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 #icon-search{
 	position: absolute;
-    right: 2%;
+    right: 30%;
 	width: 20px;
 	z-index: 1;
 	margin-top: 10px ;
+	margin-right: 100px ;
 }
 
 .top-detail{
