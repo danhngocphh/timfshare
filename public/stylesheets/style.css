@@ -21,11 +21,16 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 900;
 }
 #icon-search{
-	position: absolute;
-    right: 2%;
-	width: 20px;
-	z-index: 1;
-	margin-top: 10px ;
+	
+		position: absolute;
+		right: 2%;
+		width: 20px;
+		z-index: 1;
+		margin-top: 10px;
+		background: #fff;
+		border: none;
+	
+
 	/* margin-right: 100px ; */
 }
 
