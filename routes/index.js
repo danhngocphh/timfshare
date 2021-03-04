@@ -91,8 +91,6 @@ router.get('/search', (req, res, next) => {
       const page = (queries.request || [])[0] || {};
       const previousPage = (queries.previousPage || [])[0] || {};
       const nextPage = (queries.nextPage || [])[0] || {};
-      var toplink = [];
-      var topkey = [];
       const keysearchurl = q.toString().split(' ', 3)
       var locksearch = 0;
       switch (keysearchurl[0]) {
@@ -106,7 +104,6 @@ router.get('/search', (req, res, next) => {
           keyfshare = q.toString().substr(16)
           break;
         default:
-        // code block
       }
       if (page.startIndex == 1 && locksearch != 1) {
         const datas = await requestPromise('https://thuvienhd.com/?feed=timfsharejson&search=' + encodeURI(q));
@@ -220,9 +217,7 @@ router.get('/sitemap-search.xml', async function(req, res) {
   res.header('Content-Type', 'application/xml');
   res.header('Content-Encoding', 'gzip');
   let sitemap;
-
   let keysearch = [];
-
   await Values.aggregate([
     { $group: { _id: '$value' } },
     { $project: { _id: 1 } }
@@ -235,23 +230,17 @@ router.get('/sitemap-search.xml', async function(req, res) {
   }).catch(err => {
     console.log(err)
   });
-
   // if we have a cached entry send it
   if (sitemap) {
     res.send(sitemap)
     return
   }
-
   try {
     const smStream = new SitemapStream({ hostname: 'http://timfshare.com/' })
     const pipeline = smStream.pipe(createGzip())
-
     // pipe your entries or directly write them.
-
     _.map(keysearch, o => {
-
       smStream.write({ url: '/?s='+ encodeURI(o), changefreq: 'monthly', priority: 0.6 })
-
     })
     // cache the response
     streamToPromise(pipeline).then(sm => sitemap = sm)
